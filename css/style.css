@@ -1,0 +1,16 @@
+/* ================================
+   MENU DOS TREINOS + TREINO
+   ================================ */
+
+#treinos {
+    display: flex;
+    gap: 30px;
+}
+
+#treinos aside {
+    width: 220px;
+}
+
+#treinoAtual {
+    flex: 1;
+}

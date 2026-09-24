@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meu Plano de Treino</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+
+        <nav id="menu">
+
+            <h1>MEU PLANO</h1>
+
+            <ul>
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li>
+                    <a href="https://rlpimenta.github.io/Portfolio/">
+                        Portfólio
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- Área de apresentação -->
+        <section id="inicio">
+
+            <h2>Meu Plano de Treino</h2>
+
+            <p>
+                Organiza os teus treinos, acompanha os exercícios
+                e regista a tua evolução.
+            </p>
+
+            <p>
+                Seleciona um dia de treino para veres os exercícios
+                e os respetivos detalhes.
+            </p>
+
+        </section>
+
+
+        <!-- Área dos treinos -->
+        <section id="treinos">
+
+            <!-- Menu lateral dos dias -->
+            <aside>
+
+                <nav id="diasTreino">
+
+                    <h2>Treinos</h2>
+
+                    <ul>
+                        <li><a href="#dia1">D1 — Pull + Bíceps</a></li>
+                        <li><a href="#dia2">D2 — Lower A</a></li>
+                        <li><a href="#dia3">D3 — Push + Ombros</a></li>
+                        <li><a href="#dia4">D4 — Upper</a></li>
+                        <li><a href="#dia5">D5 — Lower B</a></li>
+                    </ul>
+
+                </nav>
+
+            </aside>
+
+
+            <!-- Conteúdo do treino selecionado -->
+            <section id="treinoAtual">
+
+                <h2>Meu treino</h2>
+
+                <p>
+                    Selecione um treino para ver os exercícios.
+                </p>
+
+
+                <!-- Pesquisa -->
+                <section id="pesquisa">
+
+                    <h3>Pesquisar exercício</h3>
+
+                    <label for="pesquisaExercicio">
+                        Nome do exercício:
+                    </label>
+
+                    <input
+                        type="search"
+                        id="pesquisaExercicio"
+                        placeholder="Ex.: Chin Up"
+                    >
+
+                </section>
+
+
+                <!-- Filtro -->
+                <section id="filtro">
+
+                    <h3>Filtrar por grupo muscular</h3>
+
+                    <label for="filtroMusculo">
+                        Grupo muscular:
+                    </label>
+
+                    <select id="filtroMusculo">
+
+                        <option value="todos">
+                            Todos
+                        </option>
+
+                        <option value="costas">
+                            Costas
+                        </option>
+
+                        <option value="peito">
+                            Peito
+                        </option>
+
+                        <option value="ombros">
+                            Ombros
+                        </option>
+
+                        <option value="biceps">
+                            Bíceps
+                        </option>
+
+                        <option value="triceps">
+                            Tríceps
+                        </option>
+
+                        <option value="pernas">
+                            Pernas
+                        </option>
+
+                        <option value="antebraco">
+                            Antebraço
+                        </option>
+
+                        <option value="abdomen">
+                            Abdómen
+                        </option>
+
+                    </select>
+
+                </section>
+
+
+                <!-- Contador -->
+                <p id="contadorResultados">
+                    0 exercícios encontrados.
+                </p>
+
+
+                <!-- Exercícios -->
+                <section id="listaExercicios">
+
+                    <!--
+                    Os exercícios serão adicionados
+                    aqui através do JavaScript.
+                    -->
+
+                </section>
+
+            </section>
+
+        </section>
+
+
+        <!-- Formulário para adicionar exercício -->
+        <section id="adicionar">
+
+            <h2>Adicionar exercício</h2>
+
+            <form id="formularioExercicio">
+
+                <div>
+                    <label for="nomeExercicio">
+                        Nome do exercício:
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nomeExercicio"
+                        required
+                    >
+                </div>
+
+
+                <div>
+                    <label for="grupoMuscular">
+                        Grupo muscular:
+                    </label>
+
+                    <select id="grupoMuscular" required>
+
+                        <option value="">
+                            Selecionar
+                        </option>
+
+                        <option value="costas">
+                            Costas
+                        </option>
+
+                        <option value="peito">
+                            Peito
+                        </option>
+
+                        <option value="ombros">
+                            Ombros
+                        </option>
+
+                        <option value="biceps">
+                            Bíceps
+                        </option>
+
+                        <option value="triceps">
+                            Tríceps
+                        </option>
+
+                        <option value="pernas">
+                            Pernas
+                        </option>
+
+                        <option value="antebraco">
+                            Antebraço
+                        </option>
+
+                        <option value="abdomen">
+                            Abdómen
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div>
+                    <label for="series">
+                        Séries:
+                    </label>
+
+                    <input
+                        type="number"
+                        id="series"
+                        min="1"
+                        required
+                    >
+                </div>
+
+
+                <div>
+                    <label for="repeticoes">
+                        Repetições:
+                    </label>
+
+                    <input
+                        type="text"
+                        id="repeticoes"
+                        placeholder="Ex.: 8-12"
+                        required
+                    >
+                </div>
+
+
+                <button type="submit">
+                    Adicionar exercício
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- Contacto -->
+        <section id="contacto">
+
+            <h2>Contacto</h2>
+
+            <p>
+                Encontre os meus contactos através do meu portfólio.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- Rodapé -->
+    <footer>
+
+        <p>
+            © 2026 Meu Plano
+        </p>
+
+    </footer>
+
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
