@@ -12,18 +12,27 @@
 
 <body>
 
-    <!-- Cabeçalho -->
+    <!-- =========================================
+         CABEÇALHO
+    ========================================== -->
+
     <header>
 
         <nav id="menu">
 
-            <h1>MEU PLANO</h1>
+            <h1>MEU <span>PLANO</span></h1>
 
             <ul>
-                <li><a href="#inicio">Início</a></li>
-                <li><a href="#contacto">Contacto</a></li>
                 <li>
-                    <a href="https://rlpimenta.github.io/Portfolio/">
+                    <a href="#inicio">Início</a>
+                </li>
+
+                <li>
+                    <a href="#contacto">Contacto</a>
+                </li>
+
+                <li>
+                    <a href="https://rlpimenta.github.io/Portfolio/" target="_blank">
                         Portfólio
                     </a>
                 </li>
@@ -34,142 +43,284 @@
     </header>
 
 
+    <!-- =========================================
+         CONTEÚDO PRINCIPAL
+    ========================================== -->
+
     <main>
 
-        <!-- Área de apresentação -->
-        <section id="inicio">
+        <!-- =====================================
+             HERO / INÍCIO
+        ====================================== -->
 
-            <h2>Meu Plano de Treino</h2>
+        <section id="inicio" class="hero">
 
-            <p>
-                Organiza os teus treinos, acompanha os exercícios
-                e regista a tua evolução.
-            </p>
+            <div class="hero-conteudo">
 
-            <p>
-                Seleciona um dia de treino para veres os exercícios
-                e os respetivos detalhes.
-            </p>
+                <p class="hero-pequeno">
+                    O TEU TREINO. A TUA EVOLUÇÃO.
+                </p>
+
+                <h2>
+                    Meu <span>Plano de Treino</span>
+                </h2>
+
+                <p>
+                    Organiza os teus treinos, acompanha os exercícios
+                    e regista a tua evolução.
+                </p>
+
+                <a href="#treinos" class="botao-principal">
+                    ▶ Começar
+                </a>
+
+            </div>
+
+
+            <div class="hero-frase">
+
+                <p id="fraseMotivacional">
+                    "Disciplina hoje,<br>
+                    resultado amanhã."
+                </p>
+
+            </div>
 
         </section>
 
 
-        <!-- Área dos treinos -->
+        <!-- =====================================
+             ÁREA DOS TREINOS
+        ====================================== -->
+
         <section id="treinos">
 
-            <!-- Menu lateral dos dias -->
+            <!-- =================================
+                 SIDEBAR DOS DIAS
+            ================================== -->
+
             <aside>
 
                 <nav id="diasTreino">
 
-                    <h2>Treinos</h2>
+                    <div class="titulo-sidebar">
+
+                        <span class="icone-sidebar">📅</span>
+
+                        <h2>Treinos</h2>
+
+                    </div>
+
 
                     <ul>
-                        <li><a href="#dia1">D1 — Pull + Bíceps</a></li>
-                        <li><a href="#dia2">D2 — Lower A</a></li>
-                        <li><a href="#dia3">D3 — Push + Ombros</a></li>
-                        <li><a href="#dia4">D4 — Upper</a></li>
-                        <li><a href="#dia5">D5 — Lower B</a></li>
+
+                        <li>
+                            <a href="#dia1">
+                                <span>D1</span>
+                                Pull + Bíceps
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#dia2">
+                                <span>D2</span>
+                                Lower A
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#dia3">
+                                <span>D3</span>
+                                Push + Ombros
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#dia4">
+                                <span>D4</span>
+                                Upper
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#dia5">
+                                <span>D5</span>
+                                Lower B
+                            </a>
+                        </li>
+
                     </ul>
 
                 </nav>
 
+
+                <!-- CARD DE PROGRESSO -->
+
+                <div class="sidebar-info">
+
+                    <span>💪</span>
+
+                    <p>
+                        Mantém a<br>
+                        consistência!
+                    </p>
+
+                </div>
+
             </aside>
 
 
-            <!-- Conteúdo do treino selecionado -->
+            <!-- =================================
+                 CONTEÚDO DO TREINO
+            ================================== -->
+
             <section id="treinoAtual">
 
-                <h2>Meu treino</h2>
+                <div class="cabecalho-treino">
 
-                <p>
-                    Selecione um treino para ver os exercícios.
-                </p>
+                    <div>
+
+                        <p class="treino-label">
+                            TREINO ATUAL
+                        </p>
+
+                        <h2 id="tituloTreino">
+                            D1 — Pull + Bíceps + Antebraço
+                        </h2>
+
+                        <p id="descricaoTreino">
+                            Costas, deltoide posterior, bíceps e
+                            antebraço. Finaliza com 20 min. de cardio.
+                        </p>
+
+                    </div>
 
 
-                <!-- Pesquisa -->
-                <section id="pesquisa">
+                    <div id="contadorResultados" class="contador">
 
-                    <h3>Pesquisar exercício</h3>
+                        0 exercícios
 
-                    <label for="pesquisaExercicio">
-                        Nome do exercício:
-                    </label>
+                    </div>
 
-                    <input
-                        type="search"
-                        id="pesquisaExercicio"
-                        placeholder="Ex.: Chin Up"
-                    >
+                </div>
+
+
+                <!-- =================================
+                     PESQUISA E FILTRO
+                ================================== -->
+
+                <section class="ferramentas">
+
+                    <div id="pesquisa">
+
+                        <label for="pesquisaExercicio">
+                            🔎 Pesquisar
+                        </label>
+
+                        <input
+                            type="search"
+                            id="pesquisaExercicio"
+                            placeholder="Pesquisar exercício..."
+                        >
+
+                    </div>
+
+
+                    <div id="filtro">
+
+                        <label for="filtroMusculo">
+                            Filtrar por grupo
+                        </label>
+
+                        <select id="filtroMusculo">
+
+                            <option value="todos">
+                                Todos os grupos
+                            </option>
+
+                            <option value="costas">
+                                Costas
+                            </option>
+
+                            <option value="peito">
+                                Peito
+                            </option>
+
+                            <option value="ombros">
+                                Ombros
+                            </option>
+
+                            <option value="biceps">
+                                Bíceps
+                            </option>
+
+                            <option value="triceps">
+                                Tríceps
+                            </option>
+
+                            <option value="pernas">
+                                Pernas
+                            </option>
+
+                            <option value="antebraco">
+                                Antebraço
+                            </option>
+
+                            <option value="abdomen">
+                                Abdómen
+                            </option>
+
+                            <option value="mobilidade">
+                                Mobilidade
+                            </option>
+
+                        </select>
+
+                    </div>
 
                 </section>
 
 
-                <!-- Filtro -->
-                <section id="filtro">
+                <!-- =================================
+                     LISTA DE EXERCÍCIOS
 
-                    <h3>Filtrar por grupo muscular</h3>
+                     O JAVASCRIPT VAI COLOCAR
+                     OS CARTÕES AQUI.
+                ================================== -->
 
-                    <label for="filtroMusculo">
-                        Grupo muscular:
-                    </label>
-
-                    <select id="filtroMusculo">
-
-                        <option value="todos">
-                            Todos
-                        </option>
-
-                        <option value="costas">
-                            Costas
-                        </option>
-
-                        <option value="peito">
-                            Peito
-                        </option>
-
-                        <option value="ombros">
-                            Ombros
-                        </option>
-
-                        <option value="biceps">
-                            Bíceps
-                        </option>
-
-                        <option value="triceps">
-                            Tríceps
-                        </option>
-
-                        <option value="pernas">
-                            Pernas
-                        </option>
-
-                        <option value="antebraco">
-                            Antebraço
-                        </option>
-
-                        <option value="abdomen">
-                            Abdómen
-                        </option>
-
-                    </select>
-
-                </section>
-
-
-                <!-- Contador -->
-                <p id="contadorResultados">
-                    0 exercícios encontrados.
-                </p>
-
-
-                <!-- Exercícios -->
                 <section id="listaExercicios">
 
                     <!--
-                    Os exercícios serão adicionados
-                    aqui através do JavaScript.
+                        Os cartões dos exercícios
+                        serão criados pelo JavaScript.
                     -->
+
+                </section>
+
+
+                <!-- =================================
+                     CARDIO
+                ================================== -->
+
+                <section class="cardio">
+
+                    <div class="cardio-icone">
+                        🏃
+                    </div>
+
+                    <div>
+
+                        <h3>Cardio</h3>
+
+                        <p>
+                            20 minutos de cardio no final do treino.
+                        </p>
+
+                    </div>
+
+                    <span class="cardio-detalhe">
+                        Moderado
+                    </span>
 
                 </section>
 
@@ -178,29 +329,53 @@
         </section>
 
 
-        <!-- Formulário para adicionar exercício -->
+        <!-- =====================================
+             ADICIONAR EXERCÍCIO
+        ====================================== -->
+
         <section id="adicionar">
 
-            <h2>Adicionar exercício</h2>
+            <div class="adicionar-cabecalho">
+
+                <div class="adicionar-icone">
+                    ＋
+                </div>
+
+                <div>
+
+                    <h2>Adicionar exercício</h2>
+
+                    <p>
+                        Adiciona um novo exercício ao treino atual.
+                    </p>
+
+                </div>
+
+            </div>
+
 
             <form id="formularioExercicio">
 
-                <div>
+                <div class="campo">
+
                     <label for="nomeExercicio">
-                        Nome do exercício:
+                        Nome do exercício
                     </label>
 
                     <input
                         type="text"
                         id="nomeExercicio"
+                        placeholder="Ex.: Chin Up"
                         required
                     >
+
                 </div>
 
 
-                <div>
+                <div class="campo">
+
                     <label for="grupoMuscular">
-                        Grupo muscular:
+                        Grupo muscular
                     </label>
 
                     <select id="grupoMuscular" required>
@@ -241,27 +416,36 @@
                             Abdómen
                         </option>
 
+                        <option value="mobilidade">
+                            Mobilidade
+                        </option>
+
                     </select>
+
                 </div>
 
 
-                <div>
+                <div class="campo campo-pequeno">
+
                     <label for="series">
-                        Séries:
+                        Séries
                     </label>
 
                     <input
                         type="number"
                         id="series"
                         min="1"
+                        placeholder="3"
                         required
                     >
+
                 </div>
 
 
-                <div>
+                <div class="campo">
+
                     <label for="repeticoes">
-                        Repetições:
+                        Repetições
                     </label>
 
                     <input
@@ -270,11 +454,29 @@
                         placeholder="Ex.: 8-12"
                         required
                     >
+
                 </div>
 
 
-                <button type="submit">
-                    Adicionar exercício
+                <div class="campo-checkbox">
+
+                    <input
+                        type="checkbox"
+                        id="ateFalha"
+                    >
+
+                    <label for="ateFalha">
+                        🔥 Até à falha
+                    </label>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="botao-adicionar"
+                >
+                    ＋ Adicionar
                 </button>
 
             </form>
@@ -282,13 +484,22 @@
         </section>
 
 
-        <!-- Contacto -->
+        <!-- =====================================
+             CONTACTO
+        ====================================== -->
+
         <section id="contacto">
 
             <h2>Contacto</h2>
 
             <p>
-                Encontre os meus contactos através do meu portfólio.
+                Encontra os meus contactos através do meu
+                <a
+                    href="https://rlpimenta.github.io/Portfolio/"
+                    target="_blank"
+                >
+                    portfólio
+                </a>.
             </p>
 
         </section>
@@ -296,8 +507,24 @@
     </main>
 
 
-    <!-- Rodapé -->
+    <!-- =========================================
+         RODAPÉ
+    ========================================== -->
+
     <footer>
+
+        <div>
+
+            <strong>
+                MEU <span>PLANO</span>
+            </strong>
+
+            <p>
+                Organiza. Treina. Evolui.
+            </p>
+
+        </div>
+
 
         <p>
             © 2026 Meu Plano
@@ -305,6 +532,10 @@
 
     </footer>
 
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
 
     <script src="js/script.js"></script>
 
