@@ -1,10 +1,54 @@
 /* =====================================================
-   1. VARIÁVEIS
+   MEU PLANO DE TREINO — STYLE.CSS
+
+   ORGANIZAÇÃO
+
+   1. Variáveis globais
+   2. Reset e base
+   3. Menu
+   4. Conteúdo principal
+   5. Hero
+   6. Área dos treinos
+   7. Sidebar
+   8. Cabeçalho do treino
+   9. Pesquisa e filtros
+   10. Grid dos exercícios
+   11. Cards dos exercícios
+   12. Imagens
+   13. Informações do exercício
+   14. Cardio
+   15. Adicionar exercício
+   16. Contacto
+   17. Footer
+   18. Calendário
+   19. Spotify
+   20. Animações
+   21. Responsividade
+
+   REGRA DO PROJETO:
+   Preferir Grid, Flexbox e fluxo normal.
+
+   Evitar position:absolute para estruturar a página.
+
+   Sobreposição só quando for realmente necessária,
+   como o botão "Ver" sobre a imagem.
+===================================================== */
+
+
+/* =====================================================
+   1. VARIÁVEIS GLOBAIS
+
+   ESTE É O PRIMEIRO LUGAR PARA PROCURAR QUANDO
+   QUISERES ALTERAR CORES, LARGURA OU ESPAÇAMENTOS.
 ===================================================== */
 
 :root {
+
+    /* ---------- CORES ---------- */
+
     --fundo: #0b0d10;
     --fundo-secundario: #111419;
+
     --fundo-card: #171a20;
     --fundo-card-hover: #1c2027;
 
@@ -13,29 +57,43 @@
     --vermelho-escuro: #9f1421;
 
     --branco: #ffffff;
+
     --texto: #e8e8e8;
     --texto-fraco: #969ba3;
     --texto-muito-fraco: #686d75;
 
     --linha: #292d35;
 
+
+    /* ---------- TIPOGRAFIA ---------- */
+
     --fonte: Arial, Helvetica, sans-serif;
 
+
+    /* ---------- LAYOUT ---------- */
+
+    /* Largura máxima do conteúdo principal */
     --largura: 1400px;
+
+    /* Espaço entre os cards */
     --gap-cards: 16px;
 
+    /* Arredondamento geral */
     --raio: 8px;
 }
 
 
 /* =====================================================
-   2. RESET
+   2. RESET E BASE
+
+   Remove margens automáticas do navegador e garante
+   que width/height incluam padding e border.
 ===================================================== */
 
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 
@@ -45,23 +103,35 @@ html {
 
 
 body {
+    margin: 0;
+
     background-color: var(--fundo);
+
     color: var(--texto);
 
     font-family: var(--fonte);
-    font-size: 16px;
-    line-height: 1.5;
+}
 
-    min-height: 100vh;
+
+img {
+    max-width: 100%;
+}
+
+
+button,
+input,
+select {
+    font: inherit;
 }
 
 
 /* =====================================================
-   3. CABEÇALHO
+   3. MENU PRINCIPAL
 ===================================================== */
 
 header {
     background-color: #08090b;
+
     border-bottom: 1px solid var(--linha);
 
     position: sticky;
@@ -72,12 +142,15 @@ header {
 
 
 #menu {
+    width: 100%;
     max-width: var(--largura);
-    margin: 0 auto;
 
     min-height: 76px;
 
-    padding: 0 24px;
+    margin: 0 auto;
+
+    padding-left: 38px;
+    padding-right: 38px;
 
     display: flex;
     align-items: center;
@@ -86,10 +159,13 @@ header {
 
 
 #menu h1 {
+    margin: 0;
+
     color: var(--branco);
 
     font-size: 24px;
     font-weight: 800;
+
     letter-spacing: 1px;
 }
 
@@ -100,6 +176,9 @@ header {
 
 
 #menu ul {
+    margin: 0;
+    padding: 0;
+
     list-style: none;
 
     display: flex;
@@ -117,7 +196,7 @@ header {
     font-size: 14px;
     font-weight: 600;
 
-    transition: 0.2s;
+    transition: color 0.2s ease;
 }
 
 
@@ -136,6 +215,7 @@ header {
 ===================================================== */
 
 main {
+    width: 100%;
     max-width: var(--largura);
 
     margin: 0 auto;
@@ -156,14 +236,18 @@ main p {
 
 /* =====================================================
    5. HERO
+
+   NOTA:
+   A imagem fica no fundo com um overlay escuro.
+
+   A faixa vermelha lateral é decorativa.
 ===================================================== */
 
 .hero {
-    min-height: 360px;
+    min-height: 300px;
 
-    margin-bottom: 50px;
-
-    padding: 70px 55px;
+    margin-bottom: 40px;
+    padding: 50px 55px;
 
     position: relative;
 
@@ -173,20 +257,25 @@ main p {
 
     overflow: hidden;
 
-    background:
+    background-image:
         linear-gradient(
             90deg,
             rgba(8, 10, 13, 0.98),
             rgba(8, 10, 13, 0.82),
             rgba(8, 10, 13, 0.45)
-        );
+        ),
+        url("../img/hero-gym.jpg");
+
+    background-size: cover;
+    background-position: center;
 
     border-bottom: 1px solid var(--linha);
 }
 
 
 /*
-   Faixa vermelha decorativa
+   SOBREPOSIÇÃO INTENCIONAL:
+   Apenas a faixa vermelha é colocada sobre o Hero.
 */
 
 .hero::before {
@@ -213,22 +302,24 @@ main p {
 
 
 .hero-pequeno {
+    margin: 0 0 10px;
+
     color: var(--vermelho) !important;
 
     font-size: 12px;
     font-weight: 800;
 
     letter-spacing: 2px;
-
-    margin-bottom: 10px;
 }
 
 
 .hero h2 {
+    margin: 0 0 18px;
+
+    color: var(--branco);
+
     font-size: 46px;
     line-height: 1.1;
-
-    margin-bottom: 18px;
 }
 
 
@@ -240,11 +331,16 @@ main p {
 .hero-conteudo > p:not(.hero-pequeno) {
     max-width: 550px;
 
-    font-size: 17px;
+    margin: 0 0 28px;
 
-    margin-bottom: 28px;
+    color: #c6c9ce;
+
+    font-size: 17px;
+    line-height: 1.5;
 }
 
+
+/* ---------- BOTÃO COMEÇAR ---------- */
 
 .botao-principal {
     display: inline-flex;
@@ -264,7 +360,9 @@ main p {
 
     border-radius: 5px;
 
-    transition: 0.2s;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 
@@ -275,21 +373,31 @@ main p {
 }
 
 
+/* ---------- FRASE MOTIVACIONAL ---------- */
+
+/*
+   Se quiseres alterar o tamanho da frase,
+   muda somente o font-size abaixo.
+
+   Mantivemos pequena para não dominar o Hero.
+*/
+
 .hero-frase {
-    position: relative;
-
-    z-index: 2;
-
-    max-width: 280px;
+    max-width: 240px;
 
     padding-right: 10px;
+
+    position: relative;
+    z-index: 2;
 }
 
 
 .hero-frase p {
+    margin: 0;
+
     color: var(--branco);
 
-    font-size: 21px;
+    font-size: 16px;
     font-weight: 700;
 
     line-height: 1.4;
@@ -314,12 +422,16 @@ main p {
 
 /* =====================================================
    6. ÁREA DOS TREINOS
+
+   Desktop:
+
+   SIDEBAR | CONTEÚDO
 ===================================================== */
 
 #treinos {
     display: grid;
 
-    grid-template-columns: 230px 1fr;
+    grid-template-columns: 230px minmax(0, 1fr);
 
     gap: 35px;
 
@@ -333,8 +445,20 @@ main p {
    7. SIDEBAR
 ===================================================== */
 
+/*
+   A sidebar acompanha a rolagem no desktop.
+
+   Não usamos isso para organizar os cards.
+   É apenas para manter o menu visível.
+*/
+
 #treinos aside {
     width: 100%;
+
+    position: sticky;
+    top: 90px;
+
+    align-self: start;
 }
 
 
@@ -367,6 +491,8 @@ main p {
 
 
 #diasTreino h2 {
+    margin: 0;
+
     color: var(--branco);
 
     font-size: 18px;
@@ -374,9 +500,10 @@ main p {
 
 
 #diasTreino ul {
-    list-style: none;
-
+    margin: 0;
     padding: 10px;
+
+    list-style: none;
 }
 
 
@@ -407,17 +534,19 @@ main p {
     font-size: 14px;
     font-weight: 600;
 
-    transition: 0.2s;
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
 }
 
 
 #diasTreino a span {
+    min-width: 22px;
+
     color: var(--texto-muito-fraco);
 
     font-size: 12px;
     font-weight: 800;
-
-    min-width: 22px;
 }
 
 
@@ -434,8 +563,9 @@ main p {
 
 
 /*
-   Quando futuramente o JS marcar
-   o treino selecionado.
+   Estado ativo.
+
+   Mantido caso o JavaScript utilize a classe "ativo".
 */
 
 #diasTreino a.ativo {
@@ -450,9 +580,7 @@ main p {
 }
 
 
-/* =====================================================
-   8. INFORMAÇÃO DA SIDEBAR
-===================================================== */
+/* ---------- CARD DE CONSISTÊNCIA ---------- */
 
 .sidebar-info {
     display: flex;
@@ -461,7 +589,6 @@ main p {
     gap: 12px;
 
     margin-top: 15px;
-
     padding: 16px;
 
     background-color: var(--fundo-secundario);
@@ -478,14 +605,21 @@ main p {
 
 
 .sidebar-info p {
-    font-size: 12px;
+    margin: 0;
 
+    color: var(--texto-fraco);
+
+    font-size: 12px;
     line-height: 1.4;
 }
 
 
 /* =====================================================
-   9. CABEÇALHO DO TREINO
+   8. CABEÇALHO DO TREINO
+
+   IMPORTANTE:
+   O título é BRANCO.
+   A descrição é CINZA.
 ===================================================== */
 
 #treinoAtual {
@@ -505,29 +639,36 @@ main p {
 
 
 .treino-label {
+    margin: 0 0 5px;
+
     color: var(--vermelho) !important;
 
     font-size: 11px;
-
     font-weight: 800;
 
     letter-spacing: 1.5px;
-
-    margin-bottom: 5px;
 }
 
 
 .cabecalho-treino h2 {
-    font-size: 27px;
+    margin: 0 0 6px;
 
-    margin-bottom: 6px;
+    color: var(--branco);
+
+    font-size: 27px;
+    line-height: 1.2;
 }
 
 
 .cabecalho-treino p {
-    font-size: 14px;
+    margin: 0;
 
     max-width: 650px;
+
+    color: var(--texto-fraco);
+
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 
@@ -550,13 +691,14 @@ main p {
 
 
 /* =====================================================
-   10. PESQUISA E FILTRO
+   9. PESQUISA E FILTRO
 ===================================================== */
 
 .ferramentas {
     display: grid;
 
-    grid-template-columns: 1fr 190px;
+    grid-template-columns:
+        minmax(0, 1fr) 190px;
 
     gap: 15px;
 
@@ -574,53 +716,93 @@ main p {
 #filtro label {
     display: block;
 
+    margin-bottom: 7px;
+
     color: var(--texto-fraco);
 
     font-size: 12px;
     font-weight: 600;
-
-    margin-bottom: 7px;
 }
 
+
+/* ---------- LINHA PESQUISA + NOVO ---------- */
 
 .pesquisa-topo {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 10px;
+
     margin-bottom: 6px;
 }
+
 
 .pesquisa-topo label {
     margin: 0;
 }
 
+
+/* ---------- BOTÃO + NOVO ---------- */
+
+/*
+   Botão secundário.
+
+   Branco para ficar visível no fundo escuro,
+   mas sem competir com o vermelho principal.
+*/
+
 .botao-novo {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 23px;
-    padding: 2px 8px;
+
+    min-height: 26px;
+
+    padding: 3px 9px;
+
     background: transparent;
-    border: 1px solid var(--linha);
+
+    border: 1px solid #d5d8dc;
     border-radius: 4px;
-    color: var(--texto-fraco);
+
+    color: var(--branco);
+
     text-decoration: none;
+
     font-size: 10px;
-    font-weight: 800;
+    font-weight: 700;
+
     line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
+
 .botao-novo:hover {
-    color: var(--branco);
+    background-color: rgba(226, 27, 45, 0.10);
+
     border-color: var(--vermelho);
-    background: rgba(229, 9, 20, 0.08);
+
+    color: var(--vermelho);
+
+    text-decoration: none;
+
+    transform: translateY(-1px);
 }
+
+
+/* ---------- INPUT E SELECT ---------- */
 
 #pesquisa input,
 #filtro select {
     width: 100%;
-
     height: 42px;
 
     padding: 0 13px;
@@ -628,10 +810,9 @@ main p {
     background-color: var(--fundo-secundario);
 
     border: 1px solid var(--linha);
-
     border-radius: 5px;
 
-    color: var(--texto);
+    color: var(--branco);
 
     font-family: var(--fonte);
     font-size: 14px;
@@ -652,367 +833,416 @@ main p {
 
 
 /* =====================================================
-   11. LISTA DE EXERCÍCIOS
-===================================================== */
+   10. GRID DOS EXERCÍCIOS
 
+   DESKTOP  → 3 cards
+   TABLET   → 2 cards
+   PEQUENO  → 1 card
 
+   NÃO usar auto-fit / auto-fill.
 
-
-/* =====================================================
-   GRID DAS CARDS
-   Desktop → 3 cards
-   Tablet → 2 cards
-   Telemóvel → 2 cards
-   Telemóvel muito pequeno → 1 card
-
-   IMPORTANTE:
-   Não usar auto-fit nem auto-fill aqui.
+   Assim o número de cards não muda de maneira
+   imprevisível quando a janela é redimensionada.
 ===================================================== */
 
 #listaExercicios {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: var(--gap-cards);
+
     align-items: start;
 }
 
 
 /* =====================================================
-   MENU LATERAL
-   Fica visível enquanto percorres os exercícios.
-===================================================== */
-
-#treinos aside {
-    position: sticky;
-    top: 90px;
-    align-self: start;
-}
-
-
-/* =====================================================
-   TABLET / TELEMÓVEL
-   Máximo de 2 cards por linha.
-===================================================== */
-
-@media (max-width: 900px) {
-
-    #listaExercicios {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    /* No telemóvel o menu deixa de acompanhar a página */
-    #treinos aside {
-        position: static;
-    }
-}
-
-
-/* =====================================================
-   TELEMÓVEL MUITO PEQUENO
-   Apenas 1 card por linha.
-===================================================== */
-
-@media (max-width: 379px) {
-
-    #listaExercicios {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* =====================================================
-   12. CARTÃO DE EXERCÍCIO
+   11. CARD DO EXERCÍCIO
 ===================================================== */
 
 #listaExercicios article {
     min-width: 0;
+
     padding: 13px;
-    background: var(--fundo-card);
+
+    background-color: var(--fundo-card);
+
     border: 1px solid var(--linha);
-    border-radius: 7px;
-    transition: 0.2s ease;
+    border-radius: 9px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
+
 
 #listaExercicios article:hover {
-    background-color: var(--fundo-card-hover);
-    border-color: #383d46;
     transform: translateY(-2px);
+
+    border-color: var(--vermelho);
+
+    background-color: var(--fundo-card-hover);
+
+    box-shadow:
+        0 0 0 1px rgba(226, 27, 45, 0.12);
 }
 
 
-/* Cabeçalho compacto */
+/* ---------- CABEÇALHO DO CARD ---------- */
 
-.cabecalho-cartao {
+/*
+   Nome à esquerda.
+   Número + Remover à direita.
+*/
+
+.cabecalho-cartao-final {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 6px 10px;
+
+    grid-template-columns:
+        minmax(0, 1fr) auto;
+
+    gap: 8px;
+
     align-items: start;
-    margin-bottom: 10px;
 }
 
-.titulo-cartao {
-    min-width: 0;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas:
-        "titulo titulo"
-        "grupo remover";
-    align-items: center;
-    gap: 2px 8px;
-}
 
-.titulo-cartao h3 {
-    grid-area: titulo;
+.cabecalho-cartao-final h3 {
     min-width: 0;
+
     margin: 0;
+
     color: var(--branco);
-    font-size: 15px;
+
+    /*
+       Antes estava maior.
+       Reduzimos um pouco para dar mais espaço.
+    */
+    font-size: 14px;
+
     line-height: 1.25;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.titulo-cartao h3 a {
+
+.nome-exercicio-link {
     color: inherit;
+
     text-decoration: none;
 }
 
-.titulo-cartao h3 a:hover {
+
+.nome-exercicio-link:hover {
     color: var(--vermelho);
 }
 
-.grupo-cartao {
-    grid-area: grupo;
-    margin: 0;
-    color: var(--texto-fraco);
-    font-size: 11px;
-    line-height: 1.2;
+
+/* ---------- NÚMERO + REMOVER ---------- */
+
+.numero-remover {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    gap: 4px;
 }
 
-.botao-apagar {
-    grid-area: remover;
-    justify-self: end;
-    padding: 2px 6px;
-    background: transparent;
-    border: 1px solid var(--linha);
-    border-radius: 4px;
-    color: var(--texto-muito-fraco);
-    cursor: pointer;
-    font-size: 9px;
-    line-height: 1.4;
-}
-
-.botao-apagar:hover {
-    color: var(--branco);
-    border-color: var(--vermelho);
-}
 
 .numero-exercicio {
     color: var(--texto-fraco);
-    font-size: 12px;
-    line-height: 1.2;
-    font-weight: 900;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+/*
+   Remover fica aproximadamente do tamanho
+   do texto "Costas", "Ombros", etc.
+*/
+
+.botao-remover {
+    min-height: 18px;
+
+    padding: 2px 5px;
+
+    border: 1px solid #3a3f48;
+    border-radius: 3px;
+
+    background-color: #12151a;
+
+    color: #aeb3bb;
+
+    font: 600 9px var(--fonte);
+
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+
+.botao-remover:hover {
+    color: var(--branco);
+
+    border-color: #666c75;
+
+    background-color: #1b1f25;
+}
+
+
+.grupo-cartao-final {
+    margin: 3px 0 8px;
+
+    color: var(--texto-fraco);
+
+    font-size: 11px;
 }
 
 
 /* =====================================================
-   13. IMAGEM DO EXERCÍCIO
+   12. IMAGEM DO EXERCÍCIO
+
+   A imagem ficou um pouco mais quadrada.
+
+   Pode cortar ligeiramente as laterais.
 ===================================================== */
 
-.imagem-exercicio {
+.imagem-exercicio-final {
     position: relative;
-    width: 100%;
-    height: 165px;
-    margin-bottom: 10px;
+
+    /*
+       ALTERAR AQUI se quiseres a imagem
+       mais alta ou mais baixa.
+    */
+    height: 195px;
+
+    border: 1px solid #252a31;
+    border-radius: 7px;
+
     overflow: hidden;
-    border-radius: 6px;
-    background: #0d0f12;
-    border: 1px solid var(--linha);
+
+    background-color: #0d0f13;
 }
 
-.imagem-exercicio img {
-    position: absolute;
-    inset: 0;
+
+.imagem-exercicio-final img {
+    display: block;
+
     width: 100%;
     height: 100%;
-    display: block;
+
+    /*
+       Cover preenche melhor a área.
+       Pode cortar um pouco as laterais.
+    */
     object-fit: cover;
-    transition: opacity 0.25s, transform 0.25s;
 }
 
-.imagem-exercicio:hover img {
-    transform: scale(1.025);
-}
 
-.imagem-exercicio > a:first-child {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
+/*
+   SOBREPOSIÇÃO INTENCIONAL:
+   Os frames precisam ficar sobrepostos porque
+   o JavaScript alterna entre eles.
+*/
 
-.botao-video {
+.frame-exercicio {
     position: absolute;
-    right: 7px;
-    bottom: 7px;
-    z-index: 5;
-    display: inline-flex !important;
-    width: auto !important;
-    height: auto !important;
-    align-items: center;
-    justify-content: center;
-    min-height: 0 !important;
-    padding: 5px 8px !important;
-    background: rgba(0, 0, 0, 0.82);
+
+    inset: 0;
+
+    opacity: 0;
+
+    transition: opacity 0.15s ease;
+}
+
+
+.frame-exercicio.visivel {
+    opacity: 1;
+}
+
+
+/*
+   SOBREPOSIÇÃO INTENCIONAL:
+   O botão "Ver" fica sobre a imagem.
+
+   É uma das poucas sobreposições do projeto.
+*/
+
+.botao-ver {
+    position: absolute;
+
+    right: 6px;
+    bottom: 6px;
+
+    z-index: 3;
+
+    /*
+       Botão menor para esconder menos da imagem.
+    */
+    padding: 4px 7px;
+
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 4px;
+
+    background-color: rgba(10, 12, 15, 0.88);
+
     color: var(--branco);
-    font-size: 10px !important;
-    font-weight: 800;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    line-height: 1;
+
     text-decoration: none;
 }
 
-.botao-video:hover {
-    background: var(--vermelho);
+
+.botao-ver:hover {
     border-color: var(--vermelho);
+
+    background-color: rgba(10, 12, 15, 0.95);
 }
 
 
 /* =====================================================
-   14. INFORMAÇÕES DO CARTÃO
+   13. INFORMAÇÕES DO EXERCÍCIO
+
+   Exemplo:
+
+   🔢 3 × 6-10   ⏱ 2-3 min   ⚖ 0 kg   ✓
+
+   IMPORTANTE:
+   Usamos FLEX aqui em vez de GRID porque precisamos
+   manter os elementos juntos numa única linha.
+
+   Isto corrige a sobreposição que estava acontecendo.
 ===================================================== */
 
-.info-exercicio {
-    width: 100%;
-    min-width: 0;
+.info-linha-final {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-top: 0;
-}
 
-.info-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 0;
-    background: transparent;
-    border-radius: 0;
+    gap: 7px;
+
+    width: 100%;
+
+    margin-top: 9px;
+
     color: var(--texto-fraco);
-    font-size: 11px;
-    line-height: 1;
+
+    font-size: 10px;
+
     white-space: nowrap;
 }
 
-.peso-cartao {
-    margin-left: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+
+/* Séries */
+
+.info-linha-final .series {
     min-width: 0;
+
+    color: var(--texto);
+
+    white-space: nowrap;
 }
 
-.pesoExercicio {
-    width: 50px;
-    height: 25px;
-    padding: 0 5px;
-    background: #101216;
+
+/* Descanso */
+
+.info-linha-final .resto {
+    flex-shrink: 0;
+
+    white-space: nowrap;
+}
+
+
+/* ---------- PESO ---------- */
+
+.peso-final {
+    display: flex;
+    align-items: center;
+
+    gap: 3px;
+
+    flex-shrink: 0;
+
+    white-space: nowrap;
+}
+
+
+.peso-final input {
+    width: 42px;
+    height: 23px;
+
+    padding: 0 4px;
+
     border: 1px solid var(--linha);
-    border-radius: 4px;
+    border-radius: 3px;
+
+    background-color: #0e1013;
+
     color: var(--branco);
-    font-size: 10px;
+
     text-align: center;
+
+    font-size: 9px;
+}
+
+
+.peso-final input:focus {
     outline: none;
-}
 
-.pesoExercicio:focus {
     border-color: var(--vermelho);
 }
 
-.unidade-peso {
-    color: var(--texto-muito-fraco);
-    font-size: 10px;
-}
 
-.botao-registar {
-    width: 25px;
-    height: 25px;
-    padding: 0;
-    display: inline-grid;
-    place-items: center;
-    background: transparent;
-    border: 1px solid var(--linha);
-    border-radius: 4px;
-    color: var(--texto-fraco);
-    cursor: pointer;
+.peso-ok {
+    flex-shrink: 0;
+
+    color: #8fd18f;
+
     font-size: 11px;
-}
-
-.botao-registar:hover {
-    color: var(--branco);
-    border-color: var(--vermelho);
 }
 
 
 /* =====================================================
-   15. ESTADO VAZIO
+   14. ESTADO VAZIO
 ===================================================== */
 
 .estado-vazio {
     grid-column: 1 / -1;
-    padding: 30px 20px;
+
+    padding: 30px;
+
     text-align: center;
-    color: var(--texto-fraco);
-    background: var(--fundo-card);
+
     border: 1px dashed var(--linha);
     border-radius: var(--raio);
+
+    color: var(--texto-fraco);
 }
 
 
 /* =====================================================
-   RESPONSIVO DOS CARTÕES
-===================================================== */
-
-
-
-
-
-
-/* =====================================================
-   16. BOTÕES ANTIGOS — mantidos por compatibilidade
-===================================================== */
-
-.botoes-exercicio {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-top: 15px;
-}
-
-.botoes-exercicio button,
-.botoes-exercicio a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 34px;
-    padding: 7px 8px;
-    border-radius: 4px;
-    font-family: var(--fonte);
-    font-size: 11px;
-    font-weight: 700;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* =====================================================
-   16. CARDIO
+   15. CARDIO
 ===================================================== */
 
 .cardio {
     display: flex;
-
     align-items: center;
 
     gap: 15px;
 
     margin-top: 20px;
-
     padding: 17px 20px;
 
     background-color: var(--fundo-secundario);
@@ -1029,12 +1259,11 @@ main p {
     width: 42px;
     height: 42px;
 
-    display: flex;
+    flex-shrink: 0;
 
+    display: flex;
     align-items: center;
     justify-content: center;
-
-    flex-shrink: 0;
 
     background-color: rgba(226, 27, 45, 0.12);
 
@@ -1045,15 +1274,19 @@ main p {
 
 
 .cardio h3 {
+    margin: 0 0 2px;
+
     color: var(--branco);
 
     font-size: 15px;
-
-    margin-bottom: 2px;
 }
 
 
 .cardio p {
+    margin: 0;
+
+    color: var(--texto-fraco);
+
     font-size: 12px;
 }
 
@@ -1075,13 +1308,12 @@ main p {
 
 
 /* =====================================================
-   17. ADICIONAR EXERCÍCIO
+   16. ADICIONAR EXERCÍCIO
 ===================================================== */
 
 #adicionar {
-    padding: 25px;
-
     margin-bottom: 45px;
+    padding: 16px 18px;
 
     background-color: var(--fundo-secundario);
 
@@ -1093,160 +1325,162 @@ main p {
 
 .adicionar-cabecalho {
     display: flex;
+    align-items: baseline;
+    justify-content: space-between;
 
+    gap: 12px;
+
+    margin-bottom: 14px;
+}
+
+
+.adicionar-cabecalho > div:first-child {
+    display: flex;
     align-items: center;
 
-    gap: 14px;
-
-    margin-bottom: 22px;
+    gap: 9px;
 }
 
 
 .adicionar-icone {
-    width: 42px;
-    height: 42px;
+    color: var(--vermelho);
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    flex-shrink: 0;
-
-    background-color: var(--vermelho);
-
-    color: var(--branco);
-
-    border-radius: 5px;
-
-    font-size: 24px;
+    font-size: 18px;
 }
 
 
 .adicionar-cabecalho h2 {
-    font-size: 20px;
+    margin: 0;
 
-    margin-bottom: 2px;
+    color: var(--branco);
+
+    font-size: 13px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
 }
 
 
 .adicionar-cabecalho p {
-    font-size: 12px;
+    display: none;
 }
 
+
+.adicionar-ajuda {
+    color: var(--texto-muito-fraco);
+
+    font-size: 10px;
+}
+
+
+/* ---------- FORMULÁRIO ---------- */
 
 #formularioExercicio {
     display: grid;
 
-    grid-template-columns: 2fr 1.3fr 100px 1.2fr auto;
+    grid-template-columns:
+        minmax(180px, 2fr)
+        minmax(140px, 1.3fr)
+        80px
+        minmax(120px, 1.2fr)
+        130px
+        auto;
 
     align-items: end;
 
-    gap: 12px;
+    gap: 10px;
 }
 
 
-.campo {
+#formularioExercicio .campo {
     min-width: 0;
+
+    display: grid;
+
+    gap: 6px;
 }
 
 
-.campo label {
-    display: block;
-
+#formularioExercicio .campo label {
     color: var(--texto-fraco);
 
     font-size: 11px;
-    font-weight: 600;
-
-    margin-bottom: 6px;
+    font-weight: 800;
 }
 
 
-.campo input,
-.campo select {
+#formularioExercicio .campo input,
+#formularioExercicio .campo select {
     width: 100%;
+    min-height: 40px;
 
-    height: 40px;
-
-    padding: 0 11px;
-
-    background-color: #0e1013;
+    padding: 0 10px;
 
     border: 1px solid var(--linha);
-
     border-radius: 5px;
+
+    background-color: #0e1013;
 
     color: var(--texto);
 
     font-family: var(--fonte);
-    font-size: 13px;
-
-    outline: none;
 }
 
 
-.campo input:focus,
-.campo select:focus {
+#formularioExercicio .campo input:focus,
+#formularioExercicio .campo select:focus {
+    outline: none;
+
     border-color: var(--vermelho);
 }
 
 
-.campo-checkbox {
-    display: flex;
+#formularioExercicio .campo-checkbox {
+    min-height: 40px;
 
+    display: flex;
     align-items: center;
 
     gap: 6px;
-
-    height: 40px;
 
     white-space: nowrap;
 }
 
 
-.campo-checkbox input {
-    accent-color: var(--vermelho);
-
+#formularioExercicio .campo-checkbox input {
     width: 15px;
     height: 15px;
+
+    accent-color: var(--vermelho);
 }
 
 
-.campo-checkbox label {
-    color: var(--texto-fraco);
+#formularioExercicio .botao-adicionar {
+    min-height: 38px;
 
-    font-size: 11px;
-}
+    padding: 0 15px;
 
-
-.botao-adicionar {
-    height: 40px;
-
-    padding: 0 18px;
+    border: 1px solid var(--vermelho);
+    border-radius: 5px;
 
     background-color: var(--vermelho);
 
-    border: 1px solid var(--vermelho);
-
-    border-radius: 5px;
-
     color: var(--branco);
 
-    font-family: var(--fonte);
-
-    font-size: 12px;
-    font-weight: 700;
+    font: 700 12px var(--fonte);
 
     cursor: pointer;
 
     white-space: nowrap;
 
-    transition: 0.2s;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
 }
 
 
-.botao-adicionar:hover {
+#formularioExercicio .botao-adicionar:hover {
     background-color: var(--vermelho-hover);
 
     border-color: var(--vermelho-hover);
@@ -1254,7 +1488,7 @@ main p {
 
 
 /* =====================================================
-   18. CONTACTO
+   17. CONTACTO
 ===================================================== */
 
 #contacto {
@@ -1269,13 +1503,19 @@ main p {
 
 
 #contacto h2 {
-    font-size: 20px;
+    margin: 0 0 6px;
 
-    margin-bottom: 6px;
+    color: var(--branco);
+
+    font-size: 20px;
 }
 
 
 #contacto p {
+    margin: 0;
+
+    color: var(--texto-fraco);
+
     font-size: 13px;
 }
 
@@ -1295,22 +1535,21 @@ main p {
 
 
 /* =====================================================
-   19. RODAPÉ
+   18. FOOTER
 ===================================================== */
 
 footer {
-    background-color: #08090b;
-
-    border-top: 1px solid var(--linha);
-
-    padding: 25px 24px;
-
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
     gap: 20px;
+
+    padding: 25px 24px;
+
+    background-color: #08090b;
+
+    border-top: 1px solid var(--linha);
 }
 
 
@@ -1329,42 +1568,411 @@ footer strong span {
 
 
 footer p {
+    margin: 0;
+
     color: var(--texto-muito-fraco);
 
     font-size: 11px;
 }
 
 
-footer > p {
-    margin: 0;
+/* =====================================================
+   19. CALENDÁRIO
+===================================================== */
+
+#calendarioDialog {
+    width: min(420px, calc(100vw - 30px));
+
+    padding: 0;
+
+    border: 1px solid var(--linha);
+    border-radius: 10px;
+
+    background-color: var(--fundo-secundario);
+
+    color: var(--texto);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+
+#calendarioDialog::backdrop {
+    background: rgba(0, 0, 0, 0.72);
+}
+
+
+.calendario-conteudo {
+    padding: 20px;
+}
+
+
+.calendario-topo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+
+.calendario-kicker {
+    color: var(--vermelho);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+}
+
+
+.calendario-topo h2 {
+    margin: 3px 0 0;
+
+    color: var(--branco);
+
+    font-size: 19px;
+}
+
+
+.calendario-fechar,
+.calendario-navegacao button {
+    border: 1px solid var(--linha);
+    border-radius: 5px;
+
+    background-color: #0e1013;
+
+    color: var(--texto);
+
+    cursor: pointer;
+}
+
+
+.calendario-fechar {
+    width: 30px;
+    height: 30px;
+
+    font-size: 22px;
+    line-height: 1;
+}
+
+
+.calendario-fechar:hover,
+.calendario-navegacao button:hover {
+    border-color: var(--vermelho);
+
+    color: var(--vermelho);
+}
+
+
+.calendario-navegacao {
+    display: grid;
+
+    grid-template-columns:
+        35px 1fr 35px;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 20px 0 12px;
+}
+
+
+.calendario-navegacao button {
+    width: 35px;
+    height: 35px;
+
+    font-size: 22px;
+}
+
+
+.calendario-navegacao strong {
+    color: var(--branco);
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+
+.calendario-semana,
+.calendario-dias {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 5px;
+}
+
+
+.calendario-semana span {
+    padding-bottom: 4px;
+
+    color: var(--texto-muito-fraco);
+
+    text-align: center;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+
+.dia-vazio {
+    min-height: 36px;
+}
+
+
+.dia-calendario {
+    min-height: 36px;
+
+    border: 1px solid transparent;
+    border-radius: 5px;
+
+    background-color: transparent;
+
+    color: var(--texto);
+
+    cursor: pointer;
+
+    font-size: 12px;
+}
+
+
+.dia-calendario:hover,
+.dia-calendario.selecionado {
+    border-color: var(--vermelho);
+
+    background-color: rgba(226, 27, 45, 0.12);
+
+    color: var(--vermelho);
+}
+
+
+.dia-calendario.hoje {
+    background-color: var(--vermelho);
+
+    color: var(--branco);
+
+    font-weight: 800;
+}
+
+
+.dia-calendario.hoje:hover,
+.dia-calendario.hoje.selecionado {
+    background-color: var(--vermelho-hover);
+
+    color: var(--branco);
+}
+
+
+.calendario-selecionada {
+    margin-top: 14px;
+    padding-top: 12px;
+
+    border-top: 1px solid var(--linha);
+
+    font-size: 11px;
+
+    text-align: center;
 }
 
 
 /* =====================================================
-   20. RESPONSIVO
+   20. SPOTIFY FLUTUANTE
+
+   position: fixed é intencional:
+   o botão precisa acompanhar o ecrã.
 ===================================================== */
 
-@media (max-width: 1050px) {
+.spotify-flutuante {
+    position: fixed;
 
-    
+    right: 18px;
+    bottom: 18px;
 
-
-    #formularioExercicio {
-        grid-template-columns: 1fr 1fr;
-    }
-
-
-    .botao-adicionar {
-        width: 100%;
-    }
-
+    z-index: 200;
 }
 
 
-@media (max-width: 800px) {
+.spotify-botao {
+    width: 48px;
+    height: 48px;
+
+    border: 1px solid var(--vermelho);
+    border-radius: 50%;
+
+    background-color: #111419;
+
+    color: var(--branco);
+
+    cursor: pointer;
+
+    font-size: 21px;
+
+    box-shadow:
+        0 6px 22px rgba(0, 0, 0, 0.35);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.spotify-botao:hover {
+    transform: scale(1.06);
+
+    background-color: var(--vermelho);
+}
+
+
+.spotify-menu {
+    position: absolute;
+
+    right: 0;
+    bottom: 58px;
+
+    width: 190px;
+
+    padding: 12px;
+
+    display: none;
+    flex-direction: column;
+
+    gap: 7px;
+
+    background-color: #111419;
+
+    border: 1px solid var(--linha);
+    border-radius: 8px;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.5);
+}
+
+
+.spotify-flutuante.aberto .spotify-menu {
+    display: flex;
+}
+
+
+.spotify-menu strong {
+    padding-bottom: 4px;
+
+    color: var(--branco);
+
+    font-size: 12px;
+
+    border-bottom: 1px solid var(--linha);
+}
+
+
+.spotify-menu a {
+    padding: 6px 5px;
+
+    color: var(--texto-fraco);
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    border-radius: 4px;
+}
+
+
+.spotify-menu a:hover {
+    color: var(--vermelho);
+
+    background-color: rgba(226, 27, 45, 0.08);
+}
+
+
+/* =====================================================
+   21. ANIMAÇÃO DA CONSISTÊNCIA
+===================================================== */
+
+@keyframes corConsistencia {
+
+    0%,
+    100% {
+        color: #7ee787;
+
+        filter:
+            drop-shadow(
+                0 0 2px rgba(126, 231, 135, 0.15)
+            );
+    }
+
+    33% {
+        color: #60a5fa;
+
+        filter:
+            drop-shadow(
+                0 0 2px rgba(96, 165, 250, 0.15)
+            );
+    }
+
+    66% {
+        color: #c084fc;
+
+        filter:
+            drop-shadow(
+                0 0 2px rgba(192, 132, 252, 0.15)
+            );
+    }
+}
+
+
+/* =====================================================
+   22. RESPONSIVIDADE
+
+   DESKTOP
+   3 cards
+
+   TABLET
+   2 cards
+
+   MUITO PEQUENO
+   1 card
+===================================================== */
+
+
+/* =====================================================
+   ATÉ 900px
+
+   3 → 2 cards
+===================================================== */
+
+@media (max-width: 900px) {
+
+    #listaExercicios {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    #formularioExercicio {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    #formularioExercicio .campo-checkbox {
+        grid-column: 1;
+    }
+
+
+    #formularioExercicio .botao-adicionar {
+        grid-column: 2;
+
+        width: 100%;
+    }
+
 
     #menu {
-        padding: 0 16px;
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
 
@@ -1374,28 +1982,31 @@ footer > p {
 
 
     #treinos {
-        grid-template-columns: 180px 1fr;
+        grid-template-columns:
+            180px minmax(0, 1fr);
 
         gap: 20px;
     }
 
 
     .hero {
-        padding: 50px 35px;
-    }
-
-
-    .hero h2 {
-        font-size: 36px;
+        padding: 42px 35px;
     }
 
 
     .hero-frase {
         display: none;
     }
-
 }
 
+
+/* =====================================================
+   ATÉ 650px
+
+   Sidebar passa para cima.
+
+   Cards continuam em 2 colunas.
+===================================================== */
 
 @media (max-width: 650px) {
 
@@ -1416,6 +2027,15 @@ footer > p {
     }
 
 
+    /*
+       No telemóvel a sidebar deixa de ser sticky.
+    */
+
+    #treinos aside {
+        position: static;
+    }
+
+
     .ferramentas {
         grid-template-columns: 1fr;
     }
@@ -1431,8 +2051,48 @@ footer > p {
     }
 
 
+    #listaExercicios {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+
+    /*
+       Imagem um pouco menor em ecrãs pequenos.
+    */
+
+    .imagem-exercicio-final {
+        height: 175px;
+    }
+
+
+    .cabecalho-cartao-final h3 {
+        font-size: 13px;
+    }
+
+
+    .info-linha-final {
+        gap: 5px;
+
+        font-size: 9px;
+    }
+
+
+    .peso-final input {
+        width: 38px;
+    }
+
+
     #formularioExercicio {
         grid-template-columns: 1fr;
+    }
+
+
+    #formularioExercicio .campo-checkbox,
+    #formularioExercicio .botao-adicionar {
+        grid-column: auto;
     }
 
 
@@ -1442,14 +2102,19 @@ footer > p {
 
 
     .hero {
-        min-height: 300px;
+        min-height: 275px;
 
-        padding: 45px 25px;
+        padding: 38px 25px;
     }
 
 
     .hero h2 {
-        font-size: 32px;
+        font-size: 30px;
+    }
+
+
+    .adicionar-ajuda {
+        display: none;
     }
 
 
@@ -1459,721 +2124,6 @@ footer > p {
         text-align: center;
     }
 
-}
-/* =====================================================
-   15. AJUSTES FINAIS DOS CARTÕES E FORMULÁRIO
-===================================================== */
-
-
-
-.card-exercicio {
-    position: relative;
-    min-width: 0;
-    padding: 15px;
-    background: var(--fundo-card);
-    border: 1px solid var(--linha);
-    border-radius: var(--raio);
-}
-
-.card-exercicio:hover {
-    background: var(--fundo-card-hover);
-    border-color: #3a3f49;
-}
-
-.cabecalho-cartao {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 10px;
-    align-items: start;
-    margin-bottom: 10px;
-}
-
-.titulo-cartao h3 {
-    color: var(--branco);
-    font-size: 15px;
-    line-height: 1.25;
-}
-
-.titulo-cartao h3 a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.titulo-cartao h3 a:hover {
-    color: var(--vermelho);
-}
-
-.grupo-cartao {
-    color: var(--texto-fraco);
-    font-size: 11px;
-    margin-top: 3px;
-}
-
-.numero-exercicio {
-    color: var(--texto-muito-fraco);
-    font-size: 12px;
-    font-weight: 900;
-}
-
-.botao-apagar {
-    margin-top: 7px;
-    padding: 3px 7px;
-    background: transparent;
-    border: 1px solid var(--linha);
-    border-radius: 4px;
-    color: var(--texto-fraco);
-    cursor: pointer;
-    font-size: 10px;
-}
-
-.botao-apagar:hover {
-    color: var(--branco);
-    border-color: var(--vermelho);
-}
-
-.imagem-exercicio {
-    position: relative;
-    height: 170px;
-    margin-bottom: 11px;
-    overflow: hidden;
-    border-radius: 6px;
-    background: #0d0f12;
-    border: 1px solid var(--linha);
-}
-
-.imagem-exercicio > a:first-child {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.imagem-exercicio .frame-exercicio {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.2s, transform 0.25s;
-}
-
-.imagem-exercicio .frame-1 {
-    opacity: 1;
-    z-index: 1;
-}
-
-.imagem-exercicio .frame-2 {
-    opacity: 0;
-    z-index: 2;
-}
-
-.imagem-exercicio:hover .frame-exercicio {
-    transform: scale(1.03);
-}
-
-.botao-video {
-    position: absolute;
-    right: 7px;
-    bottom: 7px;
-    z-index: 5;
-    padding: 5px 8px;
-    border: 1px solid rgba(255,255,255,.15);
-    border-radius: 4px;
-    background: rgba(0,0,0,.82);
-    color: var(--branco);
-    text-decoration: none;
-    font-size: 10px;
-    font-weight: 800;
-}
-
-.botao-video:hover {
-    background: var(--vermelho);
-    border-color: var(--vermelho);
-}
-
-.info-exercicio {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px 12px;
-}
-
-.info-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--texto-fraco);
-    font-size: 11px;
-    white-space: nowrap;
-}
-
-.peso-cartao {
-    margin-left: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.pesoExercicio {
-    width: 52px;
-    height: 27px;
-    padding: 0 5px;
-    background: #101216;
-    border: 1px solid var(--linha);
-    border-radius: 4px;
-    color: var(--branco);
-    font-size: 11px;
-    text-align: center;
-}
-
-.pesoExercicio:focus {
-    outline: none;
-    border-color: var(--vermelho);
-}
-
-.peso-cartao .botao-registar {
-    width: 27px;
-    height: 27px;
-    padding: 0;
-    border: 1px solid var(--linha);
-    border-radius: 4px;
-    background: #101216;
-    color: var(--texto);
-    cursor: pointer;
-}
-
-.peso-cartao .botao-registar:hover {
-    color: var(--branco);
-    border-color: var(--vermelho);
-}
-
-#formularioExercicio {
-    display: grid;
-    grid-template-columns: 2fr 1.3fr 90px 1.2fr 1.2fr auto;
-    align-items: end;
-    gap: 10px;
-}
-
-#formularioExercicio .campo {
-    display: grid;
-    gap: 6px;
-}
-
-#formularioExercicio .campo label {
-    color: var(--texto-fraco);
-    font-size: 11px;
-    font-weight: 800;
-}
-
-#formularioExercicio .campo input,
-#formularioExercicio .campo select {
-    width: 100%;
-    min-height: 40px;
-    padding: 0 10px;
-    background: var(--fundo);
-    border: 1px solid var(--linha);
-    border-radius: 5px;
-    color: var(--texto);
-}
-
-#formularioExercicio .campo input:focus,
-#formularioExercicio .campo select:focus {
-    outline: none;
-    border-color: var(--vermelho);
-}
-
-#formularioExercicio .campo-checkbox {
-    min-height: 40px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-#formularioExercicio .botao-adicionar {
-    min-height: 40px;
-    white-space: nowrap;
-}
-
-@media (max-width: 1100px) {
-    #formularioExercicio {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    #formularioExercicio .botao-adicionar {
-        width: 100%;
-    }
-}
-
-
-
-@media (max-width: 650px) {
-    #formularioExercicio {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    #formularioExercicio .campo:first-child {
-        grid-column: 1 / -1;
-    }
-
-    #formularioExercicio .botao-adicionar {
-        grid-column: 1 / -1;
-    }
-}
-
-@media (max-width: 430px) {
-    #formularioExercicio {
-        grid-template-columns: 1fr;
-    }
-
-    #formularioExercicio .campo:first-child,
-    #formularioExercicio .botao-adicionar {
-        grid-column: auto;
-    }
-}
-
-
-/* =====================================================
-   AJUSTES FINAIS — VERSÃO CONSOLIDADA
-   Esta é a área principal para alterar o visual das cards.
-   Se quiseres procurar onde mudar algo, começa aqui.
-===================================================== */
-.hero { background-image: linear-gradient(rgba(5,7,10,.68), rgba(5,7,10,.78)), url("../img/hero-gym.jpg"); background-size: cover; background-position: center; }
-.hero-frase p { transition: opacity .45s ease, transform .45s ease; }
-
-
-/* --- GRID DAS CARDS ---
-   Desktop: o navegador cria 3 ou 4 cards conforme o espaço.
-   Mobile: a regra abaixo permite 2, 3 ou 4 quando couberem.
-   Para aumentar/diminuir a largura mínima das cards, altera o minmax().
-*/
-
-#listaExercicios article { position:relative; min-width:0; background:var(--fundo-card); border:1px solid var(--linha); border-radius:10px; padding:14px; overflow:hidden; transition:transform .2s ease,border-color .2s ease,background .2s ease; }
-#listaExercicios article:hover { transform:translateY(-2px); border-color:#3a3f48; background:var(--fundo-card-hover); }
-.cabecalho-cartao-final { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:start; }
-.cabecalho-cartao-final h3 { margin:0; min-width:0; font-size:17px; line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--branco); }
-.nome-exercicio-link { color:inherit; text-decoration:none; }
-.nome-exercicio-link:hover { color:var(--vermelho); }
-.numero-remover { display:flex; flex-direction:column; align-items:flex-end; gap:5px; }
-.numero-exercicio { font-size:11px; font-weight:800; color:var(--texto-fraco); letter-spacing:.08em; }
-.botao-remover { border:1px solid #3a3f48; background:#12151a; color:#aeb3bb; border-radius:5px; padding:4px 8px; font:600 10px var(--fonte); cursor:pointer; }
-.botao-remover:hover { color:var(--branco); border-color:var(--vermelho); }
-.grupo-cartao-final { margin:4px 0 10px; color:var(--texto-fraco); font-size:11px; }
-.imagem-exercicio-final { position:relative; height:190px; border-radius:7px; overflow:hidden; background:#0d0f13; border:1px solid #252a31; }
-.imagem-exercicio-final img { width:100%; height:100%; object-fit:contain; display:block; }
-.frame-exercicio { position:absolute; inset:0; opacity:0; transition:opacity .15s ease; }
-.frame-exercicio.visivel { opacity:1; }
-.botao-ver { position:absolute; right:8px; bottom:8px; z-index:3; background:rgba(10,12,15,.88); border:1px solid rgba(255,255,255,.18); color:#fff; padding:6px 9px; border-radius:5px; font-size:10px; font-weight:700; text-decoration:none; }
-.botao-ver:hover { border-color:var(--vermelho); color:#fff; }
-/* --- LINHA DE INFORMAÇÕES ---
-   Séries, descanso e peso ficam na mesma linha.
-   A parte central pode encolher sem sobrepor os outros elementos.
-*/
-.info-linha-final {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
-    gap: 8px;
-    align-items: center;
-    margin-top: 11px;
-    font-size: 11px;
-    color: var(--texto-fraco);
-    min-width: 0;
-}
-
-.info-linha-final .series {
-    color: var(--texto);
-    white-space: nowrap;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.info-linha-final .resto {
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-.peso-final {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-.peso-final input {
-    width: 58px;
-    height: 27px;
-    padding: 0 6px;
-    background: #0e1013;
-    border: 1px solid var(--linha);
-    border-radius: 4px;
-    color: #fff;
-    text-align: center;
-    font-size: 11px;
-}
-
-.peso-final input:focus {
-    outline: none;
-    border-color: var(--vermelho);
-}
-
-.peso-ok {
-    color: #8fd18f;
-    font-size: 12px;
-}
-.estado-vazio { grid-column:1/-1; padding:30px; text-align:center; border:1px dashed var(--linha); border-radius:8px; color:var(--texto-fraco); }
-
-#adicionar { padding:16px 18px; }
-.adicionar-cabecalho { justify-content:space-between; margin-bottom:14px; }
-.adicionar-cabecalho > div:first-child { display:flex; align-items:center; gap:9px; }
-.adicionar-icone { width:auto; height:auto; background:none; color:var(--vermelho); font-size:18px; }
-.adicionar-cabecalho h2 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; margin:0; }
-.adicionar-cabecalho p { display:none; }
-#formularioExercicio { grid-template-columns:minmax(180px,2fr) minmax(140px,1.3fr) 80px minmax(120px,1.2fr) 130px auto; gap:10px; }
-.botao-adicionar { height:38px; padding:0 15px; }
-
-@media (max-width: 900px) {
-  #formularioExercicio { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .campo-checkbox { grid-column:1; }
-  .botao-adicionar { grid-column:2; }
-}
-/* =====================================================
-   RESPONSIVIDADE — TELEMÓVEL
-   O grid adapta-se sozinho: 2, 3 ou 4 cards quando houver espaço.
-   Não existe mais uma regra a forçar 1 card abaixo de 390px.
-===================================================== */
-@media (max-width: 650px) {
-  
-  .imagem-exercicio-final { height:175px; }
-  .info-linha-final { grid-template-columns:minmax(0,1fr) auto auto; gap:6px; }
-  .peso-final { grid-column:auto; }
-  #formularioExercicio { grid-template-columns:1fr; }
-  .campo-checkbox,.botao-adicionar { grid-column:auto; }
-}
-
-
-/* =====================================================
-   AJUSTES V3 — INTERFACE E FUNCIONALIDADES
-===================================================== */
-
-.hero {
-    min-height: 300px;
-    margin-bottom: 42px;
-    padding: 48px 52px;
-}
-
-.hero-conteudo {
-    max-width: 560px;
-}
-
-.hero h1 {
-    font-size: 38px;
-    line-height: 1.1;
-    margin-bottom: 12px;
-}
-
-.hero-conteudo > p:not(.hero-pequeno) {
-    max-width: 500px;
-    font-size: 15px;
-    margin-bottom: 22px;
-}
-
-.hero-frase {
-    max-width: 250px;
-}
-
-.hero-frase p {
-    font-size: 19px;
-}
-
-#diasTreino a {
-    border-left: 3px solid transparent;
-    padding-left: 10px;
-}
-
-#diasTreino a:hover {
-    background-color: rgba(226, 27, 45, 0.08);
-    color: var(--vermelho);
-    border-left-color: var(--vermelho);
-}
-
-#diasTreino a:hover span {
-    color: var(--vermelho);
-}
-
-#diasTreino a.ativo {
-    background-color: rgba(226, 27, 45, 0.12);
-    color: var(--vermelho);
-    border-left-color: var(--vermelho);
-}
-
-#diasTreino a.ativo span {
-    color: var(--vermelho);
-}
-
-.sidebar-info {
-    transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
-}
-
-.sidebar-info:hover {
-    border-color: var(--vermelho);
-    transform: translateY(-2px);
-    box-shadow: 0 0 18px rgba(226,27,45,.10);
-}
-
-.sidebar-info span {
-    animation: pulsoConsistencia 2.8s ease-in-out infinite;
-}
-
-@keyframes pulsoConsistencia {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.12); }
-}
-
-#listaExercicios article:hover {
-    border-color: var(--vermelho);
-    box-shadow: 0 0 0 1px rgba(226,27,45,.12);
-}
-
-.botao-remover:hover {
-    color: var(--vermelho);
-    border-color: var(--vermelho);
-    background: rgba(226,27,45,.06);
-}
-
-#adicionar {
-    padding: 16px 18px;
-}
-
-.adicionar-cabecalho {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
-}
-
-.adicionar-cabecalho h2 {
-    margin: 0;
-}
-
-.adicionar-ajuda {
-    color: var(--texto-muito-fraco);
-    font-size: 10px;
-}
-
-#calendarioDialog {
-    width: min(420px, calc(100vw - 30px));
-    padding: 0;
-    border: 1px solid var(--linha);
-    border-radius: 10px;
-    background: var(--fundo-secundario);
-    color: var(--texto);
-    box-shadow: 0 20px 60px rgba(0,0,0,.55);
-}
-
-#calendarioDialog::backdrop {
-    background: rgba(0,0,0,.72);
-}
-
-.calendario-conteudo {
-    padding: 20px;
-}
-
-.calendario-topo {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 15px;
-}
-
-.calendario-kicker {
-    color: var(--vermelho);
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: .15em;
-}
-
-.calendario-topo h2 {
-    margin-top: 3px;
-    font-size: 19px;
-}
-
-.calendario-fechar,
-.calendario-navegacao button {
-    border: 1px solid var(--linha);
-    background: #0e1013;
-    color: var(--texto);
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.calendario-fechar {
-    width: 30px;
-    height: 30px;
-    font-size: 22px;
-    line-height: 1;
-}
-
-.calendario-fechar:hover,
-.calendario-navegacao button:hover {
-    border-color: var(--vermelho);
-    color: var(--vermelho);
-}
-
-.calendario-navegacao {
-    display: grid;
-    grid-template-columns: 35px 1fr 35px;
-    align-items: center;
-    gap: 10px;
-    margin: 20px 0 12px;
-}
-
-.calendario-navegacao button {
-    width: 35px;
-    height: 35px;
-    font-size: 22px;
-}
-
-.calendario-navegacao strong {
-    text-align: center;
-    color: var(--branco);
-    font-size: 14px;
-}
-
-.calendario-semana,
-.calendario-dias {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-}
-
-.calendario-semana span {
-    text-align: center;
-    color: var(--texto-muito-fraco);
-    font-size: 9px;
-    font-weight: 800;
-    padding-bottom: 4px;
-}
-
-.dia-vazio {
-    min-height: 36px;
-}
-
-.dia-calendario {
-    min-height: 36px;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    background: transparent;
-    color: var(--texto);
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.dia-calendario:hover,
-.dia-calendario.selecionado {
-    border-color: var(--vermelho);
-    background: rgba(226,27,45,.12);
-    color: var(--vermelho);
-}
-
-.dia-calendario.hoje {
-    background: var(--vermelho);
-    color: var(--branco);
-    font-weight: 800;
-}
-
-.dia-calendario.hoje:hover,
-.dia-calendario.hoje.selecionado {
-    background: var(--vermelho-hover);
-    color: var(--branco);
-}
-
-.calendario-selecionada {
-    margin-top: 14px;
-    padding-top: 12px;
-    border-top: 1px solid var(--linha);
-    font-size: 11px;
-    text-align: center;
-}
-
-.spotify-flutuante {
-    position: fixed;
-    right: 18px;
-    bottom: 18px;
-    z-index: 200;
-}
-
-.spotify-botao {
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--vermelho);
-    border-radius: 50%;
-    background: #111419;
-    color: var(--branco);
-    cursor: pointer;
-    font-size: 21px;
-    box-shadow: 0 6px 22px rgba(0,0,0,.35);
-    transition: transform .2s ease, background .2s ease;
-}
-
-.spotify-botao:hover {
-    transform: scale(1.06);
-    background: var(--vermelho);
-}
-
-.spotify-menu {
-    position: absolute;
-    right: 0;
-    bottom: 58px;
-    width: 190px;
-    padding: 12px;
-    display: none;
-    flex-direction: column;
-    gap: 7px;
-    background: #111419;
-    border: 1px solid var(--linha);
-    border-radius: 8px;
-    box-shadow: 0 12px 35px rgba(0,0,0,.5);
-}
-
-.spotify-flutuante.aberto .spotify-menu {
-    display: flex;
-}
-
-.spotify-menu strong {
-    color: var(--branco);
-    font-size: 12px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid var(--linha);
-}
-
-.spotify-menu a {
-    color: var(--texto-fraco);
-    text-decoration: none;
-    font-size: 11px;
-    padding: 6px 5px;
-    border-radius: 4px;
-}
-
-.spotify-menu a:hover {
-    color: var(--vermelho);
-    background: rgba(226,27,45,.08);
-}
-
-@media (max-width: 650px) {
-    .hero {
-        min-height: 275px;
-        padding: 38px 25px;
-    }
-
-    .hero h1 {
-        font-size: 30px;
-    }
-
-    .adicionar-ajuda {
-        display: none;
-    }
 
     .spotify-flutuante {
         right: 14px;
@@ -2183,62 +2133,32 @@ footer > p {
 
 
 /* =====================================================
-   V4 — MENU FINAL
-===================================================== */
-#diasTreino ul {
-    padding: 8px 10px;
-}
-#diasTreino li {
-    margin-bottom: 0;
-}
-#diasTreino a {
-    position: relative;
-    background: transparent;
-    border-left: 3px solid transparent;
-    border-radius: 4px;
-    padding: 11px 12px;
-    color: var(--texto-fraco);
-    transition: color .22s ease, border-color .22s ease, box-shadow .22s ease, background-color .22s ease;
-}
-#diasTreino a:hover {
-    background: rgba(255,255,255,.025);
-    color: var(--branco);
-    border-left-color: rgba(226,27,45,.75);
-    box-shadow: 0 0 14px rgba(226,27,45,.08);
-}
-#diasTreino a:hover span { color: var(--vermelho); }
-#diasTreino a.ativo {
-    background: transparent;
-    color: var(--branco);
-    border-left-color: var(--vermelho);
-    box-shadow: 0 0 10px rgba(226,27,45,.08);
-}
-#diasTreino a.ativo span { color: var(--vermelho); }
-#diasTreino li + li a {
-    border-top: 1px solid rgba(255,255,255,.045);
-}
-.sidebar-info span {
-    animation: corConsistencia 2.6s ease-in-out infinite;
-}
-@keyframes corConsistencia {
-    0%, 100% { color: #7ee787; filter: drop-shadow(0 0 2px rgba(126,231,135,.15)); }
-    33% { color: #60a5fa; filter: drop-shadow(0 0 2px rgba(96,165,250,.15)); }
-    66% { color: #c084fc; filter: drop-shadow(0 0 2px rgba(192,132,252,.15)); }
-}
-.sidebar-info:hover {
-    transform: none;
-    box-shadow: none;
-}
-.hero {
-    min-height: 270px;
-    padding: 42px 48px;
-}
+   ATÉ 380px
 
-/* =====================================================
-   ECRÃ MUITO PEQUENO
-   ===================================================== */
-@media (max-width: 379px) {
+   1 CARD POR LINHA
+
+   Em ecrãs muito pequenos a linha de informações
+   passa a poder ocupar mais de uma linha se realmente
+   não houver espaço suficiente.
+
+   Isto evita sobreposição.
+===================================================== */
+
+@media (max-width: 380px) {
+
     #listaExercicios {
         grid-template-columns: 1fr;
+    }
+
+
+    .info-linha-final {
+        gap: 6px;
+
+        font-size: 10px;
+    }
+
+
+    .imagem-exercicio-final {
+        height: 190px;
     }
 }
