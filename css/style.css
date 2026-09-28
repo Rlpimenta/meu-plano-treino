@@ -21,7 +21,8 @@
 
     --fonte: Arial, Helvetica, sans-serif;
 
-    --largura: 1250px;
+    --largura: 1400px;
+    --gap-cards: 16px;
 
     --raio: 8px;
 }
@@ -654,12 +655,26 @@ main p {
    11. LISTA DE EXERCÍCIOS
 ===================================================== */
 
+
+
+
+/* =====================================================
+   GRID DAS CARDS
+   Aqui defines quantas cards aparecem por linha.
+
+   Ecrã grande  → 5 cards
+   Ecrã médio   → 4 cards
+   Tablet       → 2 cards
+   Telemóvel    → 2 cards
+   Muito pequeno → 1 card
+   ===================================================== */
+
 #listaExercicios {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gap-cards);
+    align-items: start;
 }
-
 
 /* =====================================================
    12. CARTÃO DE EXERCÍCIO
@@ -911,33 +926,9 @@ main p {
    RESPONSIVO DOS CARTÕES
 ===================================================== */
 
-@media (max-width: 650px) {
-    #listaExercicios {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
 
-    .imagem-exercicio {
-        height: 155px;
-    }
-}
 
-@media (max-width: 430px) {
-    #listaExercicios {
-        grid-template-columns: 1fr;
-    }
 
-    .info-exercicio {
-        gap: 7px;
-    }
-
-    .info-item {
-        font-size: 10px;
-    }
-
-    .pesoExercicio {
-        width: 47px;
-    }
-}
 
 
 /* =====================================================
@@ -1312,9 +1303,7 @@ footer > p {
 
 @media (max-width: 1050px) {
 
-    #listaExercicios {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    
 
 
     #formularioExercicio {
@@ -1384,11 +1373,6 @@ footer > p {
     }
 
 
-    #listaExercicios {
-        grid-template-columns: 1fr;
-    }
-
-
     .ferramentas {
         grid-template-columns: 1fr;
     }
@@ -1437,11 +1421,7 @@ footer > p {
    15. AJUSTES FINAIS DOS CARTÕES E FORMULÁRIO
 ===================================================== */
 
-#listaExercicios {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 16px;
-}
+
 
 .card-exercicio {
     position: relative;
@@ -1681,11 +1661,7 @@ footer > p {
     }
 }
 
-@media (max-width: 850px) {
-    #listaExercicios {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-}
+
 
 @media (max-width: 650px) {
     #formularioExercicio {
@@ -1702,10 +1678,6 @@ footer > p {
 }
 
 @media (max-width: 430px) {
-    #listaExercicios {
-        grid-template-columns: 1fr;
-    }
-
     #formularioExercicio {
         grid-template-columns: 1fr;
     }
@@ -1719,11 +1691,19 @@ footer > p {
 
 /* =====================================================
    AJUSTES FINAIS — VERSÃO CONSOLIDADA
+   Esta é a área principal para alterar o visual das cards.
+   Se quiseres procurar onde mudar algo, começa aqui.
 ===================================================== */
 .hero { background-image: linear-gradient(rgba(5,7,10,.68), rgba(5,7,10,.78)), url("../img/hero-gym.jpg"); background-size: cover; background-position: center; }
 .hero-frase p { transition: opacity .45s ease, transform .45s ease; }
 
-#listaExercicios { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; align-items:start; }
+
+/* --- GRID DAS CARDS ---
+   Desktop: o navegador cria 3 ou 4 cards conforme o espaço.
+   Mobile: a regra abaixo permite 2, 3 ou 4 quando couberem.
+   Para aumentar/diminuir a largura mínima das cards, altera o minmax().
+*/
+
 #listaExercicios article { position:relative; min-width:0; background:var(--fundo-card); border:1px solid var(--linha); border-radius:10px; padding:14px; overflow:hidden; transition:transform .2s ease,border-color .2s ease,background .2s ease; }
 #listaExercicios article:hover { transform:translateY(-2px); border-color:#3a3f48; background:var(--fundo-card-hover); }
 .cabecalho-cartao-final { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:start; }
@@ -1741,13 +1721,63 @@ footer > p {
 .frame-exercicio.visivel { opacity:1; }
 .botao-ver { position:absolute; right:8px; bottom:8px; z-index:3; background:rgba(10,12,15,.88); border:1px solid rgba(255,255,255,.18); color:#fff; padding:6px 9px; border-radius:5px; font-size:10px; font-weight:700; text-decoration:none; }
 .botao-ver:hover { border-color:var(--vermelho); color:#fff; }
-.info-linha-final { display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:8px; align-items:center; margin-top:11px; font-size:11px; color:var(--texto-fraco); }
-.info-linha-final .series { color:var(--texto); white-space:nowrap; }
-.info-linha-final .resto { white-space:nowrap; }
-.peso-final { display:flex; align-items:center; gap:4px; white-space:nowrap; }
-.peso-final input { width:58px; height:27px; padding:0 6px; background:#0e1013; border:1px solid var(--linha); border-radius:4px; color:#fff; text-align:center; font-size:11px; }
-.peso-final input:focus { outline:none; border-color:var(--vermelho); }
-.peso-ok { color:#8fd18f; font-size:12px; }
+/* --- LINHA DE INFORMAÇÕES ---
+   Séries, descanso e peso ficam na mesma linha.
+   A parte central pode encolher sem sobrepor os outros elementos.
+*/
+.info-linha-final {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 8px;
+    align-items: center;
+    margin-top: 11px;
+    font-size: 11px;
+    color: var(--texto-fraco);
+    min-width: 0;
+}
+
+.info-linha-final .series {
+    color: var(--texto);
+    white-space: nowrap;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-linha-final .resto {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.peso-final {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.peso-final input {
+    width: 58px;
+    height: 27px;
+    padding: 0 6px;
+    background: #0e1013;
+    border: 1px solid var(--linha);
+    border-radius: 4px;
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+}
+
+.peso-final input:focus {
+    outline: none;
+    border-color: var(--vermelho);
+}
+
+.peso-ok {
+    color: #8fd18f;
+    font-size: 12px;
+}
 .estado-vazio { grid-column:1/-1; padding:30px; text-align:center; border:1px dashed var(--linha); border-radius:8px; color:var(--texto-fraco); }
 
 #adicionar { padding:16px 18px; }
@@ -1764,16 +1794,18 @@ footer > p {
   .campo-checkbox { grid-column:1; }
   .botao-adicionar { grid-column:2; }
 }
+/* =====================================================
+   RESPONSIVIDADE — TELEMÓVEL
+   O grid adapta-se sozinho: 2, 3 ou 4 cards quando houver espaço.
+   Não existe mais uma regra a forçar 1 card abaixo de 390px.
+===================================================== */
 @media (max-width: 650px) {
-  #listaExercicios { grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:12px; }
+  
   .imagem-exercicio-final { height:175px; }
-  .info-linha-final { grid-template-columns:1fr auto auto; gap: 6px;  }
-  .peso-final { grid-column: auto; }
+  .info-linha-final { grid-template-columns:minmax(0,1fr) auto auto; gap:6px; }
+  .peso-final { grid-column:auto; }
   #formularioExercicio { grid-template-columns:1fr; }
   .campo-checkbox,.botao-adicionar { grid-column:auto; }
-}
-@media (max-width: 390px) {
-  #listaExercicios { grid-template-columns:1fr; }
 }
 
 
@@ -2157,4 +2189,13 @@ footer > p {
 .hero {
     min-height: 270px;
     padding: 42px 48px;
+}
+
+/* =====================================================
+   ECRÃ MUITO PEQUENO
+   ===================================================== */
+@media (max-width: 379px) {
+    #listaExercicios {
+        grid-template-columns: 1fr;
+    }
 }
