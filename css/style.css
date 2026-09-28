@@ -660,20 +660,63 @@ main p {
 
 /* =====================================================
    GRID DAS CARDS
-   Aqui defines quantas cards aparecem por linha.
+   Desktop → 3 cards
+   Tablet → 2 cards
+   Telemóvel → 2 cards
+   Telemóvel muito pequeno → 1 card
 
-   Ecrã grande  → 5 cards
-   Ecrã médio   → 4 cards
-   Tablet       → 2 cards
-   Telemóvel    → 2 cards
-   Muito pequeno → 1 card
-   ===================================================== */
+   IMPORTANTE:
+   Não usar auto-fit nem auto-fill aqui.
+===================================================== */
 
 #listaExercicios {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--gap-cards);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
     align-items: start;
+}
+
+
+/* =====================================================
+   MENU LATERAL
+   Fica visível enquanto percorres os exercícios.
+===================================================== */
+
+#treinos aside {
+    position: sticky;
+    top: 90px;
+    align-self: start;
+}
+
+
+/* =====================================================
+   TABLET / TELEMÓVEL
+   Máximo de 2 cards por linha.
+===================================================== */
+
+@media (max-width: 900px) {
+
+    #listaExercicios {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* No telemóvel o menu deixa de acompanhar a página */
+    #treinos aside {
+        position: static;
+    }
+}
+
+
+/* =====================================================
+   TELEMÓVEL MUITO PEQUENO
+   Apenas 1 card por linha.
+===================================================== */
+
+@media (max-width: 379px) {
+
+    #listaExercicios {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* =====================================================
