@@ -158,11 +158,11 @@ main p {
 ===================================================== */
 
 .hero {
-    min-height: 285px;
+    min-height: 360px;
 
-    margin-bottom: 38px;
+    margin-bottom: 50px;
 
-    padding: 45px 55px;
+    padding: 70px 55px;
 
     position: relative;
 
@@ -172,18 +172,13 @@ main p {
 
     overflow: hidden;
 
-    background-image:
+    background:
         linear-gradient(
             90deg,
-            rgba(8, 10, 13, 0.96) 0%,
-            rgba(8, 10, 13, 0.82) 42%,
-            rgba(8, 10, 13, 0.48) 100%
-        ),
-        url("../img/hero-gym.jpg");
-
-    background-size: cover;
-    background-position: center right;
-    background-repeat: no-repeat;
+            rgba(8, 10, 13, 0.98),
+            rgba(8, 10, 13, 0.82),
+            rgba(8, 10, 13, 0.45)
+        );
 
     border-bottom: 1px solid var(--linha);
 }
@@ -229,7 +224,7 @@ main p {
 
 
 .hero h2 {
-    font-size: 38px;
+    font-size: 46px;
     line-height: 1.1;
 
     margin-bottom: 18px;
@@ -293,14 +288,10 @@ main p {
 .hero-frase p {
     color: var(--branco);
 
-    font-size: 20px;
+    font-size: 21px;
     font-weight: 700;
 
-    line-height: 1.35;
-
-    white-space: pre-line;
-
-    transition: opacity 0.35s ease, transform 0.35s ease;
+    line-height: 1.4;
 
     text-align: right;
 }
@@ -317,12 +308,6 @@ main p {
     margin: 14px 0 0 auto;
 
     background-color: var(--vermelho);
-}
-
-
-.hero-frase p.trocando {
-    opacity: 0;
-    transform: translateY(6px);
 }
 
 
@@ -597,6 +582,40 @@ main p {
 }
 
 
+.pesquisa-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.pesquisa-topo label {
+    margin: 0;
+}
+
+.botao-novo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 23px;
+    padding: 2px 8px;
+    background: transparent;
+    border: 1px solid var(--linha);
+    border-radius: 4px;
+    color: var(--texto-fraco);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.botao-novo:hover {
+    color: var(--branco);
+    border-color: var(--vermelho);
+    background: rgba(229, 9, 20, 0.08);
+}
+
 #pesquisa input,
 #filtro select {
     width: 100%;
@@ -637,10 +656,8 @@ main p {
 
 #listaExercicios {
     display: grid;
-
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
 }
 
 
@@ -649,108 +666,153 @@ main p {
 ===================================================== */
 
 #listaExercicios article {
-    background-color: var(--fundo-card);
-
-    border: 1px solid var(--linha);
-
-    border-radius: var(--raio);
-
-    padding: 17px;
-
     min-width: 0;
-
-    transition: 0.2s;
+    padding: 13px;
+    background: var(--fundo-card);
+    border: 1px solid var(--linha);
+    border-radius: 7px;
+    transition: 0.2s ease;
 }
-
 
 #listaExercicios article:hover {
     background-color: var(--fundo-card-hover);
-
     border-color: #383d46;
-
     transform: translateY(-2px);
 }
 
 
-#listaExercicios article h3 {
+/* Cabeçalho compacto */
+
+.cabecalho-cartao {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 10px;
+    align-items: start;
+    margin-bottom: 10px;
+}
+
+.titulo-cartao {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+        "titulo titulo"
+        "grupo remover";
+    align-items: center;
+    gap: 2px 8px;
+}
+
+.titulo-cartao h3 {
+    grid-area: titulo;
+    min-width: 0;
+    margin: 0;
     color: var(--branco);
-
-    font-size: 16px;
-
-    margin-bottom: 8px;
+    font-size: 15px;
+    line-height: 1.25;
 }
 
-
-#listaExercicios article p {
-    font-size: 13px;
-
-    margin-bottom: 5px;
+.titulo-cartao h3 a {
+    color: inherit;
+    text-decoration: none;
 }
 
-
-#listaExercicios article strong {
-    color: var(--texto);
-}
-
-
-#listaExercicios article span {
-    color: var(--texto-fraco);
-}
-
-
-#listaExercicios article .falha {
+.titulo-cartao h3 a:hover {
     color: var(--vermelho);
+}
 
-    font-weight: 800;
+.grupo-cartao {
+    grid-area: grupo;
+    margin: 0;
+    color: var(--texto-fraco);
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.botao-apagar {
+    grid-area: remover;
+    justify-self: end;
+    padding: 2px 6px;
+    background: transparent;
+    border: 1px solid var(--linha);
+    border-radius: 4px;
+    color: var(--texto-muito-fraco);
+    cursor: pointer;
+    font-size: 9px;
+    line-height: 1.4;
+}
+
+.botao-apagar:hover {
+    color: var(--branco);
+    border-color: var(--vermelho);
+}
+
+.numero-exercicio {
+    color: var(--texto-fraco);
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 900;
 }
 
 
 /* =====================================================
    13. IMAGEM DO EXERCÍCIO
-
-   Já deixamos preparado para quando
-   ligarmos as imagens/GIFs no JS.
 ===================================================== */
 
 .imagem-exercicio {
+    position: relative;
     width: 100%;
-
-    height: 145px;
-
-    margin-bottom: 14px;
-
-    border-radius: 6px;
-
+    height: 165px;
+    margin-bottom: 10px;
     overflow: hidden;
-
-    background-color: #0d0f12;
-
+    border-radius: 6px;
+    background: #0d0f12;
     border: 1px solid var(--linha);
 }
 
-
 .imagem-exercicio img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-
     display: block;
-
     object-fit: cover;
-
-    transition: 0.25s;
+    transition: opacity 0.25s, transform 0.25s;
 }
-
 
 .imagem-exercicio:hover img {
-    transform: scale(1.03);
+    transform: scale(1.025);
 }
 
-
-.imagem-exercicio a {
+.imagem-exercicio > a:first-child {
     display: block;
-
     width: 100%;
     height: 100%;
+}
+
+.botao-video {
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    z-index: 5;
+    display: inline-flex !important;
+    width: auto !important;
+    height: auto !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 0 !important;
+    padding: 5px 8px !important;
+    background: rgba(0, 0, 0, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 4px;
+    color: var(--branco);
+    font-size: 10px !important;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.botao-video:hover {
+    background: var(--vermelho);
+    border-color: var(--vermelho);
 }
 
 
@@ -759,105 +821,150 @@ main p {
 ===================================================== */
 
 .info-exercicio {
+    width: 100%;
+    min-width: 0;
     display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 7px;
-
-    margin-top: 10px;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0;
 }
-
 
 .info-item {
     display: inline-flex;
-
     align-items: center;
-
-    gap: 5px;
-
-    padding: 5px 7px;
-
-    background-color: #101216;
-
-    border-radius: 4px;
-
+    gap: 4px;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
     color: var(--texto-fraco);
-
     font-size: 11px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.peso-cartao {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+.pesoExercicio {
+    width: 50px;
+    height: 25px;
+    padding: 0 5px;
+    background: #101216;
+    border: 1px solid var(--linha);
+    border-radius: 4px;
+    color: var(--branco);
+    font-size: 10px;
+    text-align: center;
+    outline: none;
+}
+
+.pesoExercicio:focus {
+    border-color: var(--vermelho);
+}
+
+.unidade-peso {
+    color: var(--texto-muito-fraco);
+    font-size: 10px;
+}
+
+.botao-registar {
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    display: inline-grid;
+    place-items: center;
+    background: transparent;
+    border: 1px solid var(--linha);
+    border-radius: 4px;
+    color: var(--texto-fraco);
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.botao-registar:hover {
+    color: var(--branco);
+    border-color: var(--vermelho);
 }
 
 
 /* =====================================================
-   15. BOTÕES DO CARTÃO
+   15. ESTADO VAZIO
+===================================================== */
+
+.estado-vazio {
+    grid-column: 1 / -1;
+    padding: 30px 20px;
+    text-align: center;
+    color: var(--texto-fraco);
+    background: var(--fundo-card);
+    border: 1px dashed var(--linha);
+    border-radius: var(--raio);
+}
+
+
+/* =====================================================
+   RESPONSIVO DOS CARTÕES
+===================================================== */
+
+@media (max-width: 650px) {
+    #listaExercicios {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .imagem-exercicio {
+        height: 155px;
+    }
+}
+
+@media (max-width: 430px) {
+    #listaExercicios {
+        grid-template-columns: 1fr;
+    }
+
+    .info-exercicio {
+        gap: 7px;
+    }
+
+    .info-item {
+        font-size: 10px;
+    }
+
+    .pesoExercicio {
+        width: 47px;
+    }
+}
+
+
+/* =====================================================
+   16. BOTÕES ANTIGOS — mantidos por compatibilidade
 ===================================================== */
 
 .botoes-exercicio {
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 8px;
-
     margin-top: 15px;
 }
-
 
 .botoes-exercicio button,
 .botoes-exercicio a {
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     min-height: 34px;
-
     padding: 7px 8px;
-
     border-radius: 4px;
-
     font-family: var(--fonte);
-
     font-size: 11px;
     font-weight: 700;
-
     text-decoration: none;
-
     cursor: pointer;
 }
-
-
-.botao-video {
-    background-color: transparent;
-
-    border: 1px solid var(--linha);
-
-    color: var(--texto);
-}
-
-
-.botao-video:hover {
-    border-color: var(--vermelho);
-
-    color: var(--vermelho);
-}
-
-
-.botao-registar {
-    background-color: var(--vermelho);
-
-    border: 1px solid var(--vermelho);
-
-    color: var(--branco);
-}
-
-
-.botao-registar:hover {
-    background-color: var(--vermelho-hover);
-
-    border-color: var(--vermelho-hover);
-}
-
 
 /* =====================================================
    16. CARDIO
@@ -1242,13 +1349,12 @@ footer > p {
 
 
     .hero {
-        min-height: 270px;
-        padding: 40px 35px;
+        padding: 50px 35px;
     }
 
 
     .hero h2 {
-        font-size: 34px;
+        font-size: 36px;
     }
 
 
@@ -1309,14 +1415,14 @@ footer > p {
 
 
     .hero {
-        min-height: 250px;
+        min-height: 300px;
 
-        padding: 35px 25px;
+        padding: 45px 25px;
     }
 
 
     .hero h2 {
-        font-size: 30px;
+        font-size: 32px;
     }
 
 
@@ -1326,4 +1432,729 @@ footer > p {
         text-align: center;
     }
 
+}
+/* =====================================================
+   15. AJUSTES FINAIS DOS CARTÕES E FORMULÁRIO
+===================================================== */
+
+#listaExercicios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.card-exercicio {
+    position: relative;
+    min-width: 0;
+    padding: 15px;
+    background: var(--fundo-card);
+    border: 1px solid var(--linha);
+    border-radius: var(--raio);
+}
+
+.card-exercicio:hover {
+    background: var(--fundo-card-hover);
+    border-color: #3a3f49;
+}
+
+.cabecalho-cartao {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: start;
+    margin-bottom: 10px;
+}
+
+.titulo-cartao h3 {
+    color: var(--branco);
+    font-size: 15px;
+    line-height: 1.25;
+}
+
+.titulo-cartao h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.titulo-cartao h3 a:hover {
+    color: var(--vermelho);
+}
+
+.grupo-cartao {
+    color: var(--texto-fraco);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+.numero-exercicio {
+    color: var(--texto-muito-fraco);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.botao-apagar {
+    margin-top: 7px;
+    padding: 3px 7px;
+    background: transparent;
+    border: 1px solid var(--linha);
+    border-radius: 4px;
+    color: var(--texto-fraco);
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.botao-apagar:hover {
+    color: var(--branco);
+    border-color: var(--vermelho);
+}
+
+.imagem-exercicio {
+    position: relative;
+    height: 170px;
+    margin-bottom: 11px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #0d0f12;
+    border: 1px solid var(--linha);
+}
+
+.imagem-exercicio > a:first-child {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.imagem-exercicio .frame-exercicio {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.25s;
+}
+
+.imagem-exercicio .frame-1 {
+    opacity: 1;
+    z-index: 1;
+}
+
+.imagem-exercicio .frame-2 {
+    opacity: 0;
+    z-index: 2;
+}
+
+.imagem-exercicio:hover .frame-exercicio {
+    transform: scale(1.03);
+}
+
+.botao-video {
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    z-index: 5;
+    padding: 5px 8px;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 4px;
+    background: rgba(0,0,0,.82);
+    color: var(--branco);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.botao-video:hover {
+    background: var(--vermelho);
+    border-color: var(--vermelho);
+}
+
+.info-exercicio {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+}
+
+.info-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--texto-fraco);
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.peso-cartao {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pesoExercicio {
+    width: 52px;
+    height: 27px;
+    padding: 0 5px;
+    background: #101216;
+    border: 1px solid var(--linha);
+    border-radius: 4px;
+    color: var(--branco);
+    font-size: 11px;
+    text-align: center;
+}
+
+.pesoExercicio:focus {
+    outline: none;
+    border-color: var(--vermelho);
+}
+
+.peso-cartao .botao-registar {
+    width: 27px;
+    height: 27px;
+    padding: 0;
+    border: 1px solid var(--linha);
+    border-radius: 4px;
+    background: #101216;
+    color: var(--texto);
+    cursor: pointer;
+}
+
+.peso-cartao .botao-registar:hover {
+    color: var(--branco);
+    border-color: var(--vermelho);
+}
+
+#formularioExercicio {
+    display: grid;
+    grid-template-columns: 2fr 1.3fr 90px 1.2fr 1.2fr auto;
+    align-items: end;
+    gap: 10px;
+}
+
+#formularioExercicio .campo {
+    display: grid;
+    gap: 6px;
+}
+
+#formularioExercicio .campo label {
+    color: var(--texto-fraco);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+#formularioExercicio .campo input,
+#formularioExercicio .campo select {
+    width: 100%;
+    min-height: 40px;
+    padding: 0 10px;
+    background: var(--fundo);
+    border: 1px solid var(--linha);
+    border-radius: 5px;
+    color: var(--texto);
+}
+
+#formularioExercicio .campo input:focus,
+#formularioExercicio .campo select:focus {
+    outline: none;
+    border-color: var(--vermelho);
+}
+
+#formularioExercicio .campo-checkbox {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#formularioExercicio .botao-adicionar {
+    min-height: 40px;
+    white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+    #formularioExercicio {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    #formularioExercicio .botao-adicionar {
+        width: 100%;
+    }
+}
+
+@media (max-width: 850px) {
+    #listaExercicios {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    #formularioExercicio {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #formularioExercicio .campo:first-child {
+        grid-column: 1 / -1;
+    }
+
+    #formularioExercicio .botao-adicionar {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 430px) {
+    #listaExercicios {
+        grid-template-columns: 1fr;
+    }
+
+    #formularioExercicio {
+        grid-template-columns: 1fr;
+    }
+
+    #formularioExercicio .campo:first-child,
+    #formularioExercicio .botao-adicionar {
+        grid-column: auto;
+    }
+}
+
+
+/* =====================================================
+   AJUSTES FINAIS — VERSÃO CONSOLIDADA
+===================================================== */
+.hero { background-image: linear-gradient(rgba(5,7,10,.68), rgba(5,7,10,.78)), url("../img/hero-gym.jpg"); background-size: cover; background-position: center; }
+.hero-frase p { transition: opacity .45s ease, transform .45s ease; }
+
+#listaExercicios { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; align-items:start; }
+#listaExercicios article { position:relative; min-width:0; background:var(--fundo-card); border:1px solid var(--linha); border-radius:10px; padding:14px; overflow:hidden; transition:transform .2s ease,border-color .2s ease,background .2s ease; }
+#listaExercicios article:hover { transform:translateY(-2px); border-color:#3a3f48; background:var(--fundo-card-hover); }
+.cabecalho-cartao-final { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:start; }
+.cabecalho-cartao-final h3 { margin:0; min-width:0; font-size:17px; line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--branco); }
+.nome-exercicio-link { color:inherit; text-decoration:none; }
+.nome-exercicio-link:hover { color:var(--vermelho); }
+.numero-remover { display:flex; flex-direction:column; align-items:flex-end; gap:5px; }
+.numero-exercicio { font-size:11px; font-weight:800; color:var(--texto-fraco); letter-spacing:.08em; }
+.botao-remover { border:1px solid #3a3f48; background:#12151a; color:#aeb3bb; border-radius:5px; padding:4px 8px; font:600 10px var(--fonte); cursor:pointer; }
+.botao-remover:hover { color:var(--branco); border-color:var(--vermelho); }
+.grupo-cartao-final { margin:4px 0 10px; color:var(--texto-fraco); font-size:11px; }
+.imagem-exercicio-final { position:relative; height:190px; border-radius:7px; overflow:hidden; background:#0d0f13; border:1px solid #252a31; }
+.imagem-exercicio-final img { width:100%; height:100%; object-fit:contain; display:block; }
+.frame-exercicio { position:absolute; inset:0; opacity:0; transition:opacity .15s ease; }
+.frame-exercicio.visivel { opacity:1; }
+.botao-ver { position:absolute; right:8px; bottom:8px; z-index:3; background:rgba(10,12,15,.88); border:1px solid rgba(255,255,255,.18); color:#fff; padding:6px 9px; border-radius:5px; font-size:10px; font-weight:700; text-decoration:none; }
+.botao-ver:hover { border-color:var(--vermelho); color:#fff; }
+.info-linha-final { display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:8px; align-items:center; margin-top:11px; font-size:11px; color:var(--texto-fraco); }
+.info-linha-final .series { color:var(--texto); white-space:nowrap; }
+.info-linha-final .resto { white-space:nowrap; }
+.peso-final { display:flex; align-items:center; gap:4px; white-space:nowrap; }
+.peso-final input { width:58px; height:27px; padding:0 6px; background:#0e1013; border:1px solid var(--linha); border-radius:4px; color:#fff; text-align:center; font-size:11px; }
+.peso-final input:focus { outline:none; border-color:var(--vermelho); }
+.peso-ok { color:#8fd18f; font-size:12px; }
+.estado-vazio { grid-column:1/-1; padding:30px; text-align:center; border:1px dashed var(--linha); border-radius:8px; color:var(--texto-fraco); }
+
+#adicionar { padding:16px 18px; }
+.adicionar-cabecalho { justify-content:space-between; margin-bottom:14px; }
+.adicionar-cabecalho > div:first-child { display:flex; align-items:center; gap:9px; }
+.adicionar-icone { width:auto; height:auto; background:none; color:var(--vermelho); font-size:18px; }
+.adicionar-cabecalho h2 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; margin:0; }
+.adicionar-cabecalho p { display:none; }
+#formularioExercicio { grid-template-columns:minmax(180px,2fr) minmax(140px,1.3fr) 80px minmax(120px,1.2fr) 130px auto; gap:10px; }
+.botao-adicionar { height:38px; padding:0 15px; }
+
+@media (max-width: 900px) {
+  #formularioExercicio { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .campo-checkbox { grid-column:1; }
+  .botao-adicionar { grid-column:2; }
+}
+@media (max-width: 650px) {
+  #listaExercicios { grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:12px; }
+  .imagem-exercicio-final { height:175px; }
+  .info-linha-final { grid-template-columns:1fr 1fr; }
+  .peso-final { grid-column:1/-1; }
+  #formularioExercicio { grid-template-columns:1fr; }
+  .campo-checkbox,.botao-adicionar { grid-column:auto; }
+}
+@media (max-width: 390px) {
+  #listaExercicios { grid-template-columns:1fr; }
+}
+
+
+/* =====================================================
+   AJUSTES V3 — INTERFACE E FUNCIONALIDADES
+===================================================== */
+
+.hero {
+    min-height: 300px;
+    margin-bottom: 42px;
+    padding: 48px 52px;
+}
+
+.hero-conteudo {
+    max-width: 560px;
+}
+
+.hero h1 {
+    font-size: 38px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+}
+
+.hero-conteudo > p:not(.hero-pequeno) {
+    max-width: 500px;
+    font-size: 15px;
+    margin-bottom: 22px;
+}
+
+.hero-frase {
+    max-width: 250px;
+}
+
+.hero-frase p {
+    font-size: 19px;
+}
+
+#diasTreino a {
+    border-left: 3px solid transparent;
+    padding-left: 10px;
+}
+
+#diasTreino a:hover {
+    background-color: rgba(226, 27, 45, 0.08);
+    color: var(--vermelho);
+    border-left-color: var(--vermelho);
+}
+
+#diasTreino a:hover span {
+    color: var(--vermelho);
+}
+
+#diasTreino a.ativo {
+    background-color: rgba(226, 27, 45, 0.12);
+    color: var(--vermelho);
+    border-left-color: var(--vermelho);
+}
+
+#diasTreino a.ativo span {
+    color: var(--vermelho);
+}
+
+.sidebar-info {
+    transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+
+.sidebar-info:hover {
+    border-color: var(--vermelho);
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(226,27,45,.10);
+}
+
+.sidebar-info span {
+    animation: pulsoConsistencia 2.8s ease-in-out infinite;
+}
+
+@keyframes pulsoConsistencia {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+}
+
+#listaExercicios article:hover {
+    border-color: var(--vermelho);
+    box-shadow: 0 0 0 1px rgba(226,27,45,.12);
+}
+
+.botao-remover:hover {
+    color: var(--vermelho);
+    border-color: var(--vermelho);
+    background: rgba(226,27,45,.06);
+}
+
+#adicionar {
+    padding: 16px 18px;
+}
+
+.adicionar-cabecalho {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.adicionar-cabecalho h2 {
+    margin: 0;
+}
+
+.adicionar-ajuda {
+    color: var(--texto-muito-fraco);
+    font-size: 10px;
+}
+
+#calendarioDialog {
+    width: min(420px, calc(100vw - 30px));
+    padding: 0;
+    border: 1px solid var(--linha);
+    border-radius: 10px;
+    background: var(--fundo-secundario);
+    color: var(--texto);
+    box-shadow: 0 20px 60px rgba(0,0,0,.55);
+}
+
+#calendarioDialog::backdrop {
+    background: rgba(0,0,0,.72);
+}
+
+.calendario-conteudo {
+    padding: 20px;
+}
+
+.calendario-topo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.calendario-kicker {
+    color: var(--vermelho);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .15em;
+}
+
+.calendario-topo h2 {
+    margin-top: 3px;
+    font-size: 19px;
+}
+
+.calendario-fechar,
+.calendario-navegacao button {
+    border: 1px solid var(--linha);
+    background: #0e1013;
+    color: var(--texto);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.calendario-fechar {
+    width: 30px;
+    height: 30px;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.calendario-fechar:hover,
+.calendario-navegacao button:hover {
+    border-color: var(--vermelho);
+    color: var(--vermelho);
+}
+
+.calendario-navegacao {
+    display: grid;
+    grid-template-columns: 35px 1fr 35px;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0 12px;
+}
+
+.calendario-navegacao button {
+    width: 35px;
+    height: 35px;
+    font-size: 22px;
+}
+
+.calendario-navegacao strong {
+    text-align: center;
+    color: var(--branco);
+    font-size: 14px;
+}
+
+.calendario-semana,
+.calendario-dias {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendario-semana span {
+    text-align: center;
+    color: var(--texto-muito-fraco);
+    font-size: 9px;
+    font-weight: 800;
+    padding-bottom: 4px;
+}
+
+.dia-vazio {
+    min-height: 36px;
+}
+
+.dia-calendario {
+    min-height: 36px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: transparent;
+    color: var(--texto);
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.dia-calendario:hover,
+.dia-calendario.selecionado {
+    border-color: var(--vermelho);
+    background: rgba(226,27,45,.12);
+    color: var(--vermelho);
+}
+
+.dia-calendario.hoje {
+    background: var(--vermelho);
+    color: var(--branco);
+    font-weight: 800;
+}
+
+.dia-calendario.hoje:hover,
+.dia-calendario.hoje.selecionado {
+    background: var(--vermelho-hover);
+    color: var(--branco);
+}
+
+.calendario-selecionada {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--linha);
+    font-size: 11px;
+    text-align: center;
+}
+
+.spotify-flutuante {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 200;
+}
+
+.spotify-botao {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--vermelho);
+    border-radius: 50%;
+    background: #111419;
+    color: var(--branco);
+    cursor: pointer;
+    font-size: 21px;
+    box-shadow: 0 6px 22px rgba(0,0,0,.35);
+    transition: transform .2s ease, background .2s ease;
+}
+
+.spotify-botao:hover {
+    transform: scale(1.06);
+    background: var(--vermelho);
+}
+
+.spotify-menu {
+    position: absolute;
+    right: 0;
+    bottom: 58px;
+    width: 190px;
+    padding: 12px;
+    display: none;
+    flex-direction: column;
+    gap: 7px;
+    background: #111419;
+    border: 1px solid var(--linha);
+    border-radius: 8px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.5);
+}
+
+.spotify-flutuante.aberto .spotify-menu {
+    display: flex;
+}
+
+.spotify-menu strong {
+    color: var(--branco);
+    font-size: 12px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--linha);
+}
+
+.spotify-menu a {
+    color: var(--texto-fraco);
+    text-decoration: none;
+    font-size: 11px;
+    padding: 6px 5px;
+    border-radius: 4px;
+}
+
+.spotify-menu a:hover {
+    color: var(--vermelho);
+    background: rgba(226,27,45,.08);
+}
+
+@media (max-width: 650px) {
+    .hero {
+        min-height: 275px;
+        padding: 38px 25px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .adicionar-ajuda {
+        display: none;
+    }
+
+    .spotify-flutuante {
+        right: 14px;
+        bottom: 14px;
+    }
+}
+
+
+/* =====================================================
+   V4 — MENU FINAL
+===================================================== */
+#diasTreino ul {
+    padding: 8px 10px;
+}
+#diasTreino li {
+    margin-bottom: 0;
+}
+#diasTreino a {
+    position: relative;
+    background: transparent;
+    border-left: 3px solid transparent;
+    border-radius: 4px;
+    padding: 11px 12px;
+    color: var(--texto-fraco);
+    transition: color .22s ease, border-color .22s ease, box-shadow .22s ease, background-color .22s ease;
+}
+#diasTreino a:hover {
+    background: rgba(255,255,255,.025);
+    color: var(--branco);
+    border-left-color: rgba(226,27,45,.75);
+    box-shadow: 0 0 14px rgba(226,27,45,.08);
+}
+#diasTreino a:hover span { color: var(--vermelho); }
+#diasTreino a.ativo {
+    background: transparent;
+    color: var(--branco);
+    border-left-color: var(--vermelho);
+    box-shadow: 0 0 10px rgba(226,27,45,.08);
+}
+#diasTreino a.ativo span { color: var(--vermelho); }
+#diasTreino li + li a {
+    border-top: 1px solid rgba(255,255,255,.045);
+}
+.sidebar-info span {
+    animation: corConsistencia 2.6s ease-in-out infinite;
+}
+@keyframes corConsistencia {
+    0%, 100% { color: #7ee787; filter: drop-shadow(0 0 2px rgba(126,231,135,.15)); }
+    33% { color: #60a5fa; filter: drop-shadow(0 0 2px rgba(96,165,250,.15)); }
+    66% { color: #c084fc; filter: drop-shadow(0 0 2px rgba(192,132,252,.15)); }
+}
+.sidebar-info:hover {
+    transform: none;
+    box-shadow: none;
+}
+.hero {
+    min-height: 270px;
+    padding: 42px 48px;
 }
