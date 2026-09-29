@@ -856,6 +856,37 @@ main p {
     align-items: start;
 }
 
+/* ---------- REPOR ÚLTIMO EXERCÍCIO ---------- */
+.area-repor {
+    grid-column: 1 / -1;
+}
+
+.botao-repor {
+    padding: 6px 9px;
+
+    border: 1px solid rgba(226, 27, 45, 0.45);
+    border-radius: 5px;
+
+    background: rgba(226, 27, 45, 0.07);
+    color: #d8a6ac;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.botao-repor:hover {
+    color: var(--branco);
+    background-color: rgba(226, 27, 45, 0.14);
+    border-color: var(--vermelho);
+}
+
 
 /* =====================================================
    11. CARD DO EXERCÍCIO
@@ -877,9 +908,12 @@ main p {
         transform 0.2s ease,
         border-color 0.2s ease,
         background-color 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
 }
 
+
+/* ---------- EFEITO AO PASSAR O MOUSE ---------- */
 
 #listaExercicios article:hover {
     transform: translateY(-2px);
@@ -893,11 +927,96 @@ main p {
 }
 
 
+/* ---------- EXERCÍCIO CONCLUÍDO ---------- */
+
+/*
+   Quando concluído, o card ganha apenas um destaque
+   vermelho discreto.
+
+   O JavaScript coloca o exercício no final
+   da lista inteira enquanto ele estiver concluído.
+*/
+
+#listaExercicios article.concluido {
+    border-color: rgba(226, 27, 45, 0.55);
+
+    box-shadow:
+        0 0 0 1px rgba(226, 27, 45, 0.10),
+        0 0 18px rgba(226, 27, 45, 0.08);
+}
+
+
+#listaExercicios article.concluido .cabecalho-cartao-final h3 {
+    color: #f0c2c7;
+}
+
+/* ---------- FEEDBACK AO ARRASTAR ---------- */
+
+#listaExercicios article.arrastando {
+    opacity: 0.55;
+}
+
+
+#listaExercicios article.alvo-arrastar {
+    border-color: var(--vermelho);
+    box-shadow: 0 0 0 2px rgba(226, 27, 45, 0.12);
+}
+
+/* ---------- CARD SENDO ARRASTADO ---------- */
+
+/*
+   Enquanto o exercício está sendo arrastado,
+   ele fica ligeiramente transparente.
+
+   Não altera a posição nem a ordem.
+   É apenas um feedback visual.
+*/
+
+#listaExercicios article.arrastando {
+    opacity: 0.45;
+
+    transform: scale(0.98);
+
+    border-color: var(--vermelho);
+
+    box-shadow:
+        0 0 0 1px rgba(226, 27, 45, 0.18);
+}
+
+
+/* ---------- CARD QUE RECEBERÁ O EXERCÍCIO ---------- */
+
+/*
+   Quando passamos o exercício por cima de outro,
+   o destino recebe um destaque discreto.
+
+   Ao soltar, o exercício será colocado
+   antes ou depois desse card dependendo
+   da posição do cursor.
+*/
+
+#listaExercicios article.alvo-arrastar {
+    border-color: var(--vermelho);
+
+    box-shadow:
+        0 0 0 2px rgba(226, 27, 45, 0.16);
+}
+
+
 /* ---------- CABEÇALHO DO CARD ---------- */
 
 /*
    Nome à esquerda.
-   Número + Remover à direita.
+   Número do exercício à direita.
+
+   IMPORTANTE:
+   O próprio número é o botão de conclusão.
+
+   Ao clicar:
+   01 → ×
+
+   O exercício é temporariamente movido
+   para o final da lista.
 */
 
 .cabecalho-cartao-final {
@@ -919,10 +1038,6 @@ main p {
 
     color: var(--branco);
 
-    /*
-       Antes estava maior.
-       Reduzimos um pouco para dar mais espaço.
-    */
     font-size: 14px;
 
     line-height: 1.25;
@@ -930,6 +1045,7 @@ main p {
     white-space: nowrap;
 
     overflow: hidden;
+
     text-overflow: ellipsis;
 }
 
@@ -946,65 +1062,111 @@ main p {
 }
 
 
-/* ---------- NÚMERO + REMOVER ---------- */
+/* ---------- NÚMERO / BOTÃO DE CONCLUSÃO ---------- */
+
+/*
+   O número é clicável.
+
+   Estado normal:
+   01 / 02 / 03...
+
+   Estado concluído:
+   ×
+
+   Não existe checkbox separada.
+*/
 
 .numero-remover {
     display: flex;
+
     flex-direction: column;
+
     align-items: flex-end;
 
     gap: 4px;
+
+    flex-shrink: 0;
+
+    margin-top: 0;
 }
 
 
-.numero-exercicio {
+.botao-concluir {
+    width: 20px;
+    height: 18px;
+
+    padding: 0;
+
+    border: 1px solid #3a3f48;
+
+    border-radius: 3px;
+
+    background-color: #12151a;
+
     color: var(--texto-fraco);
 
     font-size: 10px;
+
     font-weight: 700;
+
+    line-height: 18px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 
-/*
-   Remover fica aproximadamente do tamanho
-   do texto "Costas", "Ombros", etc.
-*/
+.botao-concluir:hover,
+#listaExercicios article.concluido .botao-concluir {
+
+    color: var(--branco);
+
+    border-color: var(--vermelho);
+
+    background-color: rgba(226, 27, 45, 0.14);
+
+    box-shadow:
+        0 0 8px rgba(226, 27, 45, 0.10);
+}
+
+/* ---------- BOTÃO REMOVER ---------- */
 
 .botao-remover {
-    min-height: 18px;
-
-    padding: 2px 5px;
+    padding: 3px 5px;
 
     border: 1px solid #3a3f48;
     border-radius: 3px;
 
     background-color: #12151a;
+    color: var(--texto-fraco);
 
-    color: #aeb3bb;
+    font-size: 9px;
+    font-weight: 600;
 
-    font: 600 9px var(--fonte);
-
-    line-height: 1;
+    line-height: 1.2;
 
     cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease;
 }
 
 
 .botao-remover:hover {
     color: var(--branco);
 
-    border-color: #666c75;
+    border-color: var(--vermelho);
 
-    background-color: #1b1f25;
-}
-
-
-.grupo-cartao-final {
-    margin: 3px 0 8px;
-
-    color: var(--texto-fraco);
-
-    font-size: 11px;
+    background-color: rgba(226, 27, 45, 0.10);
 }
 
 
@@ -1202,6 +1364,12 @@ main p {
     outline: none;
 
     border-color: var(--vermelho);
+}
+
+.peso-anterior {
+    color: var(--texto-muito-fraco);
+    font-size: 9px;
+    opacity: 0.8;
 }
 
 
@@ -1782,8 +1950,11 @@ footer p {
 /* =====================================================
    20. SPOTIFY FLUTUANTE
 
-   position: fixed é intencional:
-   o botão precisa acompanhar o ecrã.
+   A posição fixa é intencional: o controlo acompanha
+   o ecrã enquanto a página é percorrida.
+
+   O visual usa transparência para combinar com o tema
+   escuro sem criar um botão pesado.
 ===================================================== */
 
 .spotify-flutuante {
@@ -1795,43 +1966,138 @@ footer p {
     z-index: 200;
 }
 
-
 .spotify-botao {
-    width: 48px;
-    height: 48px;
+    position: relative;
 
-    border: 1px solid var(--vermelho);
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(226, 27, 45, 0.55);
     border-radius: 50%;
 
-    background-color: #111419;
+    background: rgba(17, 20, 25, 0.58);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 
     color: var(--branco);
 
     cursor: pointer;
-
-    font-size: 21px;
+    font-size: 0;
 
     box-shadow:
-        0 6px 22px rgba(0, 0, 0, 0.35);
+        0 8px 24px rgba(0, 0, 0, 0.28),
+        0 0 18px rgba(226, 27, 45, 0.08);
 
     transition:
         transform 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/*
+   Desenhamos o símbolo com CSS para não depender de
+   outro ficheiro de ícones.
+*/
+.spotify-botao::before {
+    content: "";
+
+    width: 17px;
+    height: 17px;
+
+    border: 2px solid var(--branco);
+    border-radius: 50%;
+
+    opacity: 0.9;
+}
+
+.spotify-botao::after {
+    content: "";
+
+    position: absolute;
+
+    width: 12px;
+    height: 5px;
+
+    margin-top: 8px;
+    margin-left: 4px;
+
+    border-top: 2px solid var(--branco);
+    border-radius: 50%;
+
+    transform: rotate(-7deg);
+    opacity: 0.9;
+}
+
+.spotify-botao:hover {
+    transform: scale(1.05);
+
+    border-color: rgba(226, 27, 45, 0.85);
+    background: rgba(226, 27, 45, 0.16);
+
+    box-shadow:
+        0 8px 26px rgba(0, 0, 0, 0.32),
+        0 0 20px rgba(226, 27, 45, 0.14);
+}
+
+/* ---------- MINI CONTROLES ---------- */
+.spotify-controles {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+
+    margin-top: 5px;
+    padding: 3px;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+
+    background: rgba(17, 20, 25, 0.48);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.spotify-controles button {
+    width: 22px;
+    height: 20px;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: transparent;
+    color: var(--texto-fraco);
+
+    cursor: pointer;
+    font-size: 9px;
+    line-height: 1;
+
+    transition:
+        color 0.2s ease,
         background-color 0.2s ease;
 }
 
-
-.spotify-botao:hover {
-    transform: scale(1.06);
-
-    background-color: var(--vermelho);
+.spotify-controles button:hover {
+    color: var(--branco);
+    background-color: rgba(226, 27, 45, 0.14);
 }
 
+.spotify-controles .spotify-play {
+    color: var(--branco);
+}
 
+/* ---------- MENU ---------- */
 .spotify-menu {
     position: absolute;
 
     right: 0;
-    bottom: 58px;
+    bottom: 78px;
 
     width: 190px;
 
@@ -1842,51 +2108,43 @@ footer p {
 
     gap: 7px;
 
-    background-color: #111419;
+    background: rgba(17, 20, 25, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 
     border: 1px solid var(--linha);
-    border-radius: 8px;
+    border-radius: 10px;
 
     box-shadow:
         0 12px 35px rgba(0, 0, 0, 0.5);
 }
 
-
 .spotify-flutuante.aberto .spotify-menu {
     display: flex;
 }
-
 
 .spotify-menu strong {
     padding-bottom: 4px;
 
     color: var(--branco);
-
     font-size: 12px;
 
     border-bottom: 1px solid var(--linha);
 }
 
-
 .spotify-menu a {
     padding: 6px 5px;
 
     color: var(--texto-fraco);
-
     text-decoration: none;
-
     font-size: 11px;
-
     border-radius: 4px;
 }
 
-
 .spotify-menu a:hover {
     color: var(--vermelho);
-
     background-color: rgba(226, 27, 45, 0.08);
 }
-
 
 /* =====================================================
    21. ANIMAÇÃO DA CONSISTÊNCIA
@@ -2053,7 +2311,8 @@ footer p {
 
     #listaExercicios {
         grid-template-columns: 1fr;
-        gap: 12px;   }
+        gap: 12px;
+    }
 
 
     /*
@@ -2123,8 +2382,19 @@ footer p {
 
 
     .spotify-flutuante {
-        right: 14px;
-        bottom: 14px;
+        right: 12px;
+        bottom: 12px;
+    }
+
+    .spotify-botao {
+        width: 42px;
+        height: 42px;
+    }
+
+    .spotify-controles button {
+        width: 20px;
+        height: 19px;
+        font-size: 8px;
     }
 }
 

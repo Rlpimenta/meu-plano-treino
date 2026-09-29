@@ -1,0 +1,15 @@
+ALTERAÇÕES — Meu Plano de Treino
+
+• Adicionada persistência da ordem manual dos exercícios.
+• Exercícios podem ser arrastados e reorganizados.
+• A nova ordem permanece após atualizar a página.
+• Exercícios concluídos usam o próprio número como botão.
+• Ao concluir, o número vira “×” e o exercício vai para o final da lista.
+• A conclusão é temporária e não é salva após atualizar a página.
+• É possível desmarcar um exercício concluído.
+• Adicionado histórico dos 2 últimos pesos.
+• Adicionada opção para repor o último exercício apagado.
+• Exercícios removidos podem voltar à posição original.
+• Exercícios novos são adicionados ao final da ordem atual.
+• Adicionado feedback visual durante o arrastar dos exercícios.
+• Ajustado o tamanho e estilo do botão “Remover”.

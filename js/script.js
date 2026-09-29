@@ -642,6 +642,7 @@ function obterImagem(exercicio) {
 // =====================================================
 const BASE_IMAGENS = "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/";
 const CHAVE_PESOS = "meuPlanoPesosV4";
+const CHAVE_ESTADOS = "meuPlanoEstadosV1";
 const FRASES = [
   "Disciplina hoje, resultado amanhã.",
   "Pequenos progressos, grandes resultados.",
@@ -724,23 +725,141 @@ function obterVideo(exercicio){
 function carregarPesos(){
   try{
     const dados=JSON.parse(localStorage.getItem(CHAVE_PESOS)) || {};
-    treinos.forEach(function(t){t.exercicios.forEach(function(e){if(dados[e.id] !== undefined)e.peso=dados[e.id];});});
-  }catch(erro){ console.log("Não foi possível carregar os pesos."); }
+
+    treinos.forEach(function(t){
+      t.exercicios.forEach(function(e){
+
+        if(dados[e.id] === undefined)return;
+
+        if(Array.isArray(dados[e.id])){
+          e.historicoPesos=dados[e.id].slice(0,2);
+          e.peso=e.historicoPesos[0] ?? 0;
+        }else{
+          e.historicoPesos=[Number(dados[e.id]) || 0];
+          e.peso=Number(dados[e.id]) || 0;
+        }
+
+      });
+    });
+
+  }catch(erro){
+    console.log("Não foi possível carregar os pesos.");
+  }
 }
+
 function guardarPeso(exercicio){
   try{
     const dados=JSON.parse(localStorage.getItem(CHAVE_PESOS)) || {};
-    dados[exercicio.id]=exercicio.peso;
-    localStorage.setItem(CHAVE_PESOS,JSON.stringify(dados));
-  }catch(erro){ console.log("Não foi possível guardar o peso."); }
+
+    dados[exercicio.id]=exercicio.historicoPesos || [exercicio.peso || 0];
+
+    localStorage.setItem(
+      CHAVE_PESOS,
+      JSON.stringify(dados)
+    );
+
+  }catch(erro){
+    console.log("Não foi possível guardar o peso.");
+  }
 }
+
 carregarPesos();
+
+
+// =====================================================
+// ORDEM PERSONALIZADA DOS EXERCÍCIOS
+// A ordem permanece guardada até ser alterada novamente.
+// =====================================================
+
+const CHAVE_ORDEM_EXERCICIOS = "meuPlanoOrdemExercicios";
+
+function carregarOrdemExercicios(){
+
+  try{
+
+    const dados = JSON.parse(
+      localStorage.getItem(CHAVE_ORDEM_EXERCICIOS)
+    ) || {};
+
+    treinos.forEach(function(treino){
+
+      const ordemGuardada = dados[treino.dia];
+
+      if(!Array.isArray(ordemGuardada))return;
+
+      const mapa = new Map(
+        treino.exercicios.map(function(exercicio){
+          return [String(exercicio.id), exercicio];
+        })
+      );
+
+      const ordenados = [];
+
+      ordemGuardada.forEach(function(id){
+
+        const exercicio = mapa.get(String(id));
+
+        if(exercicio){
+          ordenados.push(exercicio);
+          mapa.delete(String(id));
+        }
+
+      });
+
+      // Exercícios novos ficam no final.
+      mapa.forEach(function(exercicio){
+        ordenados.push(exercicio);
+      });
+
+      treino.exercicios = ordenados;
+
+    });
+
+  }catch(erro){
+
+    console.log(
+      "Não foi possível carregar a ordem dos exercícios."
+    );
+
+  }
+}
+
+function guardarOrdemExercicios(){
+
+  try{
+
+    const dados = {};
+
+    treinos.forEach(function(treino){
+
+      dados[treino.dia] = treino.exercicios.map(function(exercicio){
+        return exercicio.id;
+      });
+
+    });
+
+    localStorage.setItem(
+      CHAVE_ORDEM_EXERCICIOS,
+      JSON.stringify(dados)
+    );
+
+  }catch(erro){
+
+    console.log(
+      "Não foi possível guardar a ordem dos exercícios."
+    );
+
+  }
+}
+
+carregarOrdemExercicios();
 
 // =====================================================
 // 3. ELEMENTOS E TREINO ATUAL
 // =====================================================
 const paginaAtual = document.body.dataset.dia || "D1";
 const treinoAtual = treinos.find(function(t){return t.dia===paginaAtual;}) || treinos[0];
+let ultimoExercicioRemovido = null;
 const campoPesquisa=document.querySelector("#pesquisaExercicio");
 const filtroMusculo=document.querySelector("#filtroMusculo");
 const listaExercicios=document.querySelector("#listaExercicios");
@@ -792,8 +911,18 @@ function atualizarCabecalho(){
     link.addEventListener("click",function(){
       const pagina=link.getAttribute("href");
       sessionStorage.setItem("meuPlanoDiaSelecionado",pagina.replace(".html","").toUpperCase());
+      sessionStorage.setItem("meuPlanoDeveRolar","1");
     });
   });
+
+  if(window.innerWidth <= 650 && sessionStorage.getItem("meuPlanoDeveRolar") === "1" && sessionStorage.getItem("meuPlanoDiaSelecionado") === paginaAtual){
+    sessionStorage.removeItem("meuPlanoDeveRolar");
+    setTimeout(function(){
+      if(tituloTreino){
+        tituloTreino.scrollIntoView({behavior:"smooth",block:"start"});
+      }
+    },150);
+  }
 
   const cardio=cardioTreinos[treinoAtual.dia];
   if(cardioDescricao && cardio){
@@ -810,78 +939,347 @@ function obterExerciciosFiltrados(){
     return normalizarTexto(e.nome).includes(texto) && (grupo==="todos" || normalizarTexto(e.grupo)===grupo);
   });
 }
+function organizarExercicios(exercicios){
+  const grupos=[];
+  const mapa=new Map();
+
+  exercicios.forEach(function(exercicio){
+    if(!mapa.has(exercicio.grupo)){
+      const grupo=[];
+      mapa.set(exercicio.grupo,grupo);
+      grupos.push(grupo);
+    }
+    mapa.get(exercicio.grupo).push(exercicio);
+  });
+
+  return grupos.flatMap(function(grupo){
+    return grupo.filter(function(e){return !e.concluido;})
+      .concat(grupo.filter(function(e){return e.concluido;}));
+  });
+}
 function atualizarContador(n){contadorResultados.textContent=`${n} exercícios encontrados.`;}
 
 // =====================================================
 // 6. CARTÕES
 // =====================================================
+
 const intervalosImagens=new Map();
+
 function iniciarAnimacao(card,imgs){
+
   if(imgs.length<2)return;
+
   let indice=0;
+
   const frames=card.querySelectorAll(".frame-exercicio");
-  function mudar(){frames.forEach(function(f,i){f.classList.toggle("visivel",i===indice);}); indice=(indice+1)%frames.length;}
-  mudar();
-  let velocidade=1000;
-  let timer=setInterval(mudar,velocidade);
-  intervalosImagens.set(card,timer);
-  card.addEventListener("mouseenter",function(){clearInterval(timer); velocidade=500; timer=setInterval(mudar,velocidade);});
-  card.addEventListener("mouseleave",function(){clearInterval(timer); velocidade=1000; timer=setInterval(mudar,velocidade);});
-}
-function mostrarExercicios(exercicios){
-  intervalosImagens.forEach(function(timer){clearInterval(timer);});
-  intervalosImagens.clear();
-  listaExercicios.innerHTML="";
-  atualizarContador(exercicios.length);
-  if(exercicios.length===0){listaExercicios.innerHTML='<p class="estado-vazio">Nenhum exercício encontrado.</p>';return;}
-  exercicios.forEach(function(exercicio,indice){
-    const artigo=document.createElement("article");
-    const urls=obterImagemUrls(exercicio);
-    const fallbackUrls=obterImagemFallbackUrls(exercicio);
-    const wiki=obterMuscleWiki(exercicio);
-    const video=obterVideo(exercicio);
-    const numero=String(indice+1).padStart(2,"0");
-    const nomeExibicao=nomesExibicao[exercicio.nome] || exercicio.nome;
-    const imagem0=urls[0] || "";
-    const imagem1=urls[1] || imagem0;
-    artigo.innerHTML=`
-      <div class="cabecalho-cartao-final">
-        <div>
-          <h3>${exercicio.falha?"🔥 ":""}<a class="nome-exercicio-link" href="${wiki}" target="_blank" rel="noopener noreferrer" title="Abrir no MuscleWiki">${nomeExibicao} ↗</a></h3>
-          <p class="grupo-cartao-final">${exercicio.grupo}</p>
-        </div>
-        <div class="numero-remover">
-          <span class="numero-exercicio">${numero}</span>
-          <button type="button" class="botao-remover" data-id="${exercicio.id}">🗑 Remover</button>
-        </div>
-      </div>
-      <div class="imagem-exercicio-final" data-video="${video}">
-        <a href="${video}" target="_blank" rel="noopener noreferrer" class="imagem-link" title="Abrir demonstração">
-          <img class="frame-exercicio visivel" src="${imagem0}" data-fallback="${fallbackUrls[0] || ""}" alt="Demonstração de ${nomeExibicao}">
-          <img class="frame-exercicio" src="${imagem1}" data-fallback="${fallbackUrls[1] || ""}" alt="Demonstração de ${nomeExibicao}" aria-hidden="true">
-        </a>
-        <a class="botao-ver" href="${video}" target="_blank" rel="noopener noreferrer">▶ Ver</a>
-      </div>
-      <div class="info-linha-final">
-        <span class="series">🔢 ${exercicio.series} × ${exercicio.repeticoes}</span>
-        <span class="resto">⏱ ${exercicio.descanso}</span>
-        <span class="peso-final">⚖ <input type="number" class="pesoExercicio" data-id="${exercicio.id}" value="${exercicio.peso || 0}" min="0" step="0.5" aria-label="Peso em kg"> kg <span class="peso-ok">✓</span></span>
-      </div>`;
-    listaExercicios.appendChild(artigo);
-    iniciarAnimacao(artigo,urls);
-    artigo.querySelectorAll("img").forEach(function(img){
-      img.addEventListener("error",function(){
-        const fallback=this.dataset.fallback;
-        if(fallback && this.src !== fallback){
-          this.src=fallback;
-          this.dataset.fallback="";
-          return;
-        }
-        this.style.display="none";
-      });
+
+  function mudar(){
+    frames.forEach(function(f,i){
+      f.classList.toggle("visivel",i===indice);
     });
+
+    indice=(indice+1)%frames.length;
+  }
+
+  mudar();
+
+  let velocidade=1000;
+
+  let timer=setInterval(mudar,velocidade);
+
+  intervalosImagens.set(card,timer);
+
+  card.addEventListener("mouseenter",function(){
+    clearInterval(timer);
+    velocidade=500;
+    timer=setInterval(mudar,velocidade);
+  });
+
+  card.addEventListener("mouseleave",function(){
+    clearInterval(timer);
+    velocidade=1000;
+    timer=setInterval(mudar,velocidade);
   });
 }
+
+
+function mostrarExercicios(exercicios){
+
+  intervalosImagens.forEach(function(timer){
+    clearInterval(timer);
+  });
+
+  intervalosImagens.clear();
+
+  listaExercicios.innerHTML="";
+
+
+  /*
+    Os exercícios concluídos ficam temporariamente
+    no final da lista.
+
+    A ordem original não é alterada aqui.
+    Isso é importante porque a ordem manual será
+    guardada separadamente.
+  */
+
+  const exerciciosOrdenados=[...exercicios].sort(function(a,b){
+
+    return Number(Boolean(a.concluido)) -
+           Number(Boolean(b.concluido));
+
+  });
+
+
+  atualizarContador(exerciciosOrdenados.length);
+
+
+  if(ultimoExercicioRemovido){
+
+    const areaRepor=document.createElement("div");
+
+    areaRepor.className="area-repor";
+
+    areaRepor.innerHTML=
+      '<button type="button" class="botao-repor">↩ Repor último apagado</button>';
+
+    listaExercicios.appendChild(areaRepor);
+  }
+
+
+  if(exerciciosOrdenados.length===0){
+
+    listaExercicios.insertAdjacentHTML(
+      "beforeend",
+      '<p class="estado-vazio">Nenhum exercício encontrado.</p>'
+    );
+
+    return;
+  }
+
+
+  exerciciosOrdenados.forEach(function(exercicio,indice){
+
+    const artigo=document.createElement("article");
+
+    /*
+      O estado concluído existe apenas durante
+      a sessão atual.
+
+      Não é guardado no localStorage.
+    */
+
+    artigo.classList.toggle(
+      "concluido",
+      Boolean(exercicio.concluido)
+    );
+
+
+    /*
+      Preparamos o card para futuramente
+      poder ser arrastado.
+    */
+
+    artigo.draggable=true;
+
+    artigo.dataset.id=exercicio.id;
+
+
+    const urls=obterImagemUrls(exercicio);
+
+    const fallbackUrls=obterImagemFallbackUrls(exercicio);
+
+    const wiki=obterMuscleWiki(exercicio);
+
+    const video=obterVideo(exercicio);
+
+    /*
+      O número depende sempre da posição
+      atual do card na lista.
+    */
+
+    const numero=String(indice+1).padStart(2,"0");
+
+    const nomeExibicao=
+      nomesExibicao[exercicio.nome] || exercicio.nome;
+
+    const imagem0=urls[0] || "";
+
+    const imagem1=urls[1] || imagem0;
+
+
+    const historico=
+      Array.isArray(exercicio.historicoPesos)
+        ? exercicio.historicoPesos
+        : [exercicio.peso || 0];
+
+
+    const pesoAtual=historico[0] ?? 0;
+
+    const pesoAnterior=historico[1];
+
+
+    artigo.innerHTML=`
+
+      <div class="cabecalho-cartao-final">
+
+        <div>
+
+          <h3>
+            ${exercicio.falha?"🔥 ":""}
+            <a
+              class="nome-exercicio-link"
+              href="${wiki}"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Abrir no MuscleWiki"
+            >${nomeExibicao} ↗</a>
+          </h3>
+
+          <p class="grupo-cartao-final">
+            ${exercicio.grupo}
+          </p>
+
+        </div>
+
+
+        <div class="numero-remover">
+
+          <button
+            type="button"
+            class="botao-concluir"
+            data-id="${exercicio.id}"
+            aria-label="${exercicio.concluido
+              ? "Marcar exercício como não concluído"
+              : "Marcar exercício como concluído"}"
+            title="${exercicio.concluido
+              ? "Desmarcar"
+              : "Concluir"}"
+          >${exercicio.concluido ? "×" : numero}</button>
+
+
+          <button
+            type="button"
+            class="botao-remover"
+            data-id="${exercicio.id}"
+          >🗑 Remover</button>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="imagem-exercicio-final"
+        data-video="${video}"
+      >
+
+        <a
+          href="${video}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="imagem-link"
+          title="Abrir demonstração"
+        >
+
+          <img
+            class="frame-exercicio visivel"
+            src="${imagem0}"
+            data-fallback="${fallbackUrls[0] || ""}"
+            alt="Demonstração de ${nomeExibicao}"
+          >
+
+          <img
+            class="frame-exercicio"
+            src="${imagem1}"
+            data-fallback="${fallbackUrls[1] || ""}"
+            alt="Demonstração de ${nomeExibicao}"
+            aria-hidden="true"
+          >
+
+        </a>
+
+        <a
+          class="botao-ver"
+          href="${video}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >▶ Ver</a>
+
+      </div>
+
+
+      <div class="info-linha-final">
+
+        <span class="series">
+          🔢 ${exercicio.series} × ${exercicio.repeticoes}
+        </span>
+
+        <span class="resto">
+          ⏱ ${exercicio.descanso}
+        </span>
+
+        <span class="peso-final">
+
+          ⚖
+
+          <input
+            type="number"
+            class="pesoExercicio"
+            data-id="${exercicio.id}"
+            value="${pesoAtual}"
+            min="0"
+            step="0.5"
+            aria-label="Peso em kg"
+          >
+
+          kg
+
+          ${
+            pesoAnterior !== undefined
+              ? `<span class="peso-anterior" title="Peso anterior">← ${pesoAnterior} kg</span>`
+              : ""
+          }
+
+          <span class="peso-ok">✓</span>
+
+        </span>
+
+      </div>
+    `;
+
+
+    listaExercicios.appendChild(artigo);
+
+
+    iniciarAnimacao(artigo,urls);
+
+
+    artigo.querySelectorAll("img").forEach(function(img){
+
+      img.addEventListener("error",function(){
+
+        const fallback=this.dataset.fallback;
+
+        if(fallback && this.src !== fallback){
+
+          this.src=fallback;
+
+          this.dataset.fallback="";
+
+          return;
+        }
+
+        this.style.display="none";
+
+      });
+
+    });
+
+  });
+
+}
+
 
 // =====================================================
 // 7. PESQUISA / FILTRO
@@ -890,196 +1288,1166 @@ if(campoPesquisa)campoPesquisa.addEventListener("input",function(){mostrarExerci
 if(filtroMusculo)filtroMusculo.addEventListener("change",function(){mostrarExercicios(obterExerciciosFiltrados());});
 
 // =====================================================
-// 8. PESO E REMOÇÃO
+// 8. PESO, CONCLUSÃO E REMOÇÃO
 // =====================================================
-function encontrarExercicio(id){return treinoAtual.exercicios.find(function(e){return e.id===id;}) || null;}
+
+function encontrarExercicio(id){
+  return treinoAtual.exercicios.find(function(e){
+    return e.id===id;
+  }) || null;
+}
+
+
+// =====================================================
+// ALTERAÇÃO DO PESO
+// =====================================================
+
 listaExercicios.addEventListener("change",function(evento){
+
   if(!evento.target.classList.contains("pesoExercicio"))return;
-  const exercicio=encontrarExercicio(Number(evento.target.dataset.id));
-  if(exercicio){exercicio.peso=Number(evento.target.value)||0;guardarPeso(exercicio);}
+
+  const exercicio=encontrarExercicio(
+    Number(evento.target.dataset.id)
+  );
+
+  if(!exercicio)return;
+
+  const novoPeso=Number(evento.target.value)||0;
+
+  const historico=
+    Array.isArray(exercicio.historicoPesos)
+      ? exercicio.historicoPesos
+      : [exercicio.peso || 0];
+
+
+  exercicio.peso=novoPeso;
+
+
+  /*
+    Se o peso for igual ao atual,
+    não criamos uma nova entrada no histórico.
+
+    Caso seja diferente:
+    novo peso → primeiro
+    peso anterior → segundo
+    pesos mais antigos são descartados.
+  */
+
+  exercicio.historicoPesos=
+    historico[0]===novoPeso
+      ? historico.slice(0,2)
+      : [novoPeso].concat(historico).slice(0,2);
+
+
+  guardarPeso(exercicio);
+
+  mostrarExercicios(
+    obterExerciciosFiltrados()
+  );
+
 });
+
+
+// =====================================================
+// CLIQUES NOS CARTÕES
+// =====================================================
+
 listaExercicios.addEventListener("click",function(evento){
-  const botao=evento.target.closest(".botao-remover");
-  if(!botao)return;
-  const id=Number(botao.dataset.id);
-  const indice=treinoAtual.exercicios.findIndex(function(e){return e.id===id;});
-  if(indice!==-1){treinoAtual.exercicios.splice(indice,1);mostrarExercicios(obterExerciciosFiltrados());}
+
+
+  // ---------------------------------------------------
+  // CONCLUIR / DESMARCAR EXERCÍCIO
+  // ---------------------------------------------------
+
+  const botaoConcluir=
+    evento.target.closest(".botao-concluir");
+
+
+  if(botaoConcluir){
+
+    const exercicio=
+      encontrarExercicio(
+        Number(botaoConcluir.dataset.id)
+      );
+
+
+    if(exercicio){
+
+      /*
+        A conclusão é TEMPORÁRIA.
+
+        Não usamos localStorage aqui.
+
+        Ao atualizar a página:
+        - todos voltam a ficar não concluídos;
+        - a ordem manual continua preservada.
+      */
+
+      exercicio.concluido=!Boolean(
+        exercicio.concluido
+      );
+
+
+      /*
+        Se o exercício foi concluído,
+        guardamos a posição que ele tinha
+        antes de ir para o final da lista.
+      */
+
+      if(exercicio.concluido){
+
+        const indice=
+          treinoAtual.exercicios.findIndex(
+            function(e){
+              return e.id===exercicio.id;
+            }
+          );
+
+
+        exercicio.indiceAntesConclusao=indice;
+
+
+        if(indice!==-1){
+
+          treinoAtual.exercicios.splice(indice,1);
+
+          treinoAtual.exercicios.push(exercicio);
+
+        }
+
+      }else{
+
+        /*
+          Ao clicar novamente no ×,
+          tentamos devolver o exercício
+          para a posição que ele ocupava antes.
+        */
+
+        const indiceAtual=
+          treinoAtual.exercicios.findIndex(
+            function(e){
+              return e.id===exercicio.id;
+            }
+          );
+
+
+        if(indiceAtual!==-1){
+
+          treinoAtual.exercicios.splice(
+            indiceAtual,
+            1
+          );
+
+
+          let novaPosicao=
+            Number.isInteger(
+              exercicio.indiceAntesConclusao
+            )
+              ? exercicio.indiceAntesConclusao
+              : treinoAtual.exercicios.length;
+
+
+          /*
+            Evita uma posição inválida caso
+            a lista tenha mudado enquanto isso.
+          */
+
+          novaPosicao=Math.max(
+            0,
+            Math.min(
+              novaPosicao,
+              treinoAtual.exercicios.length
+            )
+          );
+
+
+          treinoAtual.exercicios.splice(
+            novaPosicao,
+            0,
+            exercicio
+          );
+
+        }
+
+
+        delete exercicio.indiceAntesConclusao;
+
+      }
+
+
+      mostrarExercicios(
+        obterExerciciosFiltrados()
+      );
+
+    }
+
+    return;
+  }
+
+
+  // ---------------------------------------------------
+  // REPOR ÚLTIMO EXERCÍCIO APAGADO
+  // ---------------------------------------------------
+
+  const botaoRepor=
+    evento.target.closest(".botao-repor");
+
+
+  if(botaoRepor){
+
+    if(ultimoExercicioRemovido){
+
+      treinoAtual.exercicios.splice(
+        ultimoExercicioRemovido.indice,
+        0,
+        ultimoExercicioRemovido.exercicio
+      );
+
+
+      ultimoExercicioRemovido=null;
+
+
+      /*
+        A reposição altera novamente a ordem
+        dos exercícios, portanto guardamos
+        a nova ordem manual.
+      */
+
+      guardarOrdemExercicios();
+
+
+      mostrarExercicios(
+        obterExerciciosFiltrados()
+      );
+
+    }
+
+    return;
+  }
+
+
+  // ---------------------------------------------------
+  // REMOVER EXERCÍCIO
+  // ---------------------------------------------------
+
+  const botaoRemover=
+    evento.target.closest(".botao-remover");
+
+
+  if(!botaoRemover)return;
+
+
+  const id=
+    Number(botaoRemover.dataset.id);
+
+
+  const indice=
+    treinoAtual.exercicios.findIndex(
+      function(e){
+        return e.id===id;
+      }
+    );
+
+
+  if(indice!==-1){
+
+    /*
+      Apenas o último exercício removido
+      pode ser recuperado.
+
+      Se outro exercício for apagado,
+      este substitui o anterior.
+    */
+
+    ultimoExercicioRemovido={
+      exercicio:treinoAtual.exercicios[indice],
+      indice:indice
+    };
+
+
+    treinoAtual.exercicios.splice(
+      indice,
+      1
+    );
+
+
+    /*
+      A remoção altera a ordem da lista,
+      então atualizamos a ordem guardada.
+    */
+
+    guardarOrdemExercicios();
+
+
+    mostrarExercicios(
+      obterExerciciosFiltrados()
+    );
+
+  }
+
 });
+
 
 // =====================================================
 // 9. ADICIONAR EXERCÍCIO
 // =====================================================
+
 if(formulario){
-  formulario.addEventListener("submit",function(evento){
-    evento.preventDefault();
-    const nome=document.querySelector("#nomeExercicio").value.trim();
-    const grupo=document.querySelector("#grupoMuscular").value;
-    const series=Number(document.querySelector("#series").value);
-    const repeticoes=document.querySelector("#repeticoes").value.trim();
-    const descanso=document.querySelector("#descansoExercicio").value;
-    const falha=document.querySelector("#ateFalha").checked;
-    if(!nome || !grupo || !series || !repeticoes){return;}
-    const duplicado=treinoAtual.exercicios.some(function(e){return normalizarTexto(e.nome)===normalizarTexto(nome);});
-    if(duplicado){alert("Já existe um exercício com esse nome neste treino.");return;}
-    const novo={id:Date.now(),nome:nome,grupo:grupo,series:series,repeticoes:repeticoes,descanso:descanso,falha:falha,peso:0,personalizado:true};
-    treinoAtual.exercicios.push(novo);
-    formulario.reset();
-    document.querySelector("#series").value=3;
-    mostrarExercicios(obterExerciciosFiltrados());
-  });
-}
 
-// =====================================================
-// 10. CALENDÁRIO
-// =====================================================
-(function criarCalendario(){
-  const icone=document.querySelector(".icone-sidebar");
-  if(!icone)return;
+  formulario.addEventListener(
+    "submit",
+    function(evento){
 
-  icone.setAttribute("role","button");
-  icone.setAttribute("tabindex","0");
-  icone.setAttribute("aria-label","Abrir calendário");
+      evento.preventDefault();
 
-  const dialog=document.createElement("dialog");
-  dialog.id="calendarioDialog";
-  dialog.innerHTML=`
-    <div class="calendario-conteudo">
-      <div class="calendario-topo">
-        <div>
-          <span class="calendario-kicker">CALENDÁRIO</span>
-          <h2>📅 Os teus treinos</h2>
-        </div>
-        <button type="button" class="calendario-fechar" aria-label="Fechar">×</button>
-      </div>
 
-      <div class="calendario-navegacao">
-        <button type="button" id="mesAnterior" aria-label="Mês anterior">‹</button>
-        <strong id="mesAtual"></strong>
-        <button type="button" id="mesSeguinte" aria-label="Mês seguinte">›</button>
-      </div>
+      const nome=
+        document.querySelector(
+          "#nomeExercicio"
+        ).value.trim();
 
-      <div class="calendario-semana">
-        <span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span>
-        <span>SEX</span><span>SÁB</span><span>DOM</span>
-      </div>
 
-      <div id="diasCalendario" class="calendario-dias"></div>
-      <p id="dataCalendarioSelecionada" class="calendario-selecionada">Seleciona um dia.</p>
-    </div>
-  `;
-  document.body.appendChild(dialog);
+      const grupo=
+        document.querySelector(
+          "#grupoMuscular"
+        ).value;
 
-  const hoje=new Date();
-  let mes=hoje.getMonth();
-  let ano=hoje.getFullYear();
-  const nomesMeses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-  const dias=dialog.querySelector("#diasCalendario");
-  const titulo=dialog.querySelector("#mesAtual");
-  const selecionada=dialog.querySelector("#dataCalendarioSelecionada");
 
-  function chaveData(d){
-    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-  }
+      const series=
+        Number(
+          document.querySelector(
+            "#series"
+          ).value
+        );
 
-  function desenharCalendario(){
-    titulo.textContent=`${nomesMeses[mes]} ${ano}`;
-    dias.innerHTML="";
 
-    const primeiroDia=new Date(ano,mes,1);
-    const ultimoDia=new Date(ano,mes+1,0);
-    const offset=(primeiroDia.getDay()+6)%7;
+      const repeticoes=
+        document.querySelector(
+          "#repeticoes"
+        ).value.trim();
 
-    for(let i=0;i<offset;i++){
-      const vazio=document.createElement("span");
-      vazio.className="dia-vazio";
-      dias.appendChild(vazio);
-    }
 
-    for(let numero=1;numero<=ultimoDia.getDate();numero++){
-      const botao=document.createElement("button");
-      const data=new Date(ano,mes,numero);
-      botao.type="button";
-      botao.className="dia-calendario";
-      botao.textContent=numero;
+      const descanso=
+        document.querySelector(
+          "#descansoExercicio"
+        ).value;
 
-      if(chaveData(data)===chaveData(hoje)){
-        botao.classList.add("hoje");
+
+      const falha=
+        document.querySelector(
+          "#ateFalha"
+        ).checked;
+
+
+      if(
+        !nome ||
+        !grupo ||
+        !series ||
+        !repeticoes
+      ){
+        return;
       }
 
-      botao.addEventListener("click",function(){
-        document.querySelectorAll(".dia-calendario.selecionado").forEach(function(item){
-          item.classList.remove("selecionado");
-        });
-        botao.classList.add("selecionado");
 
-        const texto=`${String(numero).padStart(2,"0")}/${String(mes+1).padStart(2,"0")}/${ano}`;
-        selecionada.textContent=`Treino selecionado: ${texto}`;
-        localStorage.setItem("meuPlanoDataTreino",chaveData(data));
-      });
+      const duplicado=
+        treinoAtual.exercicios.some(
+          function(e){
+            return normalizarTexto(e.nome)===
+                   normalizarTexto(nome);
+          }
+        );
+
+
+      if(duplicado){
+
+        alert(
+          "Já existe um exercício com esse nome neste treino."
+        );
+
+        return;
+      }
+
+
+      const novo={
+        id:Date.now(),
+        nome:nome,
+        grupo:grupo,
+        series:series,
+        repeticoes:repeticoes,
+        descanso:descanso,
+        falha:falha,
+        peso:0,
+        historicoPesos:[],
+        concluido:false,
+        personalizado:true
+      };
+
+
+      /*
+        Exercícios novos entram no final
+        da ordem manual atual.
+      */
+
+      treinoAtual.exercicios.push(novo);
+
+
+      /*
+        Guardamos a nova ordem para que
+        o exercício continue no final
+        mesmo depois de atualizar a página.
+      */
+
+      guardarOrdemExercicios();
+
+
+      formulario.reset();
+
+
+      document.querySelector(
+        "#series"
+      ).value=3;
+
+
+      mostrarExercicios(
+        obterExerciciosFiltrados()
+      );
+
+    }
+  );
+
+}
+
+
+// =====================================================
+// 10. ARRASTAR E REORDENAR EXERCÍCIOS
+// =====================================================
+
+let exercicioArrastadoId=null;
+
+
+listaExercicios.addEventListener("dragstart",function(evento){
+
+  const artigo=evento.target.closest("article");
+
+  if(!artigo)return;
+
+  exercicioArrastadoId=Number(artigo.dataset.id);
+
+  artigo.classList.add("arrastando");
+
+  evento.dataTransfer.effectAllowed="move";
+
+  evento.dataTransfer.setData(
+    "text/plain",
+    String(exercicioArrastadoId)
+  );
+
+});
+
+
+listaExercicios.addEventListener("dragend",function(evento){
+
+  const artigo=evento.target.closest("article");
+
+  if(artigo){
+    artigo.classList.remove("arrastando");
+  }
+
+  document
+    .querySelectorAll("#listaExercicios article")
+    .forEach(function(item){
+      item.classList.remove("alvo-arrastar");
+    });
+
+  exercicioArrastadoId=null;
+
+});
+
+
+listaExercicios.addEventListener("dragover",function(evento){
+
+  const artigo=evento.target.closest("article");
+
+  if(!artigo)return;
+
+  /*
+    É necessário impedir o comportamento padrão
+    para permitir o drop.
+  */
+
+  evento.preventDefault();
+
+  evento.dataTransfer.dropEffect="move";
+
+
+  document
+    .querySelectorAll("#listaExercicios article")
+    .forEach(function(item){
+
+      item.classList.remove("alvo-arrastar");
+
+    });
+
+
+  /*
+    Não colocamos o destaque no próprio
+    exercício que está sendo arrastado.
+  */
+
+  if(
+    Number(artigo.dataset.id)!==
+    exercicioArrastadoId
+  ){
+
+    artigo.classList.add("alvo-arrastar");
+
+  }
+
+});
+
+
+listaExercicios.addEventListener("drop",function(evento){
+
+  evento.preventDefault();
+
+
+  const alvo=evento.target.closest("article");
+
+  if(!alvo)return;
+
+
+  const idArrastado=
+    exercicioArrastadoId ||
+    Number(
+      evento.dataTransfer.getData("text/plain")
+    );
+
+
+  const idAlvo=
+    Number(alvo.dataset.id);
+
+
+  if(
+    !idArrastado ||
+    !idAlvo ||
+    idArrastado===idAlvo
+  ){
+
+    exercicioArrastadoId=null;
+
+    return;
+  }
+
+
+  const indiceArrastado=
+    treinoAtual.exercicios.findIndex(
+      function(exercicio){
+        return exercicio.id===idArrastado;
+      }
+    );
+
+
+  const indiceAlvo=
+    treinoAtual.exercicios.findIndex(
+      function(exercicio){
+        return exercicio.id===idAlvo;
+      }
+    );
+
+
+  if(
+    indiceArrastado===-1 ||
+    indiceAlvo===-1
+  ){
+
+    exercicioArrastadoId=null;
+
+    return;
+  }
+
+
+  /*
+    Retiramos o exercício da posição antiga.
+  */
+
+  const exercicio=
+    treinoAtual.exercicios.splice(
+      indiceArrastado,
+      1
+    )[0];
+
+
+  /*
+    Depois de retirar o exercício,
+    precisamos recalcular a posição do alvo.
+  */
+
+  let novaPosicao=
+    treinoAtual.exercicios.findIndex(
+      function(item){
+        return item.id===idAlvo;
+      }
+    );
+
+
+  if(novaPosicao===-1){
+
+    treinoAtual.exercicios.push(exercicio);
+
+  }else{
+
+    /*
+      Descobrimos se o mouse estava na metade
+      superior ou inferior do card.
+
+      Superior:
+      coloca antes.
+
+      Inferior:
+      coloca depois.
+    */
+
+    const rect=alvo.getBoundingClientRect();
+
+    const metade=
+      rect.top + rect.height / 2;
+
+
+    if(evento.clientY>metade){
+
+      novaPosicao++;
+
+    }
+
+
+    treinoAtual.exercicios.splice(
+      novaPosicao,
+      0,
+      exercicio
+    );
+
+  }
+
+
+  /*
+    A ordem foi alterada manualmente.
+
+    Portanto, esta ordem deve ser salva.
+  */
+
+  guardarOrdemExercicios();
+
+
+  exercicioArrastadoId=null;
+
+
+  mostrarExercicios(
+    obterExerciciosFiltrados()
+  );
+
+});
+
+
+// =====================================================
+// 11. CALENDÁRIO
+// =====================================================
+
+(function criarCalendario(){
+
+  const icone=document.querySelector(".icone-sidebar");
+
+  if(!icone)return;
+
+
+  icone.setAttribute("role","button");
+
+  icone.setAttribute("tabindex","0");
+
+  icone.setAttribute(
+    "aria-label",
+    "Abrir calendário"
+  );
+
+
+  const dialog=document.createElement("dialog");
+
+  dialog.id="calendarioDialog";
+
+
+  dialog.innerHTML=`
+
+    <div class="calendario-conteudo">
+
+      <div class="calendario-topo">
+
+        <div>
+
+          <span class="calendario-kicker">
+            CALENDÁRIO
+          </span>
+
+          <h2>📅 Os teus treinos</h2>
+
+        </div>
+
+        <button
+          type="button"
+          class="calendario-fechar"
+          aria-label="Fechar"
+        >×</button>
+
+      </div>
+
+
+      <div class="calendario-navegacao">
+
+        <button
+          type="button"
+          id="mesAnterior"
+          aria-label="Mês anterior"
+        >‹</button>
+
+        <strong id="mesAtual"></strong>
+
+        <button
+          type="button"
+          id="mesSeguinte"
+          aria-label="Mês seguinte"
+        >›</button>
+
+      </div>
+
+
+      <div class="calendario-semana">
+
+        <span>SEG</span>
+        <span>TER</span>
+        <span>QUA</span>
+        <span>QUI</span>
+        <span>SEX</span>
+        <span>SÁB</span>
+        <span>DOM</span>
+
+      </div>
+
+
+      <div
+        id="diasCalendario"
+        class="calendario-dias"
+      ></div>
+
+
+      <p
+        id="dataCalendarioSelecionada"
+        class="calendario-selecionada"
+      >Seleciona um dia.</p>
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(dialog);
+
+
+  const hoje=new Date();
+
+  let mes=hoje.getMonth();
+
+  let ano=hoje.getFullYear();
+
+
+  const nomesMeses=[
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+  ];
+
+
+  const dias=
+    dialog.querySelector(
+      "#diasCalendario"
+    );
+
+
+  const titulo=
+    dialog.querySelector(
+      "#mesAtual"
+    );
+
+
+  const selecionada=
+    dialog.querySelector(
+      "#dataCalendarioSelecionada"
+    );
+
+
+  function chaveData(d){
+
+    return `${d.getFullYear()}-${String(
+      d.getMonth()+1
+    ).padStart(2,"0")}-${String(
+      d.getDate()
+    ).padStart(2,"0")}`;
+
+  }
+
+
+  function desenharCalendario(){
+
+    titulo.textContent=
+      `${nomesMeses[mes]} ${ano}`;
+
+
+    dias.innerHTML="";
+
+
+    const primeiroDia=
+      new Date(ano,mes,1);
+
+
+    const ultimoDia=
+      new Date(ano,mes+1,0);
+
+
+    const offset=
+      (primeiroDia.getDay()+6)%7;
+
+
+    for(let i=0;i<offset;i++){
+
+      const vazio=
+        document.createElement("span");
+
+      vazio.className="dia-vazio";
+
+      dias.appendChild(vazio);
+
+    }
+
+
+    for(
+      let numero=1;
+      numero<=ultimoDia.getDate();
+      numero++
+    ){
+
+      const botao=
+        document.createElement("button");
+
+
+      const data=
+        new Date(
+          ano,
+          mes,
+          numero
+        );
+
+
+      botao.type="button";
+
+      botao.className="dia-calendario";
+
+      botao.textContent=numero;
+
+
+      if(
+        chaveData(data)===
+        chaveData(hoje)
+      ){
+
+        botao.classList.add("hoje");
+
+      }
+
+
+      botao.addEventListener(
+        "click",
+        function(){
+
+          document
+            .querySelectorAll(
+              ".dia-calendario.selecionado"
+            )
+            .forEach(function(item){
+
+              item.classList.remove(
+                "selecionado"
+              );
+
+            });
+
+
+          botao.classList.add(
+            "selecionado"
+          );
+
+
+          const texto=
+            `${String(numero).padStart(2,"0")}/`+
+            `${String(mes+1).padStart(2,"0")}/`+
+            `${ano}`;
+
+
+          selecionada.textContent=
+            `Treino selecionado: ${texto}`;
+
+
+          localStorage.setItem(
+            "meuPlanoDataTreino",
+            chaveData(data)
+          );
+
+        }
+      );
+
 
       dias.appendChild(botao);
+
     }
+
   }
+
 
   function abrir(){
+
     desenharCalendario();
+
     dialog.showModal();
+
   }
 
-  icone.addEventListener("click",abrir);
-  icone.addEventListener("keydown",function(e){
-    if(e.key==="Enter" || e.key===" "){
-      e.preventDefault();
-      abrir();
+
+  icone.addEventListener(
+    "click",
+    abrir
+  );
+
+
+  icone.addEventListener(
+    "keydown",
+    function(e){
+
+      if(
+        e.key==="Enter" ||
+        e.key===" "
+      ){
+
+        e.preventDefault();
+
+        abrir();
+
+      }
+
     }
-  });
+  );
 
-  dialog.querySelector(".calendario-fechar").addEventListener("click",function(){
-    dialog.close();
-  });
 
-  dialog.querySelector("#mesAnterior").addEventListener("click",function(){
-    mes--;
-    if(mes<0){mes=11;ano--;}
-    desenharCalendario();
-  });
+  dialog
+    .querySelector(
+      ".calendario-fechar"
+    )
+    .addEventListener(
+      "click",
+      function(){
 
-  dialog.querySelector("#mesSeguinte").addEventListener("click",function(){
-    mes++;
-    if(mes>11){mes=0;ano++;}
-    desenharCalendario();
-  });
+        dialog.close();
 
-  dialog.addEventListener("click",function(e){
-    if(e.target===dialog)dialog.close();
-  });
+      }
+    );
+
+
+  dialog
+    .querySelector(
+      "#mesAnterior"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        mes--;
+
+        if(mes<0){
+
+          mes=11;
+
+          ano--;
+
+        }
+
+        desenharCalendario();
+
+      }
+    );
+
+
+  dialog
+    .querySelector(
+      "#mesSeguinte"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        mes++;
+
+        if(mes>11){
+
+          mes=0;
+
+          ano++;
+
+        }
+
+        desenharCalendario();
+
+      }
+    );
+
+
+  dialog.addEventListener(
+    "click",
+    function(e){
+
+      if(e.target===dialog){
+
+        dialog.close();
+
+      }
+
+    }
+  );
+
 })();
 
+
 // =====================================================
-// 11. SPOTIFY FLUTUANTE
+// 12. SPOTIFY FLUTUANTE
 // =====================================================
+
 (function criarSpotify(){
-  const caixa=document.createElement("div");
-  caixa.className="spotify-flutuante";
+
+  const caixa=
+    document.createElement("div");
+
+
+  caixa.className=
+    "spotify-flutuante";
+
+
   caixa.innerHTML=`
-    <button type="button" class="spotify-botao" aria-label="Abrir menu do Spotify">🎵</button>
-    <div class="spotify-menu">
-      <strong>Spotify</strong>
-      <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer">▶ Abrir Spotify</a>
-      <a href="https://open.spotify.com/search/workout" target="_blank" rel="noopener noreferrer">🔎 Procurar música</a>
+
+    <button
+      type="button"
+      class="spotify-botao"
+      aria-label="Abrir menu do Spotify"
+    >●</button>
+
+
+    <div
+      class="spotify-controles"
+      aria-label="Atalhos do Spotify"
+    >
+
+      <button
+        type="button"
+        title="Música anterior"
+        aria-label="Música anterior"
+      >⏮</button>
+
+
+      <button
+        type="button"
+        class="spotify-play"
+        title="Abrir Spotify para reproduzir"
+        aria-label="Abrir Spotify para reproduzir"
+      >▶</button>
+
+
+      <button
+        type="button"
+        title="Próxima música"
+        aria-label="Próxima música"
+      >⏭</button>
+
     </div>
+
+
+    <div class="spotify-menu">
+
+      <strong>Spotify</strong>
+
+      <a
+        href="https://open.spotify.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >▶ Abrir Spotify</a>
+
+
+      <a
+        href="https://open.spotify.com/search/workout"
+        target="_blank"
+        rel="noopener noreferrer"
+      >🔎 Procurar música</a>
+
+    </div>
+
   `;
+
+
   document.body.appendChild(caixa);
 
-  caixa.querySelector(".spotify-botao").addEventListener("click",function(){
-    caixa.classList.toggle("aberto");
-  });
+
+  caixa
+    .querySelector(".spotify-botao")
+    .addEventListener(
+      "click",
+      function(){
+
+        caixa.classList.toggle("aberto");
+
+      }
+    );
+
+
+  caixa
+    .querySelector(".spotify-play")
+    .addEventListener(
+      "click",
+      function(){
+
+        window.open(
+          "https://open.spotify.com/",
+          "_blank",
+          "noopener,noreferrer"
+        );
+
+      }
+    );
+
 })();
 
-// =====================================================
-// 12. INICIALIZAÇÃO
-// =====================================================
 
 // =====================================================
-if(tituloTreino)atualizarCabecalho();
-mostrarExercicios(treinoAtual.exercicios);
+// 13. INICIALIZAÇÃO
+// =====================================================
+
+if(tituloTreino){
+
+  atualizarCabecalho();
+
+}
+
+
+mostrarExercicios(
+  treinoAtual.exercicios
+);
