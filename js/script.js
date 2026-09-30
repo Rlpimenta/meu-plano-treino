@@ -625,24 +625,11 @@ const imagensExercicios = {
     50: "Plank"
 };
 
-function obterImagem(exercicio) {
-    const pasta = imagensExercicios[exercicio.id];
-
-    if (!pasta) {
-        return "";
-    }
-
-    return `${BASE_IMAGENS}${pasta}/0.jpg`;
-}
-
-
-
 // =====================================================
 // 1. CONFIGURAÇÕES
 // =====================================================
 const BASE_IMAGENS = "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/";
 const CHAVE_PESOS = "meuPlanoPesosV4";
-const CHAVE_ESTADOS = "meuPlanoEstadosV1";
 const FRASES = [
   "Disciplina hoje, resultado amanhã.",
   "Pequenos progressos, grandes resultados.",
@@ -939,24 +926,6 @@ function obterExerciciosFiltrados(){
     return normalizarTexto(e.nome).includes(texto) && (grupo==="todos" || normalizarTexto(e.grupo)===grupo);
   });
 }
-function organizarExercicios(exercicios){
-  const grupos=[];
-  const mapa=new Map();
-
-  exercicios.forEach(function(exercicio){
-    if(!mapa.has(exercicio.grupo)){
-      const grupo=[];
-      mapa.set(exercicio.grupo,grupo);
-      grupos.push(grupo);
-    }
-    mapa.get(exercicio.grupo).push(exercicio);
-  });
-
-  return grupos.flatMap(function(grupo){
-    return grupo.filter(function(e){return !e.concluido;})
-      .concat(grupo.filter(function(e){return e.concluido;}));
-  });
-}
 function atualizarContador(n){contadorResultados.textContent=`${n} exercícios encontrados.`;}
 
 // =====================================================
@@ -1010,170 +979,64 @@ function mostrarExercicios(exercicios){
   });
 
   intervalosImagens.clear();
-
   listaExercicios.innerHTML="";
 
-
   /*
-    Os exercícios concluídos ficam temporariamente
-    no final da lista.
-
-    A ordem original não é alterada aqui.
-    Isso é importante porque a ordem manual será
-    guardada separadamente.
+    Exercícios concluídos ficam temporariamente no final
+    da lista. A ordem manual guardada continua intacta.
   */
-
   const exerciciosOrdenados=[...exercicios].sort(function(a,b){
-
     return Number(Boolean(a.concluido)) -
            Number(Boolean(b.concluido));
-
   });
-
 
   atualizarContador(exerciciosOrdenados.length);
 
-
   if(ultimoExercicioRemovido){
-
     const areaRepor=document.createElement("div");
-
     areaRepor.className="area-repor";
-
     areaRepor.innerHTML=
       '<button type="button" class="botao-repor">↩ Repor último apagado</button>';
-
     listaExercicios.appendChild(areaRepor);
   }
 
-
   if(exerciciosOrdenados.length===0){
-
     listaExercicios.insertAdjacentHTML(
       "beforeend",
       '<p class="estado-vazio">Nenhum exercício encontrado.</p>'
     );
-
     return;
   }
-
 
   exerciciosOrdenados.forEach(function(exercicio,indice){
 
     const artigo=document.createElement("article");
 
-    /*
-      O estado concluído existe apenas durante
-      a sessão atual.
-
-      Não é guardado no localStorage.
-    */
-
-    artigo.classList.toggle(
-      "concluido",
-      Boolean(exercicio.concluido)
-    );
-
-
-    /*
-      Preparamos o card para futuramente
-      poder ser arrastado.
-    */
-
+    artigo.classList.toggle("concluido",Boolean(exercicio.concluido));
     artigo.draggable=true;
-
     artigo.dataset.id=exercicio.id;
 
-
     const urls=obterImagemUrls(exercicio);
-
     const fallbackUrls=obterImagemFallbackUrls(exercicio);
-
     const wiki=obterMuscleWiki(exercicio);
-
     const video=obterVideo(exercicio);
-
-    /*
-      O número depende sempre da posição
-      atual do card na lista.
-    */
-
     const numero=String(indice+1).padStart(2,"0");
-
-    const nomeExibicao=
-      nomesExibicao[exercicio.nome] || exercicio.nome;
+    const nomeExibicao=nomesExibicao[exercicio.nome] || exercicio.nome;
 
     const imagem0=urls[0] || "";
-
     const imagem1=urls[1] || imagem0;
-
+    const temImagem=Boolean(imagem0);
 
     const historico=
       Array.isArray(exercicio.historicoPesos)
         ? exercicio.historicoPesos
         : [exercicio.peso || 0];
 
-
     const pesoAtual=historico[0] ?? 0;
-
     const pesoAnterior=historico[1];
 
-
-    artigo.innerHTML=`
-
-      <div class="cabecalho-cartao-final">
-
-        <div>
-
-          <h3>
-            ${exercicio.falha?"🔥 ":""}
-            <a
-              class="nome-exercicio-link"
-              href="${wiki}"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Abrir no MuscleWiki"
-            >${nomeExibicao} ↗</a>
-          </h3>
-
-          <p class="grupo-cartao-final">
-            ${exercicio.grupo}
-          </p>
-
-        </div>
-
-
-        <div class="numero-remover">
-
-          <button
-            type="button"
-            class="botao-concluir"
-            data-id="${exercicio.id}"
-            aria-label="${exercicio.concluido
-              ? "Marcar exercício como não concluído"
-              : "Marcar exercício como concluído"}"
-            title="${exercicio.concluido
-              ? "Desmarcar"
-              : "Concluir"}"
-          >${exercicio.concluido ? "×" : numero}</button>
-
-
-          <button
-            type="button"
-            class="botao-remover"
-            data-id="${exercicio.id}"
-          >🗑 Remover</button>
-
-        </div>
-
-      </div>
-
-
-      <div
-        class="imagem-exercicio-final"
-        data-video="${video}"
-      >
-
+    const imagemMarkup=temImagem
+      ? `
         <a
           href="${video}"
           target="_blank"
@@ -1181,7 +1044,6 @@ function mostrarExercicios(exercicios){
           class="imagem-link"
           title="Abrir demonstração"
         >
-
           <img
             class="frame-exercicio visivel"
             src="${imagem0}"
@@ -1196,8 +1058,64 @@ function mostrarExercicios(exercicios){
             alt="Demonstração de ${nomeExibicao}"
             aria-hidden="true"
           >
-
         </a>
+      `
+      : `
+        <div class="imagem-sem-foto" aria-label="Imagem não disponível">
+          <span>💪</span>
+          <p>Imagem não disponível</p>
+        </div>
+      `;
+
+    artigo.innerHTML=`
+
+      <div class="cabecalho-cartao-final">
+        <div>
+          <h3>
+            ${exercicio.falha ? "🔥 " : ""}
+            <a
+              class="nome-exercicio-link"
+              href="${wiki}"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Abrir no MuscleWiki"
+            >${nomeExibicao} ↗</a>
+          </h3>
+
+          <p class="grupo-cartao-final">
+            ${exercicio.grupo}
+          </p>
+        </div>
+
+        <div class="numero-remover">
+          <button
+            type="button"
+            class="botao-concluir"
+            data-id="${exercicio.id}"
+            aria-label="${exercicio.concluido
+              ? "Marcar exercício como não concluído"
+              : "Marcar exercício como concluído"}"
+            title="${exercicio.concluido ? "Desmarcar" : "Concluir"}"
+          >${exercicio.concluido ? "×" : numero}</button>
+        </div>
+      </div>
+
+      <div class="imagem-exercicio-final" data-video="${video}">
+
+        <!--
+          SOBREPOSIÇÃO INTENCIONAL:
+          O botão de remover fica sobre a imagem para
+          não ocupar espaço no cabeçalho do cartão.
+        -->
+        <button
+          type="button"
+          class="botao-remover"
+          data-id="${exercicio.id}"
+          aria-label="Remover exercício ${nomeExibicao}"
+          title="Remover exercício"
+        >🗑</button>
+
+        ${imagemMarkup}
 
         <a
           class="botao-ver"
@@ -1205,12 +1123,9 @@ function mostrarExercicios(exercicios){
           target="_blank"
           rel="noopener noreferrer"
         >▶ Ver</a>
-
       </div>
 
-
       <div class="info-linha-final">
-
         <span class="series">
           🔢 ${exercicio.series} × ${exercicio.repeticoes}
         </span>
@@ -1220,9 +1135,7 @@ function mostrarExercicios(exercicios){
         </span>
 
         <span class="peso-final">
-
           ⚖
-
           <input
             type="number"
             class="pesoExercicio"
@@ -1232,52 +1145,37 @@ function mostrarExercicios(exercicios){
             step="0.5"
             aria-label="Peso em kg"
           >
-
           kg
-
           ${
             pesoAnterior !== undefined
               ? `<span class="peso-anterior" title="Peso anterior">← ${pesoAnterior} kg</span>`
               : ""
           }
-
           <span class="peso-ok">✓</span>
-
         </span>
-
       </div>
     `;
 
-
     listaExercicios.appendChild(artigo);
 
-
-    iniciarAnimacao(artigo,urls);
-
+    if(temImagem){
+      iniciarAnimacao(artigo,urls);
+    }
 
     artigo.querySelectorAll("img").forEach(function(img){
-
       img.addEventListener("error",function(){
-
         const fallback=this.dataset.fallback;
 
         if(fallback && this.src !== fallback){
-
           this.src=fallback;
-
           this.dataset.fallback="";
-
           return;
         }
 
         this.style.display="none";
-
       });
-
     });
-
   });
-
 }
 
 
@@ -2332,107 +2230,33 @@ listaExercicios.addEventListener("drop",function(evento){
 
 // =====================================================
 // 12. SPOTIFY FLUTUANTE
+//
+// Apenas o ícone é mantido porque os controlos de
+// música anteriores não controlavam a reprodução real.
 // =====================================================
 
 (function criarSpotify(){
 
-  const caixa=
-    document.createElement("div");
-
-
-  caixa.className=
-    "spotify-flutuante";
-
+  const caixa=document.createElement("div");
+  caixa.className="spotify-flutuante";
 
   caixa.innerHTML=`
-
-    <button
-      type="button"
+    <a
       class="spotify-botao"
-      aria-label="Abrir menu do Spotify"
-    >●</button>
-
-
-    <div
-      class="spotify-controles"
-      aria-label="Atalhos do Spotify"
+      href="https://open.spotify.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Abrir Spotify"
+      title="Abrir Spotify"
     >
-
-      <button
-        type="button"
-        title="Música anterior"
-        aria-label="Música anterior"
-      >⏮</button>
-
-
-      <button
-        type="button"
-        class="spotify-play"
-        title="Abrir Spotify para reproduzir"
-        aria-label="Abrir Spotify para reproduzir"
-      >▶</button>
-
-
-      <button
-        type="button"
-        title="Próxima música"
-        aria-label="Próxima música"
-      >⏭</button>
-
-    </div>
-
-
-    <div class="spotify-menu">
-
-      <strong>Spotify</strong>
-
-      <a
-        href="https://open.spotify.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >▶ Abrir Spotify</a>
-
-
-      <a
-        href="https://open.spotify.com/search/workout"
-        target="_blank"
-        rel="noopener noreferrer"
-      >🔎 Procurar música</a>
-
-    </div>
-
+      <img
+        src="icon/spotfly.png"
+        alt="Spotify"
+      >
+    </a>
   `;
 
-
   document.body.appendChild(caixa);
-
-
-  caixa
-    .querySelector(".spotify-botao")
-    .addEventListener(
-      "click",
-      function(){
-
-        caixa.classList.toggle("aberto");
-
-      }
-    );
-
-
-  caixa
-    .querySelector(".spotify-play")
-    .addEventListener(
-      "click",
-      function(){
-
-        window.open(
-          "https://open.spotify.com/",
-          "_blank",
-          "noopener,noreferrer"
-        );
-
-      }
-    );
 
 })();
 
