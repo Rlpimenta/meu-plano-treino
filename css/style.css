@@ -313,7 +313,7 @@ main p {
 }
 
 
-.hero h2 {
+.hero h1 {
     margin: 0 0 18px;
 
     color: var(--branco);
@@ -323,7 +323,7 @@ main p {
 }
 
 
-.hero h2 span {
+.hero h1 span {
     color: var(--vermelho);
 }
 
@@ -889,7 +889,7 @@ main p {
 
 
 /* =====================================================
-   11. CARD DO EXERCÍCIO
+   11. CARDS DO EXERCÍCIO
 ===================================================== */
 
 #listaExercicios article {
@@ -948,18 +948,6 @@ main p {
 
 #listaExercicios article.concluido .cabecalho-cartao-final h3 {
     color: #f0c2c7;
-}
-
-/* ---------- FEEDBACK AO ARRASTAR ---------- */
-
-#listaExercicios article.arrastando {
-    opacity: 0.55;
-}
-
-
-#listaExercicios article.alvo-arrastar {
-    border-color: var(--vermelho);
-    box-shadow: 0 0 0 2px rgba(226, 27, 45, 0.12);
 }
 
 /* ---------- CARD SENDO ARRASTADO ---------- */
@@ -1047,6 +1035,14 @@ main p {
     overflow: hidden;
 
     text-overflow: ellipsis;
+}
+
+.grupo-cartao-final {
+    margin: 1px 0 10px;
+
+    color: var(--texto-fraco);
+
+    font-size: 11px;
 }
 
 
@@ -1138,35 +1134,50 @@ main p {
 
 /* ---------- BOTÃO REMOVER ---------- */
 
+/*
+   SOBREPOSIÇÃO INTENCIONAL:
+   O ícone fica dentro da imagem para não ocupar
+   espaço no cabeçalho do cartão.
+*/
 .botao-remover {
-    padding: 3px 5px;
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    z-index: 4;
 
-    border: 1px solid #3a3f48;
-    border-radius: 3px;
+    width: 24px;
+    height: 24px;
+    padding: 0;
 
-    background-color: #12151a;
-    color: var(--texto-fraco);
+    border: 0;
+    border-radius: 50%;
 
-    font-size: 9px;
-    font-weight: 600;
+    background: rgba(8, 10, 13, 0.38);
+    color: rgba(255, 255, 255, 0.78);
 
-    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 13px;
+    line-height: 1;
 
     cursor: pointer;
 
+    opacity: 0.78;
     transition:
         color 0.2s ease,
-        border-color 0.2s ease,
-        background-color 0.2s ease;
+        background-color 0.2s ease,
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
-
-.botao-remover:hover {
+.botao-remover:hover,
+.botao-remover:focus-visible {
     color: var(--branco);
-
-    border-color: var(--vermelho);
-
-    background-color: rgba(226, 27, 45, 0.10);
+    background: rgba(226, 27, 45, 0.82);
+    opacity: 1;
+    transform: scale(1.05);
 }
 
 
@@ -1193,6 +1204,34 @@ main p {
     overflow: hidden;
 
     background-color: #0d0f13;
+}
+
+
+/* ---------- IMAGEM INDISPONÍVEL ---------- */
+
+.imagem-sem-foto {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    color: var(--texto-muito-fraco);
+    text-align: center;
+}
+
+.imagem-sem-foto span {
+    font-size: 24px;
+    opacity: 0.7;
+}
+
+.imagem-sem-foto p {
+    margin: 0;
+    color: var(--texto-muito-fraco);
+    font-size: 10px;
 }
 
 
@@ -1950,47 +1989,39 @@ footer p {
 /* =====================================================
    20. SPOTIFY FLUTUANTE
 
-   A posição fixa é intencional: o controlo acompanha
-   o ecrã enquanto a página é percorrida.
-
-   O visual usa transparência para combinar com o tema
-   escuro sem criar um botão pesado.
+   Apenas o ícone é mantido.
+   A posição fixa é intencional para acompanhar a página.
 ===================================================== */
 
 .spotify-flutuante {
     position: fixed;
-
     right: 18px;
     bottom: 18px;
-
     z-index: 200;
 }
 
 .spotify-botao {
-    position: relative;
-
     width: 46px;
     height: 46px;
+    padding: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border: 1px solid rgba(226, 27, 45, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 50%;
 
-    background: rgba(17, 20, 25, 0.58);
+    background: rgba(17, 20, 25, 0.55);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 
-    color: var(--branco);
-
-    cursor: pointer;
-    font-size: 0;
-
     box-shadow:
         0 8px 24px rgba(0, 0, 0, 0.28),
-        0 0 18px rgba(226, 27, 45, 0.08);
+        0 0 16px rgba(0, 0, 0, 0.12);
+
+    overflow: hidden;
+    cursor: pointer;
 
     transition:
         transform 0.2s ease,
@@ -1999,151 +2030,21 @@ footer p {
         box-shadow 0.2s ease;
 }
 
-/*
-   Desenhamos o símbolo com CSS para não depender de
-   outro ficheiro de ícones.
-*/
-.spotify-botao::before {
-    content: "";
-
-    width: 17px;
-    height: 17px;
-
-    border: 2px solid var(--branco);
-    border-radius: 50%;
-
-    opacity: 0.9;
+.spotify-botao img {
+    width: 30px;
+    height: 30px;
+    display: block;
+    object-fit: contain;
 }
 
-.spotify-botao::after {
-    content: "";
-
-    position: absolute;
-
-    width: 12px;
-    height: 5px;
-
-    margin-top: 8px;
-    margin-left: 4px;
-
-    border-top: 2px solid var(--branco);
-    border-radius: 50%;
-
-    transform: rotate(-7deg);
-    opacity: 0.9;
-}
-
-.spotify-botao:hover {
-    transform: scale(1.05);
-
-    border-color: rgba(226, 27, 45, 0.85);
-    background: rgba(226, 27, 45, 0.16);
-
+.spotify-botao:hover,
+.spotify-botao:focus-visible {
+    transform: scale(1.06);
+    border-color: rgba(255, 255, 255, 0.24);
+    background: rgba(17, 20, 25, 0.72);
     box-shadow:
-        0 8px 26px rgba(0, 0, 0, 0.32),
-        0 0 20px rgba(226, 27, 45, 0.14);
-}
-
-/* ---------- MINI CONTROLES ---------- */
-.spotify-controles {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-
-    margin-top: 5px;
-    padding: 3px;
-
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-
-    background: rgba(17, 20, 25, 0.48);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
-.spotify-controles button {
-    width: 22px;
-    height: 20px;
-
-    padding: 0;
-
-    border: 0;
-    border-radius: 8px;
-
-    background: transparent;
-    color: var(--texto-fraco);
-
-    cursor: pointer;
-    font-size: 9px;
-    line-height: 1;
-
-    transition:
-        color 0.2s ease,
-        background-color 0.2s ease;
-}
-
-.spotify-controles button:hover {
-    color: var(--branco);
-    background-color: rgba(226, 27, 45, 0.14);
-}
-
-.spotify-controles .spotify-play {
-    color: var(--branco);
-}
-
-/* ---------- MENU ---------- */
-.spotify-menu {
-    position: absolute;
-
-    right: 0;
-    bottom: 78px;
-
-    width: 190px;
-
-    padding: 12px;
-
-    display: none;
-    flex-direction: column;
-
-    gap: 7px;
-
-    background: rgba(17, 20, 25, 0.88);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-
-    border: 1px solid var(--linha);
-    border-radius: 10px;
-
-    box-shadow:
-        0 12px 35px rgba(0, 0, 0, 0.5);
-}
-
-.spotify-flutuante.aberto .spotify-menu {
-    display: flex;
-}
-
-.spotify-menu strong {
-    padding-bottom: 4px;
-
-    color: var(--branco);
-    font-size: 12px;
-
-    border-bottom: 1px solid var(--linha);
-}
-
-.spotify-menu a {
-    padding: 6px 5px;
-
-    color: var(--texto-fraco);
-    text-decoration: none;
-    font-size: 11px;
-    border-radius: 4px;
-}
-
-.spotify-menu a:hover {
-    color: var(--vermelho);
-    background-color: rgba(226, 27, 45, 0.08);
+        0 10px 28px rgba(0, 0, 0, 0.34),
+        0 0 18px rgba(0, 0, 0, 0.16);
 }
 
 /* =====================================================
@@ -2364,7 +2265,7 @@ footer p {
     }
 
 
-    .hero h2 {
+    .hero h1 {
         font-size: 30px;
     }
 
@@ -2391,10 +2292,9 @@ footer p {
         height: 42px;
     }
 
-    .spotify-controles button {
-        width: 20px;
-        height: 19px;
-        font-size: 8px;
+    .spotify-botao img {
+        width: 28px;
+        height: 28px;
     }
 }
 
