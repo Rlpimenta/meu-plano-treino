@@ -21,5 +21,3 @@ https://rlpimenta.github.io/meu-plano-treino/
 📌 Nota importante
 
 Manter o ficheiro original img/hero-gym.jpg dentro da pasta img/.
-
-A pasta .vscode não faz parte da versão final do projeto.
