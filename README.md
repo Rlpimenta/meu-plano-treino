@@ -4,7 +4,7 @@ Aplicação web desenvolvida com HTML, CSS e JavaScript Vanilla.
 
 🚀 Aceder ao projeto
 
-👉 ABRIR MEU PLANO DE TREINO
+https://rlpimenta.github.io/meu-plano-treino/
 
 🛠️ Tecnologias
 
@@ -15,7 +15,7 @@ Aplicação web desenvolvida com HTML, CSS e JavaScript Vanilla.
 ✨ Alterações desta versão
 
 * Remoção de código antigo ou não utilizado.
-* Utilização exclusiva do ícone local do Spotify: icon/spotfly.png.
+* Utilização do ícone local do Spotify: icon/spotfly.png.
 * Reposicionamento do botão Remover para dentro da imagem do exercício.
 
 📌 Nota importante
