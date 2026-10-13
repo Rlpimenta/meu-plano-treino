@@ -1,13 +1,25 @@
-VERSÃO LIMPA — MEU PLANO DE TREINO
+💪 Meu Plano de Treino
 
-'
-'Esta versão mantém a estrutura HTML + CSS + JavaScript Vanilla do projeto.
-'
-'Foi removido código antigo/não utilizado, o Spotify passou a usar apenas o ícone local
-'
-'icon/spotfly.png e o botão Remover foi reposicionado dentro da imagem do exercício.
+Aplicação web desenvolvida com HTML, CSS e JavaScript Vanilla.
 
-'
-'IMPORTANTE: mantenha o teu ficheiro original img/hero-gym.jpg nesta pasta img/.
-'
-'.vscode não faz parte da versão final.
+🚀 Aceder ao projeto
+
+👉 ABRIR MEU PLANO DE TREINO
+
+🛠️ Tecnologias
+
+* HTML5
+* CSS3
+* JavaScript Vanilla
+
+✨ Alterações desta versão
+
+* Remoção de código antigo ou não utilizado.
+* Utilização exclusiva do ícone local do Spotify: icon/spotfly.png.
+* Reposicionamento do botão Remover para dentro da imagem do exercício.
+
+📌 Nota importante
+
+Manter o ficheiro original img/hero-gym.jpg dentro da pasta img/.
+
+A pasta .vscode não faz parte da versão final do projeto.
