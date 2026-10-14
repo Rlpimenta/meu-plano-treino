@@ -2329,3 +2329,71 @@ footer p {
         height: 190px;
     }
 }
+
+
+/* ========================================
+   MENU DE TREINOS — NOVA APARÊNCIA
+   ======================================== */
+
+#diasTreino {
+    background-color: #111419;
+    border: 1px solid #3a3035;
+    border-radius: var(--raio);
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+#diasTreino .titulo-sidebar {
+    background-color: #151216;
+    border-bottom: 1px solid #3a3035;
+}
+
+#diasTreino a {
+    border-left: 3px solid transparent;
+    border-radius: 6px;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+#diasTreino a:hover {
+    background-color: #292027;
+    color: #ffffff;
+}
+
+#diasTreino a:hover span {
+    color: #ff5363;
+}
+
+/* Treino selecionado */
+#diasTreino a.ativo {
+    background-color: #541923;
+    border-left-color: #ff5363;
+    color: #ffffff;
+}
+
+#diasTreino a.ativo span {
+    color: #ffffff;
+}
+
+/* Foco para navegação por teclado */
+#diasTreino a:focus-visible {
+    outline: 2px solid #ff5363;
+    outline-offset: 2px;
+}
+
+/* Ajustes para telemóveis */
+@media (max-width: 650px) {
+    #diasTreino {
+        border-radius: 10px;
+    }
+
+    #diasTreino ul {
+        padding: 8px;
+    }
+
+    #diasTreino a {
+        padding: 12px;
+    }
+}
