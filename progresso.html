@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d10">
+  <title>Meu Plano — Progresso</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="pagina-progresso-body">
+  <header>
+    <nav id="menu" aria-label="Menu principal">
+      <h1>MEU <span>PLANO</span></h1>
+      <ul>
+        <li><a href="d1.html">Treinos</a></li>
+        <li><a href="progresso.html" aria-current="page">Progresso</a></li>
+        <li><a href="d6.html">D.O Abdominais</a></li>
+        <li><a href="https://rlpimenta.github.io/Portfolio/" target="_blank" rel="noopener noreferrer">Portfólio</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="pagina-progresso">
+    <section class="progresso-intro">
+      <p class="treino-label">ACOMPANHAMENTO PESSOAL</p>
+      <h1>O teu progresso</h1>
+      <p>Consulta a frequência dos treinos, regista avaliações físicas e compara os teus resultados ao longo do tempo. Os registos ficam guardados neste navegador.</p>
+    </section>
+
+    <div class="progresso-grid">
+      <section class="painel-progresso largo" aria-labelledby="tituloFrequencia">
+        <h2 id="tituloFrequencia">Frequência semanal</h2>
+        <p class="subtitulo">Marca a sessão como concluída na página do treino. Os dias registados ficam mais discretos no calendário.</p>
+        <div class="resumo-cartoes">
+          <div class="resumo-cartao"><span>Esta semana</span><strong id="treinosSemana">0</strong><small>sessões registadas</small></div>
+          <div class="resumo-cartao"><span>Este mês</span><strong id="treinosMes">0</strong><small>sessões registadas</small></div>
+          <div class="resumo-cartao"><span>Total</span><strong id="treinosTotal">0</strong><small>sessões guardadas</small></div>
+        </div>
+        <div id="calendarioSemana" class="calendario-semana-progresso" aria-label="Calendário da semana"></div>
+      </section>
+
+      <section class="painel-progresso largo" aria-labelledby="tituloGrafico">
+        <h2 id="tituloGrafico">Treinos por semana</h2>
+        <p class="subtitulo">As últimas oito semanas. Só aparecem sessões que registaste na aplicação.</p>
+        <div id="graficoFrequencia" class="grafico-barras" role="img" aria-label="Gráfico de sessões por semana"></div>
+      </section>
+
+      <section class="painel-progresso largo" aria-labelledby="tituloNovaAvaliacao">
+        <h2 id="tituloNovaAvaliacao">Medidas e avaliação física</h2>
+        <p class="subtitulo">Adiciona uma avaliação com a data original. Os campos que não tiveres medido podem ficar vazios.</p>
+        <form id="formAvaliacao">
+          <div class="form-medidas">
+            <label>Data da avaliação<input type="date" id="dataAvaliacao" required></label>
+            <label>Profissional responsável<input type="text" id="profissionalAvaliacao" maxlength="120" placeholder="Nome de quem realizou a avaliação"></label>
+            <label>Local / ginásio (opcional)<input type="text" id="localAvaliacao" maxlength="120" placeholder="Nome do ginásio ou clínica"></label>
+            <label>Peso (kg)<input type="number" step="0.01" id="pesoCorporal" min="0"></label>
+            <label>Altura (cm)<input type="number" step="0.1" id="alturaCorporal" min="0"></label>
+            <label>Gordura corporal (%)<input type="number" step="0.01" id="gorduraCorporal" min="0" max="100"></label>
+            <label>Gordura visceral<input type="number" step="0.1" id="gorduraVisceral" min="0"></label>
+            <label>Massa gorda (kg)<input type="number" step="0.01" id="massaGorda" min="0"></label>
+            <label>Massa magra (kg)<input type="number" step="0.01" id="massaMagra" min="0"></label>
+            <label>Densidade óssea (kg)<input type="number" step="0.01" id="densidadeOssea" min="0"></label>
+            <label>Metabolismo basal (kcal)<input type="number" step="1" id="metabolismoBasal" min="0"></label>
+            <label>Idade metabólica (anos)<input type="number" step="1" id="idadeMetabolica" min="0"></label>
+            <label>Ombros (cm)<input type="number" step="0.1" id="ombros" min="0"></label>
+            <label>Braço direito (cm)<input type="number" step="0.1" id="bracoDireito" min="0"></label>
+            <label>Braço esquerdo (cm)<input type="number" step="0.1" id="bracoEsquerdo" min="0"></label>
+            <label>Antebraço direito (cm)<input type="number" step="0.1" id="antebracoDireito" min="0"></label>
+            <label>Antebraço esquerdo (cm)<input type="number" step="0.1" id="antebracoEsquerdo" min="0"></label>
+            <label>Tórax (cm)<input type="number" step="0.1" id="torax" min="0"></label>
+            <label>Cintura (cm)<input type="number" step="0.1" id="cintura" min="0"></label>
+            <label>Abdómen (cm)<input type="number" step="0.1" id="abdomen" min="0"></label>
+            <label>Quadril (cm)<input type="number" step="0.1" id="quadril" min="0"></label>
+            <label>Coxa direita (cm)<input type="number" step="0.1" id="coxaDireita" min="0"></label>
+            <label>Coxa esquerda (cm)<input type="number" step="0.1" id="coxaEsquerda" min="0"></label>
+            <label>Perna direita (cm)<input type="number" step="0.1" id="pernaDireita" min="0"></label>
+            <label>Perna esquerda (cm)<input type="number" step="0.1" id="pernaEsquerda" min="0"></label>
+            <label>IMC<input type="number" step="0.01" id="imc" min="0"></label>
+            <label>Relação cintura/quadril<input type="number" step="0.01" id="relacaoCinturaQuadril" min="0"></label>
+            <label>Pressão sistólica (mmHg)<input type="number" step="1" id="pressaoSistolica" min="0"></label>
+            <label>Pressão diastólica (mmHg)<input type="number" step="1" id="pressaoDiastolica" min="0"></label>
+            <label>Frequência cardíaca repouso (bpm)<input type="number" step="1" id="fcRepouso" min="0"></label>
+            <label>Frequência cardíaca máxima (bpm)<input type="number" step="1" id="fcMaxima" min="0"></label>
+            <label>Força de preensão (kg)<input type="number" step="0.1" id="forcaPreensao" min="0"></label>
+            <label>Notas<textarea id="notasAvaliacao" rows="2" placeholder="Observações opcionais"></textarea></label>
+          </div>
+          <div class="acoes-form">
+            <button type="submit" class="botao-principal">Guardar avaliação</button>
+            <button type="button" id="limparFormulario" class="botao-secundario">Limpar campos</button>
+          </div>
+          <p id="mensagemAvaliacao" class="mensagem-toast" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="painel-progresso largo" aria-labelledby="tituloGraficoMedidas">
+        <h2 id="tituloGraficoMedidas">Evolução das medidas</h2>
+        <p class="subtitulo">Escolhe uma medida para acompanhar a alteração entre avaliações registadas.</p>
+        <label for="metricaEvolucao" style="display:block;max-width:300px;color:var(--texto-fraco);font-size:12px;margin-bottom:12px">Medida a apresentar</label>
+        <select id="metricaEvolucao" class="filtro-historico" style="max-width:300px">
+          <option value="pesoCorporal">Peso (kg)</option><option value="cintura">Cintura (cm)</option><option value="abdomen">Abdómen (cm)</option><option value="quadril">Quadril (cm)</option><option value="gorduraCorporal">Gordura corporal (%)</option><option value="massaMagra">Massa magra (kg)</option>
+        </select>
+        <div id="graficoMedidas" style="margin-top:14px"></div>
+      </section>
+
+      <section class="painel-progresso largo" aria-labelledby="tituloHistorico">
+        <h2 id="tituloHistorico">Histórico de avaliações</h2>
+        <p class="subtitulo">Escolhe uma avaliação para ver os detalhes ou compara os registos mais recentes.</p>
+        <div id="resumoComparacao"></div>
+        <div id="historicoAvaliacoes" class="tabela-scroll"></div>
+      </section>
+
+      <section class="painel-progresso largo" aria-labelledby="tituloExerciciosNaoFeitos">
+        <h2 id="tituloExerciciosNaoFeitos">Histórico de exercícios não realizados</h2>
+        <p class="subtitulo">Consulta os exercícios que assinalaste como "Não fiz", com a data e o dia de treino.</p>
+        <div id="historicoNaoRealizados" class="tabela-scroll"></div>
+      </section>
+
+      <section class="painel-progresso" aria-labelledby="tituloDados">
+        <h2 id="tituloDados">Os teus dados</h2>
+        <p class="subtitulo">Faz uma cópia de segurança para transferir os registos ou recuperar os dados noutro navegador.</p>
+        <div class="acoes-form">
+          <button type="button" id="exportarDados" class="botao-secundario">Exportar cópia</button>
+          <label class="botao-secundario" for="importarDados" style="display:inline-flex;align-items:center;cursor:pointer">Importar cópia</label>
+          <input type="file" id="importarDados" accept="application/json,.json" hidden>
+        </div>
+        <p id="mensagemBackup" class="mensagem-toast" role="status" aria-live="polite"></p>
+        <p class="aviso-dados">Os dados são guardados no armazenamento local do navegador deste dispositivo. Exporta uma cópia regularmente. Não partilhes o ficheiro de cópia, pois contém dados pessoais.</p>
+      </section>
+
+      <section class="painel-progresso" aria-labelledby="tituloPrivacidade">
+        <h2 id="tituloPrivacidade">Como usar</h2>
+        <p class="subtitulo">Para manter o histórico fiável:</p>
+        <ul style="color:var(--texto-fraco);line-height:1.7;padding-left:20px">
+          <li>Regista uma sessão no próprio dia em que treinares.</li>
+          <li>Introduz as medidas com a data indicada no relatório.</li>
+          <li>Deixa em branco os campos que não foram medidos.</li>
+          <li>Usa condições semelhantes ao repetir as medidas.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <nav class="menu-flutuante" aria-label="Navegação principal">
+    <a href="d1.html" aria-label="Treinos"><span aria-hidden="true">▦</span><small>Treinos</small></a>
+    <a href="progresso.html" class="nav-flutuante-ativo" aria-current="page" aria-label="Progresso"><span aria-hidden="true">↗</span><small>Progresso</small></a>
+  </nav>
+  <script src="js/progresso.js"></script>
+</body>
+</html>

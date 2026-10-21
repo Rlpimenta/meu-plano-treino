@@ -499,7 +499,7 @@ const treinos = [
 
     {
         dia: "D6",
-        nome: "Abdómen",
+        nome: "D.O Abdominais",
 
         exercicios: [
             {
@@ -653,7 +653,7 @@ const descricoesTreinos = {
   D3:"Peito, ombros e tríceps. Finaliza com 20 min. de cardio.",
   D4:"Costas, peito, ombros e braços. Finaliza com 20 min. de cardio.",
   D5:"Pernas, glúteos e gémeos. Finaliza com 20 min. de cardio.",
-  D6:"Sessão complementar de abdómen para força e estabilidade do core."
+  D6:"Biblioteca complementar de exercícios para abdómen e estabilidade do core."
 };
 
 const cardioTreinos = {
@@ -846,6 +846,19 @@ carregarOrdemExercicios();
 // =====================================================
 const paginaAtual = document.body.dataset.dia || "D1";
 const treinoAtual = treinos.find(function(t){return t.dia===paginaAtual;}) || treinos[0];
+
+// Histórico explícito dos exercícios por data e dia de treino.
+const CHAVE_ESTADOS_EXERCICIOS = "meuPlanoEstadosExerciciosV1";
+function dataLocalISO(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}
+function lerEstadosExercicios(){try{return JSON.parse(localStorage.getItem(CHAVE_ESTADOS_EXERCICIOS))||[];}catch(e){return [];}}
+function guardarEstadoExercicio(exercicio, estado){
+  const data=dataLocalISO(), dia=treinoAtual.dia;
+  let registos=lerEstadosExercicios().filter(r=>!(r.data===data&&r.dia===dia&&Number(r.exercicioId)===Number(exercicio.id)));
+  if(estado!=="pendente") registos.push({data,dia,exercicioId:exercicio.id,nome:exercicio.nome,grupo:exercicio.grupo,estado,atualizadoEm:Date.now()});
+  try{localStorage.setItem(CHAVE_ESTADOS_EXERCICIOS,JSON.stringify(registos));}catch(e){}
+}
+function estadoExercicioHoje(exercicio){return lerEstadosExercicios().find(r=>r.data===dataLocalISO()&&r.dia===treinoAtual.dia&&Number(r.exercicioId)===Number(exercicio.id))?.estado||"pendente";}
+
 let ultimoExercicioRemovido = null;
 const campoPesquisa=document.querySelector("#pesquisaExercicio");
 const filtroMusculo=document.querySelector("#filtroMusculo");
@@ -885,14 +898,23 @@ function atualizarCabecalho(){
   if(descricaoTreino)descricaoTreino.textContent=descricoesTreinos[treinoAtual.dia] || "Organiza o teu treino e acompanha a tua evolução.";
 
   const selecionado=sessionStorage.getItem("meuPlanoDiaSelecionado");
-  document.querySelectorAll("#diasTreino a").forEach(function(link){
-    const pagina=link.getAttribute("href");
-    const diaLink=pagina.replace(".html","").toUpperCase();
-    const ativo=selecionado === diaLink;
-    link.classList.toggle("ativo",ativo);
-    if(ativo)link.setAttribute("aria-current","page");
-    else link.removeAttribute("aria-current");
-  });
+const diaAtual = (
+  document.body.dataset.dia || treinoAtual.dia
+).toUpperCase();
+
+document.querySelectorAll("#diasTreino a").forEach(function(link) {
+  const pagina = link.getAttribute("href");
+  const diaLink = pagina.replace(".html", "").toUpperCase();
+  const ativo = diaAtual === diaLink;
+
+  link.classList.toggle("ativo", ativo);
+
+  if (ativo) {
+    link.setAttribute("aria-current", "page");
+  } else {
+    link.removeAttribute("aria-current");
+  }
+});
 
   document.querySelectorAll("#diasTreino a").forEach(function(link){
     link.addEventListener("click",function(){
@@ -934,73 +956,81 @@ function atualizarContador(n){contadorResultados.textContent=`${n} exercícios e
 
 const intervalosImagens=new Map();
 
-function iniciarAnimacao(card,imgs){
 
-  if(imgs.length<2)return;
+function iniciarAnimacao(card, imgs) {
+  if (imgs.length < 2) return;
 
-  let indice=0;
+  let indice = 0;
+  const frames = card.querySelectorAll(".frame-exercicio");
 
-  const frames=card.querySelectorAll(".frame-exercicio");
+  // Link clicável da imagem, se existir
+  const linkImagem = card.querySelector(".imagem-link");
 
-  function mudar(){
-    frames.forEach(function(f,i){
-      f.classList.toggle("visivel",i===indice);
+  function mudar() {
+    frames.forEach(function(f, i) {
+      f.classList.toggle("visivel", i === indice);
     });
 
-    indice=(indice+1)%frames.length;
+    // Abre a imagem correspondente ao frame visível
+    if (linkImagem && imgs[indice]) {
+      linkImagem.href = imgs[indice];
+    }
+
+    indice = (indice + 1) % frames.length;
   }
 
   mudar();
 
-  let velocidade=1000;
+  let velocidade = 1000;
+  let timer = setInterval(mudar, velocidade);
 
-  let timer=setInterval(mudar,velocidade);
+  intervalosImagens.set(card, timer);
 
-  intervalosImagens.set(card,timer);
-
-  card.addEventListener("mouseenter",function(){
+  card.addEventListener("mouseenter", function() {
     clearInterval(timer);
-    velocidade=500;
-    timer=setInterval(mudar,velocidade);
+    velocidade = 500;
+    timer = setInterval(mudar, velocidade);
+    intervalosImagens.set(card, timer);
   });
 
-  card.addEventListener("mouseleave",function(){
+  card.addEventListener("mouseleave", function() {
     clearInterval(timer);
-    velocidade=1000;
-    timer=setInterval(mudar,velocidade);
+    velocidade = 1000;
+    timer = setInterval(mudar, velocidade);
+    intervalosImagens.set(card, timer);
   });
 }
 
 
-function mostrarExercicios(exercicios){
+function mostrarExercicios(exercicios) {
 
-  intervalosImagens.forEach(function(timer){
+  // Limpa as animações anteriores
+  intervalosImagens.forEach(function(timer) {
     clearInterval(timer);
   });
 
   intervalosImagens.clear();
-  listaExercicios.innerHTML="";
+  listaExercicios.innerHTML = "";
 
-  /*
-    Exercícios concluídos ficam temporariamente no final
-    da lista. A ordem manual guardada continua intacta.
-  */
-  const exerciciosOrdenados=[...exercicios].sort(function(a,b){
-    return Number(Boolean(a.concluido)) -
-           Number(Boolean(b.concluido));
+  // Mantém os exercícios concluídos no final
+  const exerciciosOrdenados = [...exercicios].sort(function(a, b) {
+    const prioridade = e => estadoExercicioHoje(e)==="nao-realizado" ? 2 : (e.concluido ? 1 : 0);
+    return prioridade(a) - prioridade(b);
   });
 
   atualizarContador(exerciciosOrdenados.length);
 
-  if(ultimoExercicioRemovido){
-    const areaRepor=document.createElement("div");
-    areaRepor.className="area-repor";
-    areaRepor.innerHTML=
+  // Botão para repor o último exercício removido
+  if (ultimoExercicioRemovido) {
+    const areaRepor = document.createElement("div");
+    areaRepor.className = "area-repor";
+    areaRepor.innerHTML =
       '<button type="button" class="botao-repor">↩ Repor último apagado</button>';
+
     listaExercicios.appendChild(areaRepor);
   }
 
-  if(exerciciosOrdenados.length===0){
+  if (exerciciosOrdenados.length === 0) {
     listaExercicios.insertAdjacentHTML(
       "beforeend",
       '<p class="estado-vazio">Nenhum exercício encontrado.</p>'
@@ -1008,41 +1038,50 @@ function mostrarExercicios(exercicios){
     return;
   }
 
-  exerciciosOrdenados.forEach(function(exercicio,indice){
+  exerciciosOrdenados.forEach(function(exercicio, indice) {
 
-    const artigo=document.createElement("article");
+    const artigo = document.createElement("article");
 
-    artigo.classList.toggle("concluido",Boolean(exercicio.concluido));
-    artigo.draggable=true;
-    artigo.dataset.id=exercicio.id;
+    artigo.classList.toggle("concluido", Boolean(exercicio.concluido));
+    artigo.classList.toggle("nao-realizado", estadoExercicioHoje(exercicio)==="nao-realizado");
+    artigo.draggable = true;
+    artigo.dataset.id = exercicio.id;
 
-    const urls=obterImagemUrls(exercicio);
-    const fallbackUrls=obterImagemFallbackUrls(exercicio);
-    const wiki=obterMuscleWiki(exercicio);
-    const video=obterVideo(exercicio);
-    const numero=String(indice+1).padStart(2,"0");
-    const nomeExibicao=nomesExibicao[exercicio.nome] || exercicio.nome;
+    const urls = obterImagemUrls(exercicio);
+    const fallbackUrls = obterImagemFallbackUrls(exercicio);
 
-    const imagem0=urls[0] || "";
-    const imagem1=urls[1] || imagem0;
-    const temImagem=Boolean(imagem0);
+    const wiki = obterMuscleWiki(exercicio);
+    const video = obterVideo(exercicio);
 
-    const historico=
-      Array.isArray(exercicio.historicoPesos)
-        ? exercicio.historicoPesos
-        : [exercicio.peso || 0];
+    const numero = String(indice + 1).padStart(2, "0");
+    const nomeExibicao =
+      nomesExibicao[exercicio.nome] || exercicio.nome;
 
-    const pesoAtual=historico[0] ?? 0;
-    const pesoAnterior=historico[1];
+    const imagem0 = urls[0] || "";
+    const imagem1 = urls[1] || imagem0;
+    const temImagem = Boolean(imagem0);
 
-    const imagemMarkup=temImagem
+    // Link direto para a primeira imagem do exercício
+    const imagemPrincipal = obterImagemUrls(exercicio)[0];
+    const paginaImagem = imagemPrincipal || "";
+
+    // Histórico de pesos
+    const historico = Array.isArray(exercicio.historicoPesos)
+      ? exercicio.historicoPesos
+      : [exercicio.peso || 0];
+
+    const pesoAtual = historico[0] ?? 0;
+    const pesoAnterior = historico[1];
+
+    // Imagem: abre o GitHub, não o YouTube
+    const imagemMarkup = temImagem
       ? `
         <a
-          href="${video}"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="${paginaImagem || "#"}"
+          ${paginaImagem ? 'target="_blank" rel="noopener noreferrer"' : ""}
           class="imagem-link"
-          title="Abrir demonstração"
+          title="${paginaImagem ? "Ver imagens no Free Exercise DB" : "Imagem do exercício"}"
+          ${paginaImagem ? "" : 'aria-disabled="true"'}
         >
           <img
             class="frame-exercicio visivel"
@@ -1055,7 +1094,7 @@ function mostrarExercicios(exercicios){
             class="frame-exercicio"
             src="${imagem1}"
             data-fallback="${fallbackUrls[1] || ""}"
-            alt="Demonstração de ${nomeExibicao}"
+            alt=""
             aria-hidden="true"
           >
         </a>
@@ -1067,8 +1106,7 @@ function mostrarExercicios(exercicios){
         </div>
       `;
 
-    artigo.innerHTML=`
-
+    artigo.innerHTML = `
       <div class="cabecalho-cartao-final">
         <div>
           <h3>
@@ -1082,9 +1120,7 @@ function mostrarExercicios(exercicios){
             >${nomeExibicao} ↗</a>
           </h3>
 
-          <p class="grupo-cartao-final">
-            ${exercicio.grupo}
-          </p>
+          <p class="grupo-cartao-final">${exercicio.grupo}</p>
         </div>
 
         <div class="numero-remover">
@@ -1092,21 +1128,14 @@ function mostrarExercicios(exercicios){
             type="button"
             class="botao-concluir"
             data-id="${exercicio.id}"
-            aria-label="${exercicio.concluido
-              ? "Marcar exercício como não concluído"
-              : "Marcar exercício como concluído"}"
-            title="${exercicio.concluido ? "Desmarcar" : "Concluir"}"
-          >${exercicio.concluido ? "×" : numero}</button>
+            aria-label="${estadoExercicioHoje(exercicio)==="nao-realizado" ? "Retirar marcação Não fiz" : (exercicio.concluido ? "Marcar exercício como não concluído" : "Marcar exercício como concluído")}"
+            title="${estadoExercicioHoje(exercicio)==="nao-realizado" ? "Retirar marcação Não fiz" : (exercicio.concluido ? "Desmarcar" : "Concluir")}"
+          >${estadoExercicioHoje(exercicio)==="nao-realizado" ? "↶" : (exercicio.concluido ? "×" : numero)}</button>
         </div>
       </div>
 
       <div class="imagem-exercicio-final" data-video="${video}">
 
-        <!--
-          SOBREPOSIÇÃO INTENCIONAL:
-          O botão de remover fica sobre a imagem para
-          não ocupar espaço no cabeçalho do cartão.
-        -->
         <button
           type="button"
           class="botao-remover"
@@ -1115,14 +1144,32 @@ function mostrarExercicios(exercicios){
           title="Remover exercício"
         >🗑</button>
 
+        <button type="button" class="botao-nao-fiz" data-id="${exercicio.id}" aria-label="Opções para ${nomeExibicao}" title="Marcar como não realizado">×</button>
+        <div class="menu-nao-fiz" data-menu-nao-fiz="${exercicio.id}" hidden>
+          <button type="button" class="confirmar-nao-fiz" data-id="${exercicio.id}">Não fiz</button>
+        </div>
+        ${estadoExercicioHoje(exercicio)==="nao-realizado" ? '<span class="etiqueta-nao-realizado">Não fiz</span>' : ''}
+
         ${imagemMarkup}
 
-        <a
+        <div class="controles-imagem-exercicio">
+          <button type="button" class="botao-cronometro" data-id="${exercicio.id}" aria-label="Iniciar cronómetro de descanso" title="Cronómetro: 1 minuto de contagem decrescente e depois crescente">◷</button>
+          <a
           class="botao-ver"
           href="${video}"
           target="_blank"
           rel="noopener noreferrer"
-        >▶ Ver</a>
+          aria-label="Ver vídeos de ${nomeExibicao} no YouTube"
+          >▶ Ver</a>
+        </div>
+        <div class="cronometro-painel" data-cronometro="${exercicio.id}" hidden>
+          <div class="cronometro-tempo" aria-live="polite">01:00</div>
+          <div class="cronometro-acoes">
+            <button type="button" class="cronometro-pausar" data-id="${exercicio.id}">Pausar</button>
+            <button type="button" class="cronometro-reiniciar" data-id="${exercicio.id}">Reiniciar</button>
+            <button type="button" class="cronometro-fechar" data-id="${exercicio.id}" aria-label="Fechar cronómetro">×</button>
+          </div>
+        </div>
       </div>
 
       <div class="info-linha-final">
@@ -1146,11 +1193,13 @@ function mostrarExercicios(exercicios){
             aria-label="Peso em kg"
           >
           kg
+
           ${
             pesoAnterior !== undefined
               ? `<span class="peso-anterior" title="Peso anterior">← ${pesoAnterior} kg</span>`
               : ""
           }
+
           <span class="peso-ok">✓</span>
         </span>
       </div>
@@ -1158,26 +1207,28 @@ function mostrarExercicios(exercicios){
 
     listaExercicios.appendChild(artigo);
 
-    if(temImagem){
-      iniciarAnimacao(artigo,urls);
+    // Mantém a animação das duas imagens
+    if (temImagem) {
+      iniciarAnimacao(artigo, urls);
     }
 
-    artigo.querySelectorAll("img").forEach(function(img){
-      img.addEventListener("error",function(){
-        const fallback=this.dataset.fallback;
+    // Tenta a imagem alternativa se a principal falhar
+    artigo.querySelectorAll("img").forEach(function(img) {
+      img.addEventListener("error", function() {
+        const fallback = this.dataset.fallback;
 
-        if(fallback && this.src !== fallback){
-          this.src=fallback;
-          this.dataset.fallback="";
+        if (fallback && this.src !== fallback) {
+          this.src = fallback;
+          this.dataset.fallback = "";
           return;
         }
 
-        this.style.display="none";
+        this.style.display = "none";
       });
     });
+
   });
 }
-
 
 // =====================================================
 // 7. PESQUISA / FILTRO
@@ -1270,6 +1321,16 @@ listaExercicios.addEventListener("click",function(evento){
 
 
     if(exercicio){
+
+      // Se está marcado como "Não fiz", o botão retira essa marcação
+      // em vez de concluir acidentalmente o exercício.
+      if (estadoExercicioHoje(exercicio)==="nao-realizado") {
+        guardarEstadoExercicio(exercicio,"pendente");
+        exercicio.naoRealizado=false;
+        mostrarExercicios(obterExerciciosFiltrados());
+        mostrarAvisoNaoFiz("Marcação removida. O exercício voltou à lista.");
+        return;
+      }
 
       /*
         A conclusão é TEMPORÁRIA.
@@ -1373,6 +1434,7 @@ listaExercicios.addEventListener("click",function(evento){
       }
 
 
+      guardarEstadoExercicio(exercicio, exercicio.concluido ? "concluido" : "pendente");
       mostrarExercicios(
         obterExerciciosFiltrados()
       );
@@ -1382,6 +1444,42 @@ listaExercicios.addEventListener("click",function(evento){
     return;
   }
 
+  // Opções compactas para marcar um exercício como não realizado.
+  const botaoNaoFiz = evento.target.closest(".botao-nao-fiz");
+  if (botaoNaoFiz) {
+    const menu = listaExercicios.querySelector(`[data-menu-nao-fiz="${botaoNaoFiz.dataset.id}"]`);
+    if (menu) {
+      const abrir = menu.hidden;
+      listaExercicios.querySelectorAll(".menu-nao-fiz").forEach(m => m.hidden = true);
+      menu.hidden = !abrir;
+    }
+    return;
+  }
+
+  const confirmarNaoFiz = evento.target.closest(".confirmar-nao-fiz");
+  if (confirmarNaoFiz) {
+    const exercicio = encontrarExercicio(Number(confirmarNaoFiz.dataset.id));
+    if (exercicio) {
+      exercicio.concluido = false;
+      exercicio.naoRealizado = true;
+      const idx = treinoAtual.exercicios.findIndex(e => e.id === exercicio.id);
+      if (idx !== -1) { treinoAtual.exercicios.splice(idx, 1); treinoAtual.exercicios.push(exercicio); }
+      guardarEstadoExercicio(exercicio, "nao-realizado");
+      mostrarExercicios(obterExerciciosFiltrados());
+      mostrarAvisoNaoFiz("Exercício registado como não realizado e movido para o final.");
+    }
+    return;
+  }
+
+  // Controlos do cronómetro sobre a imagem do exercício.
+  const timerButton = evento.target.closest(".botao-cronometro");
+  if (timerButton) { controlarCronometro(Number(timerButton.dataset.id), "toggle"); return; }
+  const pauseButton = evento.target.closest(".cronometro-pausar");
+  if (pauseButton) { controlarCronometro(Number(pauseButton.dataset.id), "pause"); return; }
+  const resetButton = evento.target.closest(".cronometro-reiniciar");
+  if (resetButton) { controlarCronometro(Number(resetButton.dataset.id), "reset"); return; }
+  const closeButton = evento.target.closest(".cronometro-fechar");
+  if (closeButton) { controlarCronometro(Number(closeButton.dataset.id), "close"); return; }
 
   // ---------------------------------------------------
   // REPOR ÚLTIMO EXERCÍCIO APAGADO
@@ -1490,131 +1588,92 @@ listaExercicios.addEventListener("click",function(evento){
 // 9. ADICIONAR EXERCÍCIO
 // =====================================================
 
-if(formulario){
+if (formulario) {
 
-  formulario.addEventListener(
-    "submit",
-    function(evento){
+  formulario.addEventListener("submit", function(evento) {
 
-      evento.preventDefault();
+    evento.preventDefault();
 
+    const nome = document.querySelector("#nomeExercicio").value.trim();
 
-      const nome=
-        document.querySelector(
-          "#nomeExercicio"
-        ).value.trim();
+    const grupo = document.querySelector("#grupoMuscular").value;
 
+    const series = Number(document.querySelector("#series").value);
 
-      const grupo=
-        document.querySelector(
-          "#grupoMuscular"
-        ).value;
+    const repeticoes = document.querySelector("#repeticoes").value.trim();
 
+    const descanso = document.querySelector("#descansoExercicio").value;
 
-      const series=
-        Number(
-          document.querySelector(
-            "#series"
-          ).value
-        );
+    const falha = document.querySelector("#ateFalha").checked;
 
+    // Link de referência opcional
+    const campoLink = document.querySelector("#linkReferencia");
+    const linkReferencia = campoLink ? campoLink.value.trim() : "";
 
-      const repeticoes=
-        document.querySelector(
-          "#repeticoes"
-        ).value.trim();
-
-
-      const descanso=
-        document.querySelector(
-          "#descansoExercicio"
-        ).value;
-
-
-      const falha=
-        document.querySelector(
-          "#ateFalha"
-        ).checked;
-
-
-      if(
-        !nome ||
-        !grupo ||
-        !series ||
-        !repeticoes
-      ){
-        return;
-      }
-
-
-      const duplicado=
-        treinoAtual.exercicios.some(
-          function(e){
-            return normalizarTexto(e.nome)===
-                   normalizarTexto(nome);
-          }
-        );
-
-
-      if(duplicado){
-
-        alert(
-          "Já existe um exercício com esse nome neste treino."
-        );
-
-        return;
-      }
-
-
-      const novo={
-        id:Date.now(),
-        nome:nome,
-        grupo:grupo,
-        series:series,
-        repeticoes:repeticoes,
-        descanso:descanso,
-        falha:falha,
-        peso:0,
-        historicoPesos:[],
-        concluido:false,
-        personalizado:true
-      };
-
-
-      /*
-        Exercícios novos entram no final
-        da ordem manual atual.
-      */
-
-      treinoAtual.exercicios.push(novo);
-
-
-      /*
-        Guardamos a nova ordem para que
-        o exercício continue no final
-        mesmo depois de atualizar a página.
-      */
-
-      guardarOrdemExercicios();
-
-
-      formulario.reset();
-
-
-      document.querySelector(
-        "#series"
-      ).value=3;
-
-
-      mostrarExercicios(
-        obterExerciciosFiltrados()
-      );
-
+    if (!nome || !grupo || !series || !repeticoes) {
+      return;
     }
-  );
+
+    const duplicado = treinoAtual.exercicios.some(function(e) {
+      return normalizarTexto(e.nome) === normalizarTexto(nome);
+    });
+
+    if (duplicado) {
+      alert("Já existe um exercício com esse nome neste treino.");
+      return;
+    }
+
+    const novo = {
+      id: Date.now(),
+      nome: nome,
+      grupo: grupo,
+      series: series,
+      repeticoes: repeticoes,
+      descanso: descanso,
+      falha: falha,
+      peso: 0,
+      historicoPesos: [],
+      concluido: false,
+      personalizado: true,
+      linkReferencia: linkReferencia
+    };
+
+    // Adiciona o exercício ao treino atual
+    treinoAtual.exercicios.push(novo);
+
+    // Guarda a ordem dos exercícios
+    guardarOrdemExercicios();
+
+    // Guarda os exercícios personalizados
+    const chave = "meuPlanoExerciciosPersonalizados";
+
+    let personalizados = {};
+
+    try {
+      personalizados = JSON.parse(localStorage.getItem(chave)) || {};
+    } catch (erro) {
+      personalizados = {};
+    }
+
+    if (!Array.isArray(personalizados[treinoAtual.dia])) {
+      personalizados[treinoAtual.dia] = [];
+    }
+
+    personalizados[treinoAtual.dia].push(novo);
+
+    localStorage.setItem(chave, JSON.stringify(personalizados));
+
+    // Limpa o formulário
+    formulario.reset();
+
+    document.querySelector("#series").value = 3;
+
+    // Atualiza os cartões
+    mostrarExercicios(obterExerciciosFiltrados());
+
+  });
 
 }
-
 
 // =====================================================
 // 10. ARRASTAR E REORDENAR EXERCÍCIOS
@@ -2229,6 +2288,34 @@ listaExercicios.addEventListener("drop",function(evento){
 
 
 // =====================================================
+// CRONÓMETRO DE DESCANSO: 60 s decrescentes e, depois,
+// contagem crescente até 02:00. Um cronómetro por card.
+// =====================================================
+const cronometrosAtivos = new Map();
+function formatarTempo(total){const t=Math.max(0,Math.floor(total));return `${String(Math.floor(t/60)).padStart(2,"0")}:${String(t%60).padStart(2,"0")}`;}
+function controlarCronometro(id,acao){
+  const card=listaExercicios.querySelector(`article[data-id="${id}"]`);if(!card)return;
+  const painel=card.querySelector(`[data-cronometro="${id}"]`);if(!painel)return;
+  let st=cronometrosAtivos.get(id);
+  if(acao==="close"){if(st&&st.interval)clearInterval(st.interval);cronometrosAtivos.delete(id);painel.hidden=true;return;}
+  if(acao==="reset"){if(st&&st.interval)clearInterval(st.interval);st={restante:60,decrescente:true,pausado:false,interval:null};cronometrosAtivos.set(id,st);painel.querySelector(".cronometro-tempo").textContent="01:00";painel.querySelector(".cronometro-pausar").textContent="Pausar";if(!painel.hidden)iniciarTick(id,painel,st);return;}
+  if(acao==="pause"){if(!st)return;if(st.interval){clearInterval(st.interval);st.interval=null;st.pausado=true;painel.querySelector(".cronometro-pausar").textContent="Continuar";}else{st.pausado=false;painel.querySelector(".cronometro-pausar").textContent="Pausar";iniciarTick(id,painel,st);}return;}
+  if(!st){st={restante:60,decrescente:true,pausado:false,interval:null};cronometrosAtivos.set(id,st);}painel.hidden=false;if(!st.interval&&!st.pausado)iniciarTick(id,painel,st);
+}
+function iniciarTick(id,painel,st){
+  if(st.interval)clearInterval(st.interval);
+  st.interval=setInterval(()=>{
+    if(st.decrescente){st.restante--;if(st.restante<=0){st.restante=0;st.decrescente=false;}}
+    else {st.restante++;if(st.restante>=120){st.restante=120;clearInterval(st.interval);st.interval=null;const b=painel.querySelector(".cronometro-pausar");if(b)b.textContent="Terminado";}}
+    const el=painel.querySelector(".cronometro-tempo");if(el)el.textContent=formatarTempo(st.restante);
+  },1000);
+}
+function mostrarAvisoNaoFiz(mensagem){
+  let aviso=document.getElementById("avisoNaoFiz");if(!aviso){aviso=document.createElement("div");aviso.id="avisoNaoFiz";aviso.className="aviso-nao-fiz";aviso.setAttribute("role","status");aviso.setAttribute("aria-live","polite");document.body.appendChild(aviso);}
+  aviso.textContent=mensagem;aviso.classList.add("visivel");clearTimeout(aviso._timer);aviso._timer=setTimeout(()=>aviso.classList.remove("visivel"),2600);
+}
+
+// =====================================================
 // 12. SPOTIFY FLUTUANTE
 //
 // Apenas o ícone é mantido porque os controlos de
@@ -2249,10 +2336,12 @@ listaExercicios.addEventListener("drop",function(evento){
       aria-label="Abrir Spotify"
       title="Abrir Spotify"
     >
-      <img
-        src="icon/spotfly.png"
-        alt="Spotify"
-      >
+      <svg viewBox="0 0 24 24" role="img" aria-label="Spotify" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="11" fill="#1DB954"/>
+        <path d="M5.2 9.1c4.5-1.35 9.6-.9 13.4 1.35" fill="none" stroke="#101410" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M6.1 12.1c3.9-1.1 8.1-.65 11.3 1.2" fill="none" stroke="#101410" stroke-width="1.55" stroke-linecap="round"/>
+        <path d="M7 14.8c3.1-.85 6.4-.45 9.1 1.05" fill="none" stroke="#101410" stroke-width="1.35" stroke-linecap="round"/>
+      </svg>
     </a>
   `;
 
@@ -2275,3 +2364,45 @@ if(tituloTreino){
 mostrarExercicios(
   treinoAtual.exercicios
 );
+
+// =====================================================
+// REGISTO DE SESSÕES — usado pela página Progresso
+// Regista uma sessão completa uma única vez por dia.
+// =====================================================
+(function iniciarRegistoSessao(){
+  const botao = document.getElementById("registarSessao");
+  const estado = document.getElementById("estadoSessao");
+  if (!botao) return;
+  const chave = "meuPlanoSessoesV1";
+  const dia = (document.body.dataset.dia || "D1").toUpperCase();
+  // D6 é uma biblioteca de consulta, não uma sessão obrigatória de treino.
+  if (dia === "D6") {
+    const bloco = botao.closest(".registar-sessao");
+    if (bloco) bloco.style.display = "none";
+    const cardio = document.querySelector(".cardio");
+    if (cardio) cardio.style.display = "none";
+    return;
+  }
+  const hoje = new Date();
+  const dataHoje = `${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,"0")}-${String(hoje.getDate()).padStart(2,"0")}`;
+  function ler(){ try { return JSON.parse(localStorage.getItem(chave)) || []; } catch(e) { return []; } }
+  function atualizar(){
+    const existente = ler().find(x => x.data === dataHoje && x.dia === dia);
+    if (existente) { botao.textContent = "Treino registado hoje ✓"; if (estado) estado.textContent = `Sessão ${dia} registada em ${dataHoje.split("-").reverse().join("/")}.`; }
+  }
+  botao.addEventListener("click", function(){
+    let registos = ler();
+    if (registos.some(x => x.data === dataHoje && x.dia === dia)) {
+      if (estado) estado.textContent = "Esta sessão já está registada para hoje.";
+      return;
+    }
+    registos.push({data:dataHoje, dia:dia, nome: dia === "D6" ? "D.O Abdominais" : dia, timestamp:Date.now()});
+    registos.sort((a,b) => a.data.localeCompare(b.data));
+    try {
+      localStorage.setItem(chave, JSON.stringify(registos));
+      botao.textContent = "Treino registado hoje ✓";
+      if (estado) estado.textContent = "Treino guardado no calendário. Podes consultar a tua frequência em Progresso.";
+    } catch(e) { if (estado) estado.textContent = "Não foi possível guardar. Exporta os teus dados ou verifica o armazenamento do navegador."; }
+  });
+  atualizar();
+})();

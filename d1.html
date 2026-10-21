@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Meu Plano de Treino</title>
+    <title>Meu Plano — Treinos</title>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -25,6 +25,10 @@
             <ul>
                 <li>
                     <a href="#inicio">Início</a>
+                </li>
+
+                <li>
+                    <a href="progresso.html">Progresso</a>
                 </li>
 
                 <li>
@@ -152,7 +156,7 @@
                         <li>
                             <a href="d6.html">
                                 <span>D6</span>
-                                Abdómen
+                                D.O Abdominais
                             </a>
                         </li>
 
@@ -353,6 +357,16 @@
 
                 </section>
 
+                <section class="registar-sessao" aria-labelledby="tituloRegistarSessao">
+                    <div>
+                        <p class="treino-label">NO FINAL DO TREINO</p>
+                        <h3 id="tituloRegistarSessao">Concluíste a sessão?</h3>
+                        <p>Regista o dia no teu calendário para acompanhares a frequência semanal.</p>
+                    </div>
+                    <button type="button" id="registarSessao" class="botao-principal">Marcar treino como concluído</button>
+                    <p id="estadoSessao" class="estado-sessao" role="status" aria-live="polite"></p>
+                </section>
+
             </section>
 
         </section>
@@ -369,62 +383,72 @@
                 <span class="adicionar-ajuda">Adiciona um exercício ao dia atual.</span>
             </div>
 
-            <form id="formularioExercicio">
+            
+        <form id="formularioExercicio">
 
-                <div class="campo">
-                    <label for="nomeExercicio">Nome do exercício</label>
-                    <input type="text" id="nomeExercicio" placeholder="Ex.: Face Pull" required>
-                </div>
+            <div class="campo">
+                <label for="nomeExercicio">Nome do exercício</label>
+                <input type="text" id="nomeExercicio" placeholder="Ex.: Face Pull" required>
+            </div>
 
-                <div class="campo">
-                    <label for="grupoMuscular">Grupo muscular</label>
-                    <select id="grupoMuscular" required>
-                        <option value="">Selecionar grupo</option>
-                        <option value="Costas">Costas</option>
-                        <option value="Peito">Peito</option>
-                        <option value="Ombros">Ombros</option>
-                        <option value="Bíceps">Bíceps</option>
-                        <option value="Tríceps">Tríceps</option>
-                        <option value="Pernas">Pernas</option>
-                        <option value="Quadríceps">Quadríceps</option>
-                        <option value="Posterior da coxa">Posterior da coxa</option>
-                        <option value="Glúteos">Glúteos</option>
-                        <option value="Gémeos">Gémeos</option>
-                        <option value="Antebraço">Antebraço</option>
-                        <option value="Abdómen">Abdómen</option>
-                        <option value="Mobilidade">Mobilidade</option>
-                    </select>
-                </div>
+            <div class="campo">
+                <label for="linkReferencia">Link de referência (opcional)</label>
+                <input
+                    type="url"
+                    id="linkReferencia"
+                    placeholder="https://musclewiki.com/..."
+                >
+            </div>
 
-                <div class="campo campo-pequeno">
-                    <label for="series">Séries</label>
-                    <input type="number" id="series" min="1" max="20" value="3" required>
-                </div>
+            <div class="campo">
+                <label for="grupoMuscular">Grupo muscular</label>
+                <select id="grupoMuscular" required>
+                    <option value="">Selecionar grupo</option>
+                    <option value="Costas">Costas</option>
+                    <option value="Peito">Peito</option>
+                    <option value="Ombros">Ombros</option>
+                    <option value="Bíceps">Bíceps</option>
+                    <option value="Tríceps">Tríceps</option>
+                    <option value="Pernas">Pernas</option>
+                    <option value="Quadríceps">Quadríceps</option>
+                    <option value="Posterior da coxa">Posterior da coxa</option>
+                    <option value="Glúteos">Glúteos</option>
+                    <option value="Gémeos">Gémeos</option>
+                    <option value="Antebraço">Antebraço</option>
+                    <option value="Abdómen">Abdómen</option>
+                    <option value="Mobilidade">Mobilidade</option>
+                </select>
+            </div>
 
-                <div class="campo">
-                    <label for="repeticoes">Repetições</label>
-                    <input type="text" id="repeticoes" placeholder="Ex.: 8–12" required>
-                </div>
+            <div class="campo campo-pequeno">
+                <label for="series">Séries</label>
+                <input type="number" id="series" min="1" max="20" value="3" required>
+            </div>
 
-                <div class="campo">
-                    <label for="descansoExercicio">Descanso</label>
-                    <select id="descansoExercicio">
-                        <option value="60-90 seg">60–90 seg</option>
-                        <option value="2-3 min">2–3 min</option>
-                        <option value="3-4 min">3–4 min</option>
-                    </select>
-                </div>
+            <div class="campo">
+                <label for="repeticoes">Repetições</label>
+                <input type="text" id="repeticoes" placeholder="Ex.: 8–12" required>
+            </div>
 
-                <div class="campo-checkbox">
-                    <input type="checkbox" id="ateFalha">
-                    <label for="ateFalha">🔥 Até à falha</label>
-                </div>
+            <div class="campo">
+                <label for="descansoExercicio">Descanso</label>
+                <select id="descansoExercicio">
+                    <option value="60-90 seg">60–90 seg</option>
+                    <option value="2-3 min">2–3 min</option>
+                    <option value="3-4 min">3–4 min</option>
+                </select>
+            </div>
 
-                <button type="submit" class="botao-adicionar">
-                    Adicionar
-                </button>
+            <div class="campo-checkbox">
+                <input type="checkbox" id="ateFalha">
+                <label for="ateFalha">🔥 Até à falha</label>
+            </div>
 
-            </form>
+            <button type="submit" class="botao-adicionar">
+                Adicionar
+            </button>
+
+        </form>
 
         </section>
 
@@ -481,6 +505,11 @@
     <!-- =========================================
          JAVASCRIPT
     ========================================== -->
+
+    <nav class="menu-flutuante" aria-label="Navegação principal">
+        <a href="d1.html" class="nav-flutuante-ativo" aria-label="Treinos"><span aria-hidden="true">▦</span><small>Treinos</small></a>
+        <a href="progresso.html" aria-label="Progresso"><span aria-hidden="true">↗</span><small>Progresso</small></a>
+    </nav>
 
     <script src="js/script.js"></script>
 

@@ -1,0 +1,29 @@
+MEU PLANO — VERSÃO ATUALIZADA
+
+Estrutura:
+- index.html: entrada da aplicação
+- d1.html a d6.html: páginas dos treinos; D6 aparece como D.O Abdominais
+- progresso.html: calendário, frequência, gráficos, avaliações e histórico de exercícios não realizados
+- css/style.css: estilos e responsividade
+- js/script.js: funcionamento dos treinos, cronómetro, estado dos exercícios e ícone Spotify
+- js/progresso.js: página de progresso e avaliações físicas
+
+Funcionalidades incluídas nesta versão:
+- Cronómetro em cada card: inicia em 01:00 decrescente, depois conta para cima até 02:00; permite pausar, continuar, reiniciar e fechar.
+- Botão X discreto no card para abrir a opção “Não fiz”; o exercício vai para o fim e fica guardado no histórico com a data.
+- O botão numerado mantém a função de concluir/desmarcar; o botão de repor exercício removido mantém-se separado.
+- Ícone Spotify corrigido usando SVG incorporado, sem depender de um ficheiro de imagem que faltava. Abre o Spotify numa nova aba; não controla a reprodução dentro da página.
+- Página Progresso com frequência semanal, calendário, gráfico e histórico de exercícios não realizados.
+- Avaliações físicas ordenadas por data, com profissional e local opcionais, comparação e gráfico de medidas.
+- Avaliação de 29/07/2026 importada do relatório fornecido; o profissional registado é Joseane Oliveira, conforme o documento.
+- Exportação e importação de cópia de segurança em JSON.
+
+Como testar:
+1. Extrai a pasta completa.
+2. Abre index.html ou d1.html no navegador.
+3. Mantém a estrutura das pastas ao publicar no GitHub Pages.
+
+Dados e privacidade:
+- Os registos ficam no armazenamento local deste navegador/dispositivo; não são sincronizados automaticamente.
+- Exporta uma cópia antes de mudar de dispositivo ou limpar os dados do navegador.
+- A aplicação utiliza imagens externas referenciadas no projeto e pode precisar de internet para as carregar.

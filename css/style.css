@@ -52,9 +52,9 @@
     --fundo-card: #171a20;
     --fundo-card-hover: #1c2027;
 
-    --vermelho: #e21b2d;
-    --vermelho-hover: #ff2639;
-    --vermelho-escuro: #9f1421;
+    --vermelho: #c92836;
+    --vermelho-hover: #e43b49;
+    --vermelho-escuro: #8f202b;
 
     --branco: #ffffff;
 
@@ -263,8 +263,7 @@ main p {
             rgba(8, 10, 13, 0.98),
             rgba(8, 10, 13, 0.82),
             rgba(8, 10, 13, 0.45)
-        ),
-        url("../img/hero-gym.jpg");
+        );
 
     background-size: cover;
     background-position: center;
@@ -2030,7 +2029,8 @@ footer p {
         box-shadow 0.2s ease;
 }
 
-.spotify-botao img {
+.spotify-botao img,
+.spotify-botao svg {
     width: 30px;
     height: 30px;
     display: block;
@@ -2330,70 +2330,119 @@ footer p {
     }
 }
 
-
-/* ========================================
-   MENU DE TREINOS — NOVA APARÊNCIA
-   ======================================== */
-
-#diasTreino {
-    background-color: #111419;
-    border: 1px solid #3a3035;
-    border-radius: var(--raio);
-    overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+/* =====================================================
+   23. MELHORIAS VISUAIS E NAVEGAÇÃO MÓVEL
+===================================================== */
+#menu { backdrop-filter: blur(14px); }
+#menu h1 { letter-spacing: .08em; }
+#diasTreino a.ativo { background: #1d2026; border: 1px solid #3a252a; box-shadow: inset 3px 0 0 var(--vermelho); }
+#diasTreino a.ativo span { background: #2b1a1e; color: #f06b76; }
+.botao-principal { background: var(--vermelho); box-shadow: 0 5px 18px rgba(201,40,54,.14); }
+.botao-principal:hover { background: var(--vermelho-hover); }
+.registar-sessao { margin: 22px 0 32px; padding: 22px; display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; background:linear-gradient(145deg,#171a20,#111419); border:1px solid var(--linha); border-radius:14px; }
+.registar-sessao h3 { margin:5px 0 8px; }
+.registar-sessao p { color:var(--texto-fraco); margin:0; line-height:1.5; }
+.registar-sessao .botao-principal { border:0; border-radius:9px; color:white; padding:13px 17px; cursor:pointer; font-weight:600; }
+.registar-sessao .estado-sessao { width:100%; font-size:13px; }
+.menu-flutuante { display:none; }
+/* Página Progresso */
+.pagina-progresso { max-width:1180px; margin:0 auto; padding:34px 24px 70px; }
+.progresso-intro { margin:14px 0 28px; }
+.progresso-intro .treino-label { color:var(--vermelho); letter-spacing:.12em; font-size:11px; font-weight:700; }
+.progresso-intro h1 { font-size:clamp(28px,4vw,42px); margin:8px 0 10px; }
+.progresso-intro p { color:var(--texto-fraco); max-width:680px; line-height:1.65; }
+.progresso-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.painel-progresso { background:var(--fundo-secundario); border:1px solid var(--linha); border-radius:14px; padding:22px; min-width:0; }
+.painel-progresso.largo { grid-column:1/-1; }
+.painel-progresso h2 { margin:0 0 6px; font-size:19px; }
+.painel-progresso .subtitulo { color:var(--texto-fraco); font-size:13px; margin:0 0 18px; line-height:1.5; }
+.resumo-cartoes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-bottom:18px; }
+.resumo-cartao { padding:14px; background:var(--fundo-card); border:1px solid var(--linha); border-radius:10px; }
+.resumo-cartao span { display:block; color:var(--texto-fraco); font-size:12px; }
+.resumo-cartao strong { display:block; margin-top:7px; font-size:24px; }
+.resumo-cartao small { color:var(--texto-fraco); }
+.calendario-semana-progresso { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:7px; }
+.dia-semana-progresso { text-align:center; padding:10px 2px; border:1px solid var(--linha); background:#191c22; border-radius:9px; color:var(--texto-fraco); font-size:12px; }
+.dia-semana-progresso strong { display:block; margin-top:7px; font-size:15px; color:var(--texto); }
+.dia-semana-progresso.concluido { opacity:.48; background:#24272d; }
+.dia-semana-progresso.concluido strong { color:#b7bac0; }
+.dia-semana-progresso.hoje { border-color:#7d343c; box-shadow:inset 0 -2px 0 var(--vermelho); }
+.grafico-barras { height:180px; display:flex; align-items:stretch; gap:10px; padding-top:10px; }
+.coluna-grafico { flex:1; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:8px; min-width:0; }
+.coluna-grafico .barra-fundo { height:135px; width:100%; max-width:42px; display:flex; align-items:flex-end; background:#202329; border-radius:7px; overflow:hidden; }
+.coluna-grafico .barra { width:100%; background:linear-gradient(180deg,#d84a56,#92232d); border-radius:7px; min-height:3px; }
+.coluna-grafico strong { font-size:12px; }
+.coluna-grafico small { color:var(--texto-fraco); font-size:11px; }
+.form-medidas { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.form-medidas label { display:flex; flex-direction:column; gap:6px; color:var(--texto-fraco); font-size:12px; }
+.form-medidas input,.form-medidas select,.filtro-historico { width:100%; min-width:0; padding:11px 10px; background:#0d1014; color:var(--texto); border:1px solid #343943; border-radius:8px; font:inherit; }
+.form-medidas input:focus,.form-medidas select:focus { outline:1px solid var(--vermelho); border-color:var(--vermelho); }
+.acoes-form { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.botao-secundario,.botao-acao { padding:11px 14px; border-radius:8px; border:1px solid #383d46; background:#202329; color:var(--texto); cursor:pointer; font-weight:600; }
+.botao-secundario:hover,.botao-acao:hover { border-color:#666d78; }
+.tabela-scroll { overflow-x:auto; }
+.tabela-historico { width:100%; border-collapse:collapse; font-size:13px; min-width:560px; }
+.tabela-historico th,.tabela-historico td { text-align:left; padding:12px 10px; border-bottom:1px solid var(--linha); white-space:nowrap; }
+.tabela-historico th { color:var(--texto-fraco); font-weight:500; }
+.tabela-historico td strong { color:var(--texto); }
+.estado-vazio { padding:20px; text-align:center; color:var(--texto-fraco); border:1px dashed #383d46; border-radius:10px; }
+.aviso-dados { color:var(--texto-fraco); font-size:12px; line-height:1.5; margin-top:14px; }
+.grafico-linha { width:100%; height:170px; display:block; }
+.mensagem-toast { min-height:18px; margin-top:10px; color:#d7d9dd; font-size:13px; }
+@media(max-width:760px) {
+  body { padding-bottom:84px; }
+  #menu { min-height:auto; padding:14px 18px; flex-direction:row; gap:12px; }
+  #menu ul { display:none; }
+  #menu h1 { font-size:17px; }
+  .menu-flutuante { display:flex; position:fixed; z-index:1000; left:50%; transform:translateX(-50%); bottom:12px; width:min(300px,calc(100% - 34px)); padding:7px; gap:6px; justify-content:stretch; border:1px solid rgba(255,255,255,.12); border-radius:18px; background:rgba(19,22,27,.76); backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%); box-shadow:0 8px 28px rgba(0,0,0,.35); }
+  .menu-flutuante a { flex:1; display:flex; align-items:center; justify-content:center; flex-direction:row; gap:8px; padding:10px 12px; text-decoration:none; color:#a8adb5; border-radius:12px; font-size:13px; }
+  .menu-flutuante a span { font-size:17px; line-height:1; }
+  .menu-flutuante a small { font-size:12px; }
+  .menu-flutuante a.nav-flutuante-ativo { background:rgba(201,40,54,.16); color:#f07b85; }
+  #treinos aside { position:static; }
+  #diasTreino ul { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; }
+  #diasTreino li { margin:0; }
+  #diasTreino a { padding:9px 8px; min-height:48px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; text-align:center; font-size:11px; }
+  #diasTreino a span { margin:0; font-size:12px; }
+  .pagina-progresso { padding:24px 15px 35px; }
+  .progresso-grid { grid-template-columns:1fr; }
+  .painel-progresso.largo { grid-column:auto; }
+  .resumo-cartoes { grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; }
+  .resumo-cartao { padding:11px 9px; }
+  .resumo-cartao strong { font-size:20px; }
+  .form-medidas { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .painel-progresso { padding:17px; }
+  .registar-sessao { align-items:stretch; }
+  .registar-sessao .botao-principal { width:100%; }
 }
-
-#diasTreino .titulo-sidebar {
-    background-color: #151216;
-    border-bottom: 1px solid #3a3035;
+@media(max-width:390px) {
+  #diasTreino ul { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .form-medidas { grid-template-columns:1fr 1fr; }
+  .resumo-cartao strong { font-size:18px; }
+  .dia-semana-progresso { font-size:10px; }
 }
+.form-medidas textarea { width:100%; min-width:0; padding:11px 10px; background:#0d1014; color:var(--texto); border:1px solid #343943; border-radius:8px; font:inherit; resize:vertical; }
 
-#diasTreino a {
-    border-left: 3px solid transparent;
-    border-radius: 6px;
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease;
-}
 
-#diasTreino a:hover {
-    background-color: #292027;
-    color: #ffffff;
-}
-
-#diasTreino a:hover span {
-    color: #ff5363;
-}
-
-/* Treino selecionado */
-#diasTreino a.ativo {
-    background-color: #541923;
-    border-left-color: #ff5363;
-    color: #ffffff;
-}
-
-#diasTreino a.ativo span {
-    color: #ffffff;
-}
-
-/* Foco para navegação por teclado */
-#diasTreino a:focus-visible {
-    outline: 2px solid #ff5363;
-    outline-offset: 2px;
-}
-
-/* Ajustes para telemóveis */
-@media (max-width: 650px) {
-    #diasTreino {
-        border-radius: 10px;
-    }
-
-    #diasTreino ul {
-        padding: 8px;
-    }
-
-    #diasTreino a {
-        padding: 12px;
-    }
-}
+/* Funcionalidades compactas adicionadas: cronómetro e estado "Não fiz" */
+.botao-nao-fiz{position:absolute;top:8px;left:8px;z-index:7;width:32px;height:32px;border:1px solid rgba(255,255,255,.24);border-radius:50%;background:rgba(10,12,15,.88);color:#fff;font-size:27px;line-height:27px;cursor:pointer;opacity:0;transform:scale(.92);transition:opacity .18s ease,transform .18s ease,border-color .18s ease;}
+#listaExercicios article:hover .botao-nao-fiz,#listaExercicios article:focus-within .botao-nao-fiz,#listaExercicios article.nao-realizado .botao-nao-fiz{opacity:1;transform:scale(1);}
+.menu-nao-fiz{position:absolute;z-index:9;top:45px;left:8px;padding:5px;border:1px solid #393e47;border-radius:8px;background:rgba(17,20,25,.97);box-shadow:0 8px 22px rgba(0,0,0,.35);}
+.menu-nao-fiz[hidden],.cronometro-painel[hidden]{display:none!important;}
+.confirmar-nao-fiz{border:0;border-radius:5px;padding:8px 12px;background:#282d35;color:#fff;font-size:12px;cursor:pointer;white-space:nowrap;}
+.confirmar-nao-fiz:hover{background:#3a2529;color:#ff7b86;}
+.etiqueta-nao-realizado{position:absolute;left:48px;top:10px;z-index:6;padding:5px 8px;border-radius:5px;background:rgba(130,24,36,.93);color:#fff;font-size:10px;font-weight:700;pointer-events:none;}
+#listaExercicios article.nao-realizado{border-color:rgba(226,27,45,.42);}
+#listaExercicios article.nao-realizado .botao-concluir{border-color:#8b2530;color:#ff7b86;}
+.controles-imagem-exercicio{position:absolute;right:6px;bottom:6px;z-index:4;display:flex;align-items:center;gap:6px;}
+.controles-imagem-exercicio .botao-ver{position:static;display:inline-flex;align-items:center;min-height:26px;}
+.botao-cronometro{display:inline-flex;align-items:center;justify-content:center;width:27px;height:26px;border:1px solid rgba(255,255,255,.2);border-radius:4px;background:rgba(10,12,15,.9);color:#fff;font-size:19px;line-height:1;cursor:pointer;}
+.botao-cronometro:hover,.botao-cronometro:focus-visible{border-color:var(--vermelho);color:#ff5260;}
+.cronometro-painel{position:absolute;z-index:8;left:50%;top:50%;transform:translate(-50%,-50%);width:min(190px,calc(100% - 28px));padding:12px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(11,13,16,.94);backdrop-filter:blur(12px);text-align:center;box-shadow:0 12px 35px rgba(0,0,0,.42);}
+.cronometro-tempo{font-size:30px;font-variant-numeric:tabular-nums;font-weight:800;letter-spacing:1px;color:#fff;}
+.cronometro-acoes{display:flex;justify-content:center;align-items:center;gap:5px;margin-top:8px;}
+.cronometro-acoes button{border:1px solid #3b4049;border-radius:5px;background:#20242b;color:#e8e9ec;padding:5px 7px;font-size:10px;cursor:pointer;}
+.cronometro-acoes .cronometro-fechar{font-size:16px;padding:2px 7px;}
+.aviso-nao-fiz{position:fixed;left:50%;bottom:84px;z-index:500;transform:translate(-50%,12px);opacity:0;pointer-events:none;padding:10px 14px;border:1px solid #3a3f48;border-radius:8px;background:rgba(17,20,25,.96);color:#f0f1f3;font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,.32);transition:opacity .2s ease,transform .2s ease;max-width:calc(100vw - 28px);text-align:center;}
+.aviso-nao-fiz.visivel{opacity:1;transform:translate(-50%,0);}
+@media(max-width:650px){.botao-nao-fiz{opacity:.82;transform:none;width:29px;height:29px;font-size:25px;}.controles-imagem-exercicio{right:5px;bottom:5px;}.botao-cronometro{width:29px;height:28px;}.aviso-nao-fiz{bottom:92px;}}

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Meu Plano de Treino — D6 Abdómen</title>
+    <title>Meu Plano de Treino — D.O Abdominais</title>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -25,6 +25,10 @@
             <ul>
                 <li>
                     <a href="#inicio">Início</a>
+                </li>
+
+                <li>
+                    <a href="progresso.html">Progresso</a>
                 </li>
 
                 <li>
@@ -152,7 +156,7 @@
                         <li>
                             <a href="d6.html">
                                 <span>D6</span>
-                                Abdómen
+                                D.O Abdominais
                             </a>
                         </li>
 
@@ -353,6 +357,16 @@
 
                 </section>
 
+                <section class="registar-sessao" aria-labelledby="tituloRegistarSessao">
+                    <div>
+                        <p class="treino-label">NO FINAL DO TREINO</p>
+                        <h3 id="tituloRegistarSessao">Concluíste a sessão?</h3>
+                        <p>Regista o dia no teu calendário para acompanhares a frequência semanal.</p>
+                    </div>
+                    <button type="button" id="registarSessao" class="botao-principal">Marcar treino como concluído</button>
+                    <p id="estadoSessao" class="estado-sessao" role="status" aria-live="polite"></p>
+                </section>
+
             </section>
 
         </section>
@@ -481,6 +495,11 @@
     <!-- =========================================
          JAVASCRIPT
     ========================================== -->
+
+    <nav class="menu-flutuante" aria-label="Navegação principal">
+        <a href="d1.html" class="nav-flutuante-ativo" aria-label="Treinos"><span aria-hidden="true">▦</span><small>Treinos</small></a>
+        <a href="progresso.html" aria-label="Progresso"><span aria-hidden="true">↗</span><small>Progresso</small></a>
+    </nav>
 
     <script src="js/script.js"></script>
 
