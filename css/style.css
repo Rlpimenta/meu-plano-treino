@@ -2344,7 +2344,12 @@ footer p {
 .registar-sessao p { color:var(--texto-fraco); margin:0; line-height:1.5; }
 .registar-sessao .botao-principal { border:0; border-radius:9px; color:white; padding:13px 17px; cursor:pointer; font-weight:600; }
 .registar-sessao .estado-sessao { width:100%; font-size:13px; }
-.menu-flutuante { display:none; }
+.menu-flutuante { display:flex; position:fixed; z-index:1000; left:50%; right:auto; transform:translateX(-50%); bottom:20px; width:min(340px,calc(100% - 32px)); padding:7px; gap:6px; justify-content:stretch; border:1px solid rgba(255,255,255,.12); border-radius:18px; background:rgba(19,22,27,.82); backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%); box-shadow:0 8px 28px rgba(0,0,0,.4); }
+.menu-flutuante a { flex:1; display:flex; align-items:center; justify-content:center; gap:8px; padding:10px 12px; text-decoration:none; color:#a8adb5; border-radius:12px; font-size:13px; }
+.menu-flutuante a span { font-size:17px; line-height:1; }
+.menu-flutuante a small { font-size:12px; }
+.menu-flutuante a.nav-flutuante-ativo { background:rgba(201,40,54,.16); color:#f07b85; }
+body { padding-bottom:88px; }
 /* Página Progresso */
 .pagina-progresso { max-width:1180px; margin:0 auto; padding:34px 24px 70px; }
 .progresso-intro { margin:14px 0 28px; }
@@ -2394,7 +2399,7 @@ footer p {
   #menu { min-height:auto; padding:14px 18px; flex-direction:row; gap:12px; }
   #menu ul { display:none; }
   #menu h1 { font-size:17px; }
-  .menu-flutuante { display:flex; position:fixed; z-index:1000; left:50%; transform:translateX(-50%); bottom:12px; width:min(300px,calc(100% - 34px)); padding:7px; gap:6px; justify-content:stretch; border:1px solid rgba(255,255,255,.12); border-radius:18px; background:rgba(19,22,27,.76); backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%); box-shadow:0 8px 28px rgba(0,0,0,.35); }
+  .menu-flutuante { left:50%; right:auto; transform:translateX(-50%); bottom:12px; width:min(340px,calc(100% - 34px)); }
   .menu-flutuante a { flex:1; display:flex; align-items:center; justify-content:center; flex-direction:row; gap:8px; padding:10px 12px; text-decoration:none; color:#a8adb5; border-radius:12px; font-size:13px; }
   .menu-flutuante a span { font-size:17px; line-height:1; }
   .menu-flutuante a small { font-size:12px; }
@@ -2446,3 +2451,5 @@ footer p {
 .aviso-nao-fiz{position:fixed;left:50%;bottom:84px;z-index:500;transform:translate(-50%,12px);opacity:0;pointer-events:none;padding:10px 14px;border:1px solid #3a3f48;border-radius:8px;background:rgba(17,20,25,.96);color:#f0f1f3;font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,.32);transition:opacity .2s ease,transform .2s ease;max-width:calc(100vw - 28px);text-align:center;}
 .aviso-nao-fiz.visivel{opacity:1;transform:translate(-50%,0);}
 @media(max-width:650px){.botao-nao-fiz{opacity:.82;transform:none;width:29px;height:29px;font-size:25px;}.controles-imagem-exercicio{right:5px;bottom:5px;}.botao-cronometro{width:29px;height:28px;}.aviso-nao-fiz{bottom:92px;}}
+
+.menu-flutuante a.nav-voltar-portfolio{color:#f07b85}.menu-flutuante a.nav-voltar-portfolio:hover,.menu-flutuante a.nav-voltar-portfolio:focus-visible{background:rgba(201,40,54,.16)}
