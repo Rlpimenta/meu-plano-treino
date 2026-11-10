@@ -1,8 +1,8 @@
 MEU PLANO — VERSÃO ATUALIZADA
 
 Estrutura:
-- index.html: entrada da aplicação
-- d1.html a d6.html: páginas dos treinos; D6 aparece como D.O Abdominais
+- index.html: página única dos seis treinos; o parâmetro `?dia=D1` a `?dia=D6` seleciona o treino
+- d1.html a d6.html: redirecionamentos para manter compatibilidade com os links antigos; D6 aparece como D.O Abdominais
 - progresso.html: calendário, frequência, gráficos, avaliações e histórico de exercícios não realizados
 - css/style.css: estilos e responsividade
 - js/script.js: funcionamento dos treinos, cronómetro, estado dos exercícios e ícone Spotify

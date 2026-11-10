@@ -158,7 +158,7 @@ header {
 }
 
 
-#menu h1 {
+#menu .marca-titulo {
     margin: 0;
 
     color: var(--branco);
@@ -170,7 +170,7 @@ header {
 }
 
 
-#menu h1 span {
+#menu .marca-titulo span {
     color: var(--vermelho);
 }
 
@@ -2334,7 +2334,7 @@ footer p {
    23. MELHORIAS VISUAIS E NAVEGAÇÃO MÓVEL
 ===================================================== */
 #menu { backdrop-filter: blur(14px); }
-#menu h1 { letter-spacing: .08em; }
+#menu .marca-titulo { letter-spacing: .08em; }
 #diasTreino a.ativo { background: #1d2026; border: 1px solid #3a252a; box-shadow: inset 3px 0 0 var(--vermelho); }
 #diasTreino a.ativo span { background: #2b1a1e; color: #f06b76; }
 .botao-principal { background: var(--vermelho); box-shadow: 0 5px 18px rgba(201,40,54,.14); }
@@ -2398,7 +2398,7 @@ body { padding-bottom:88px; }
   body { padding-bottom:84px; }
   #menu { min-height:auto; padding:14px 18px; flex-direction:row; gap:12px; }
   #menu ul { display:none; }
-  #menu h1 { font-size:17px; }
+  #menu .marca-titulo { font-size:17px; }
   .menu-flutuante { left:50%; right:auto; transform:translateX(-50%); bottom:12px; width:min(340px,calc(100% - 34px)); }
   .menu-flutuante a { flex:1; display:flex; align-items:center; justify-content:center; flex-direction:row; gap:8px; padding:10px 12px; text-decoration:none; color:#a8adb5; border-radius:12px; font-size:13px; }
   .menu-flutuante a span { font-size:17px; line-height:1; }
@@ -2453,3 +2453,69 @@ body { padding-bottom:88px; }
 @media(max-width:650px){.botao-nao-fiz{opacity:.82;transform:none;width:29px;height:29px;font-size:25px;}.controles-imagem-exercicio{right:5px;bottom:5px;}.botao-cronometro{width:29px;height:28px;}.aviso-nao-fiz{bottom:92px;}}
 
 .menu-flutuante a.nav-voltar-portfolio{color:#f07b85}.menu-flutuante a.nav-voltar-portfolio:hover,.menu-flutuante a.nav-voltar-portfolio:focus-visible{background:rgba(201,40,54,.16)}
+
+
+
+/* Interface simplificada, com prioridade ao telemóvel */
+.aviso-erro-plano { margin:18px auto; max-width:900px; padding:14px 16px; border:1px solid #9b3944; border-radius:12px; background:#26171a; color:#ffd8dc; line-height:1.5; }
+#diasTreino { border-radius:16px; }
+#diasTreino a { border-radius:12px; }
+#listaExercicios article { border-radius:15px; padding:16px; }
+.cabecalho-cartao-final h3 { white-space:normal; overflow:visible; text-overflow:clip; line-height:1.35; }
+@media(max-width:760px) {
+  body { padding-bottom:calc(96px + env(safe-area-inset-bottom)); }
+  .menu-flutuante { bottom:calc(10px + env(safe-area-inset-bottom)); }
+  .hero { min-height:0; margin-bottom:20px; padding:22px 20px; }
+  .hero h1 { margin-bottom:8px; font-size:clamp(25px,7vw,34px); }
+  .hero-conteudo > p:not(.hero-pequeno) { margin-bottom:0; font-size:14px; }
+  .hero-frase, .sidebar-info { display:none; }
+  #treinos { gap:14px; margin-bottom:24px; }
+  #treinos aside { position:static; }
+  #diasTreino { overflow:visible; border:0; background:transparent; }
+  #diasTreino .titulo-sidebar { display:none; }
+  #diasTreino ul { display:flex; gap:8px; overflow-x:auto; padding:3px 2px 10px; scroll-snap-type:x mandatory; scrollbar-width:none; }
+  #diasTreino ul::-webkit-scrollbar { display:none; }
+  #diasTreino li { flex:0 0 auto; margin:0; scroll-snap-align:start; }
+  #diasTreino a { min-width:70px; min-height:54px; padding:8px 12px; flex-direction:column; gap:2px; border:1px solid var(--linha); background:var(--fundo-card); font-size:11px; }
+  #diasTreino a span { min-width:0; font-size:12px; }
+  #diasTreino a.ativo { border-color:#7d343c; }
+  .cabecalho-treino { gap:10px; margin-bottom:16px; }
+  .cabecalho-treino h2 { font-size:clamp(22px,6vw,28px); }
+  .cabecalho-treino p { font-size:13px; }
+  .contador { align-self:flex-start; padding:7px 10px; border-radius:10px; }
+  .ferramentas { gap:10px; margin-bottom:16px; }
+  #listaExercicios { gap:12px; }
+  #listaExercicios article { padding:14px; border-radius:16px; }
+  #listaExercicios article:hover { transform:none; }
+  .cabecalho-cartao-final { gap:12px; align-items:center; }
+  .cabecalho-cartao-final h3 { font-size:16px; }
+  .grupo-cartao-final { margin:4px 0 0; font-size:12px; }
+  .botao-concluir { width:44px; height:44px; border-radius:13px; font-size:14px; line-height:1; }
+  .imagem-exercicio-final { height:145px; border-radius:12px; }
+  .info-linha-final { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; white-space:normal; font-size:12px; }
+  .info-linha-final .series, .info-linha-final .resto { min-width:0; padding:9px 10px; border:1px solid var(--linha); border-radius:10px; background:var(--fundo-secundario); white-space:normal; }
+  .peso-final { grid-column:1/-1; min-height:48px; justify-content:space-between; gap:8px; padding:6px 10px; border:1px solid var(--linha); border-radius:10px; background:var(--fundo-secundario); }
+  .peso-final input { width:76px; height:40px; border-radius:9px; font-size:16px; }
+  .botao-nao-fiz, .botao-remover { width:36px; height:36px; background:rgba(8,10,13,.82); }
+  .botao-cronometro { width:40px; height:40px; border-radius:11px; }
+  .controles-imagem-exercicio .botao-ver { min-height:40px; padding:0 12px; border-radius:11px; font-size:12px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  #diasTreino ul { scroll-behavior:auto; }
+  #listaExercicios article { transition:none; }
+}
+
+/* Janela compacta de alternativas acionada pela imagem do exercício. */
+.modal-alternativas{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.78);display:grid;place-items:center;padding:16px;}
+.modal-alternativas-painel{position:relative;width:min(560px,100%);max-height:85vh;overflow:auto;background:#17191e;border:1px solid #454951;border-radius:16px;padding:22px;color:#f7f7f7;}
+.modal-alternativas-painel h2{margin:8px 36px 6px 0;color:#f0b43c;font-size:20px;}
+.modal-alternativas-painel>p{color:#b9bbc2;font-size:13px;line-height:1.45;margin:0 0 16px;}
+.fechar-alternativas{position:absolute;right:12px;top:8px;border:0;background:transparent;color:#fff;font-size:28px;cursor:pointer;}
+.lista-alternativas{display:grid;gap:10px;}
+.opcao-alternativa{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:12px;width:100%;padding:8px;text-align:left;background:#22252b;border:1px solid #3d4149;border-radius:12px;color:#fff;cursor:pointer;}
+.opcao-alternativa:hover,.opcao-alternativa:focus-visible{border-color:#e0a82e;}
+.opcao-alternativa img{width:110px;height:76px;object-fit:cover;border-radius:8px;background:#101114;}
+.opcao-alternativa span{display:grid;gap:5px;}.opcao-alternativa small{color:#c4c6cc;}.opcao-alternativa em{font-style:normal;color:#f0b43c;font-size:12px;}
+.restaurar-alternativa{margin-top:14px;padding:9px 12px;border:1px solid #555;background:transparent;color:#fff;border-radius:8px;cursor:pointer;}
+.credito-alternativas{display:block;margin-top:14px;color:#8e929a;font-size:10px;}
+@media(max-width:480px){.modal-alternativas-painel{padding:18px 14px;}.opcao-alternativa{grid-template-columns:88px 1fr;gap:9px;}.opcao-alternativa img{width:88px;height:68px;}}

@@ -1,0 +1,663 @@
+{
+  "id": "ciclo-2026-11",
+  "nome": "Plano atual — novembro de 2026",
+  "treinos": [
+    {
+      "dia": "D1",
+      "nome": "Pull + Bíceps + Antebraço",
+      "exercicios": [
+        {
+          "id": 1,
+          "nome": "Chin Up",
+          "grupo": "Costas",
+          "series": 3,
+          "repeticoes": "6-10",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 2,
+          "nome": "Lat Pulldown Wide Grip",
+          "grupo": "Costas",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": false,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 3,
+          "nome": "Chest-Supported Low Row",
+          "grupo": "Costas",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 4,
+          "nome": "Single-Arm Cable Row",
+          "grupo": "Costas",
+          "series": 2,
+          "repeticoes": "10-15",
+          "falha": false,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 5,
+          "nome": "Reverse Fly Machine",
+          "grupo": "Ombros",
+          "series": 3,
+          "repeticoes": "12-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 6,
+          "nome": "Preacher Curl",
+          "grupo": "Bíceps",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 7,
+          "nome": "Incline Dumbbell Curl",
+          "grupo": "Bíceps",
+          "series": 2,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 8,
+          "nome": "Reverse Wrist Curl",
+          "grupo": "Antebraço",
+          "series": 2,
+          "repeticoes": "12-20",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 9,
+          "nome": "Wrist Curl",
+          "grupo": "Antebraço",
+          "series": 2,
+          "repeticoes": "12-20",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 1001,
+          "nome": "Arm Circles",
+          "grupo": "Mobilidade",
+          "series": 2,
+          "repeticoes": "30–45 seg",
+          "falha": false,
+          "descanso": "30–60 seg",
+          "peso": 0
+        }
+      ]
+    },
+    {
+      "dia": "D2",
+      "nome": "Lower A — Pesado",
+      "exercicios": [
+        {
+          "id": 10,
+          "nome": "Smith Machine Squat",
+          "grupo": "Pernas",
+          "series": 3,
+          "repeticoes": "6-10",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 11,
+          "nome": "Romanian Deadlift / Stiff",
+          "grupo": "Pernas",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 12,
+          "nome": "Barbell Hip Thrust",
+          "grupo": "Glúteos",
+          "series": 3,
+          "repeticoes": "6-10",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 13,
+          "nome": "Leg Press 45°",
+          "grupo": "Pernas",
+          "series": 3,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 14,
+          "nome": "Lying Leg Curl",
+          "grupo": "Posterior da coxa",
+          "series": 3,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 15,
+          "nome": "Leg Extension",
+          "grupo": "Quadríceps",
+          "series": 2,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 16,
+          "nome": "Standing Calf Raise",
+          "grupo": "Gémeos",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 17,
+          "nome": "Seated Calf Raise",
+          "grupo": "Gémeos",
+          "series": 3,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 1002,
+          "nome": "Ankle Circles",
+          "grupo": "Mobilidade",
+          "series": 2,
+          "repeticoes": "30–45 seg",
+          "falha": false,
+          "descanso": "30–60 seg",
+          "peso": 0
+        }
+      ]
+    },
+    {
+      "dia": "D3",
+      "nome": "Push + Ombros + Tríceps",
+      "exercicios": [
+        {
+          "id": 18,
+          "nome": "Barbell Bench Press",
+          "grupo": "Peito",
+          "series": 3,
+          "repeticoes": "6-10",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 19,
+          "nome": "Incline Dumbbell Bench Press",
+          "grupo": "Peito",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 20,
+          "nome": "Pec Fly",
+          "grupo": "Peito",
+          "series": 2,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 21,
+          "nome": "Cable Crossover — High Pulley",
+          "grupo": "Peito",
+          "series": 2,
+          "repeticoes": "12-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 22,
+          "nome": "Dumbbell Shoulder Press",
+          "grupo": "Ombros",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 23,
+          "nome": "Cable Lateral Raise",
+          "grupo": "Ombros",
+          "series": 3,
+          "repeticoes": "12-20",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 24,
+          "nome": "Cable Rear Delt Fly",
+          "grupo": "Ombros",
+          "series": 2,
+          "repeticoes": "12-20",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 25,
+          "nome": "Lying Triceps Extension / Skullcrusher",
+          "grupo": "Tríceps",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 26,
+          "nome": "Cable Triceps Extension",
+          "grupo": "Tríceps",
+          "series": 2,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 27,
+          "nome": "Overhead Cable Triceps Extension",
+          "grupo": "Tríceps",
+          "series": 2,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 1003,
+          "nome": "Shoulder Stretch",
+          "grupo": "Mobilidade",
+          "series": 2,
+          "repeticoes": "30–45 seg",
+          "falha": false,
+          "descanso": "30–60 seg",
+          "peso": 0
+        }
+      ]
+    },
+    {
+      "dia": "D4",
+      "nome": "Upper",
+      "exercicios": [
+        {
+          "id": 28,
+          "nome": "Lat Pulldown / Chin Up",
+          "grupo": "Costas",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": false,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 29,
+          "nome": "Upper Back Machine",
+          "grupo": "Costas",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": false,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 30,
+          "nome": "Machine Chest Press",
+          "grupo": "Peito",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": false,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 31,
+          "nome": "Low-to-High Cable Fly",
+          "grupo": "Peito",
+          "series": 2,
+          "repeticoes": "12-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 32,
+          "nome": "Cable Lateral Raise",
+          "grupo": "Ombros",
+          "series": 3,
+          "repeticoes": "12-20",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 33,
+          "nome": "Cable Rear Delt Fly",
+          "grupo": "Ombros",
+          "series": 2,
+          "repeticoes": "12-20",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 34,
+          "nome": "Hammer Curl",
+          "grupo": "Bíceps",
+          "series": 2,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 35,
+          "nome": "Rope Pushdown",
+          "grupo": "Tríceps",
+          "series": 2,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 1004,
+          "nome": "Cat Stretch",
+          "grupo": "Mobilidade",
+          "series": 2,
+          "repeticoes": "30–45 seg",
+          "falha": false,
+          "descanso": "30–60 seg",
+          "peso": 0
+        }
+      ]
+    },
+    {
+      "dia": "D5",
+      "nome": "Lower B",
+      "exercicios": [
+        {
+          "id": 37,
+          "nome": "Bulgarian Split Squat",
+          "grupo": "Pernas",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 38,
+          "nome": "Hip Thrust / Glute Bridge",
+          "grupo": "Glúteos",
+          "series": 3,
+          "repeticoes": "8-12",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 39,
+          "nome": "Single-Leg Romanian Deadlift",
+          "grupo": "Posterior da coxa",
+          "series": 2,
+          "repeticoes": "10-12",
+          "falha": true,
+          "descanso": "2-3 min",
+          "peso": 0
+        },
+        {
+          "id": 40,
+          "nome": "Leg Extension Unilateral",
+          "grupo": "Quadríceps",
+          "series": 2,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 41,
+          "nome": "Lying Leg Curl",
+          "grupo": "Posterior da coxa",
+          "series": 3,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 42,
+          "nome": "Hip Abduction",
+          "grupo": "Glúteos",
+          "series": 3,
+          "repeticoes": "12-20",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 43,
+          "nome": "Leg Press Calf Raise",
+          "grupo": "Gémeos",
+          "series": 3,
+          "repeticoes": "10-15",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 44,
+          "nome": "Seated Calf Raise",
+          "grupo": "Gémeos",
+          "series": 3,
+          "repeticoes": "12-20",
+          "falha": true,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 1005,
+          "nome": "Kneeling Hip Flexor",
+          "grupo": "Mobilidade",
+          "series": 2,
+          "repeticoes": "30–45 seg",
+          "falha": false,
+          "descanso": "30–60 seg",
+          "peso": 0
+        }
+      ]
+    },
+    {
+      "dia": "D6",
+      "nome": "D.O Abdominais",
+      "exercicios": [
+        {
+          "id": 47,
+          "nome": "Cable Crunch",
+          "grupo": "Abdómen",
+          "series": 3,
+          "repeticoes": "10-15",
+          "falha": false,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 48,
+          "nome": "Ab Wheel Rollout",
+          "grupo": "Abdómen",
+          "series": 3,
+          "repeticoes": "6-12",
+          "falha": false,
+          "descanso": "90 seg",
+          "peso": 0
+        },
+        {
+          "id": 49,
+          "nome": "Leg Raise",
+          "grupo": "Abdómen",
+          "series": 3,
+          "repeticoes": "8-15",
+          "falha": false,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 50,
+          "nome": "Plank",
+          "grupo": "Abdómen",
+          "series": 2,
+          "repeticoes": "30-60 seg",
+          "falha": false,
+          "descanso": "60 seg",
+          "peso": 0
+        }
+      ]
+    }
+  ],
+  "imagens": {
+    "1": "Chin-Up",
+    "2": "Wide-Grip_Lat_Pulldown",
+    "3": "Leverage_Iso_Row",
+    "4": "Seated_One-Arm_Cable_Pulley_Rows",
+    "5": "Reverse_Machine_Flyes",
+    "6": "Preacher_Curl",
+    "7": "Alternate_Incline_Dumbbell_Curl",
+    "8": "Palms-Down_Wrist_Curl_Over_A_Bench",
+    "9": "Palms-Up_Barbell_Wrist_Curl_Over_A_Bench",
+    "10": "Smith_Machine_Squat",
+    "11": "Romanian_Deadlift",
+    "12": "Barbell_Hip_Thrust",
+    "13": "Leg_Press",
+    "14": "Lying_Leg_Curls",
+    "15": "Leg_Extensions",
+    "16": "Standing_Barbell_Calf_Raise",
+    "17": "Seated_Calf_Raise",
+    "18": "Barbell_Bench_Press_-_Medium_Grip",
+    "19": "Incline_Dumbbell_Press",
+    "20": "Butterfly",
+    "21": "Cable_Crossover",
+    "22": "Seated_Dumbbell_Press",
+    "23": "Bent_Over_Low-Pulley_Side_Lateral",
+    "24": "Cable_Rear_Delt_Fly",
+    "25": "EZ-Bar_Skullcrusher",
+    "26": "Cable_One_Arm_Tricep_Extension",
+    "27": "Cable_Rope_Overhead_Triceps_Extension",
+    "28": "Wide-Grip_Lat_Pulldown",
+    "29": "Leverage_High_Row",
+    "30": "Leverage_Chest_Press",
+    "31": "Low_Cable_Crossover",
+    "32": "Bent_Over_Low-Pulley_Side_Lateral",
+    "33": "Cable_Rear_Delt_Fly",
+    "34": "Hammer_Curls",
+    "35": "Triceps_Pushdown_-_Rope_Attachment",
+    "36": "Crunches",
+    "37": "Split_Squat_with_Dumbbells",
+    "38": "Barbell_Hip_Thrust",
+    "39": "Romanian_Deadlift",
+    "40": "Single-Leg_Leg_Extension",
+    "41": "Lying_Leg_Curls",
+    "42": "Thigh_Abductor",
+    "43": "Calf_Press",
+    "44": "Seated_Calf_Raise",
+    "45": "Oblique_Crunches",
+    "46": "Plank",
+    "47": "Cable_Crunch",
+    "48": "Ab_Roller",
+    "49": "Leg_Lift",
+    "50": "Plank",
+    "1001": "Arm_Circles",
+    "1002": "Ankle_Circles",
+    "1003": "Shoulder_Stretch",
+    "1004": "Cat_Stretch",
+    "1005": "Kneeling_Hip_Flexor"
+  },
+  "descricoes": {
+    "D1": "Costas, deltoide posterior, bíceps e antebraço. Finaliza com 20 min. de cardio.",
+    "D2": "Quadríceps, posterior da coxa, glúteos e gémeos. Finaliza com 20 min. de cardio.",
+    "D3": "Peito, ombros e tríceps. Finaliza com 20 min. de cardio.",
+    "D4": "Costas, peito, ombros e braços. Finaliza com 20 min. de cardio.",
+    "D5": "Pernas, glúteos e gémeos. Finaliza com 20 min. de cardio.",
+    "D6": "Biblioteca complementar de exercícios para abdómen e estabilidade do core."
+  },
+  "cardio": {
+    "D1": {
+      "tipo": "Esteira inclinada",
+      "detalhe": "20 min · moderado"
+    },
+    "D2": {
+      "tipo": "Bicicleta",
+      "detalhe": "20 min · leve/moderado"
+    },
+    "D3": {
+      "tipo": "Esteira inclinada",
+      "detalhe": "20 min · moderado"
+    },
+    "D4": {
+      "tipo": "Elíptica",
+      "detalhe": "20 min · moderado"
+    },
+    "D5": {
+      "tipo": "Bicicleta ou elíptica",
+      "detalhe": "20 min · leve/moderado"
+    },
+    "D6": {
+      "tipo": "Caminhada leve",
+      "detalhe": "10–15 min · opcional"
+    }
+  },
+  "imagensAlternativas": {
+    "4": "Seated_Cable_Rows"
+  },
+  "rotacaoTreinos": [
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5"
+  ]
+}

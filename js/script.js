@@ -1,635 +1,80 @@
-// DADOS DOS TREINOS
-// ==========================================
-
-const treinos = [
-
-    // ==========================================
-    // D1 — PULL + BÍCEPS + ANTEBRAÇO
-    // ==========================================
-
-    {
-        dia: "D1",
-        nome: "Pull + Bíceps + Antebraço",
-
-        exercicios: [
-            {
-                id: 1,
-                nome: "Chin Up",
-                grupo: "Costas",
-                series: 3,
-                repeticoes: "6-10",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 2,
-                nome: "Lat Pulldown Wide Grip",
-                grupo: "Costas",
-                series: 3,
-                repeticoes: "8-12",
-                falha: false,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 3,
-                nome: "Chest-Supported Low Row",
-                grupo: "Costas",
-                series: 3,
-                repeticoes: "8-12",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 4,
-                nome: "Single-Arm Cable Row",
-                grupo: "Costas",
-                series: 2,
-                repeticoes: "10-15",
-                falha: false,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 5,
-                nome: "Reverse Fly Machine",
-                grupo: "Ombros",
-                series: 3,
-                repeticoes: "12-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 6,
-                nome: "Preacher Curl",
-                grupo: "Bíceps",
-                series: 3,
-                repeticoes: "8-12",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 7,
-                nome: "Incline Dumbbell Curl",
-                grupo: "Bíceps",
-                series: 2,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 8,
-                nome: "Reverse Wrist Curl",
-                grupo: "Antebraço",
-                series: 2,
-                repeticoes: "12-20",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 9,
-                nome: "Wrist Curl",
-                grupo: "Antebraço",
-                series: 2,
-                repeticoes: "12-20",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            }
-        ]
-    },
-
-    // ==========================================
-    // D2 — LOWER A — PESADO
-    // ==========================================
-
-    {
-        dia: "D2",
-        nome: "Lower A — Pesado",
-
-        exercicios: [
-            {
-                id: 10,
-                nome: "Smith Machine Squat",
-                grupo: "Pernas",
-                series: 3,
-                repeticoes: "6-10",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 11,
-                nome: "Romanian Deadlift / Stiff",
-                grupo: "Pernas",
-                series: 3,
-                repeticoes: "8-12",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 12,
-                nome: "Barbell Hip Thrust",
-                grupo: "Glúteos",
-                series: 3,
-                repeticoes: "6-10",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 13,
-                nome: "Leg Press 45°",
-                grupo: "Pernas",
-                series: 3,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 14,
-                nome: "Lying Leg Curl",
-                grupo: "Posterior da coxa",
-                series: 3,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 15,
-                nome: "Leg Extension",
-                grupo: "Quadríceps",
-                series: 2,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 16,
-                nome: "Standing Calf Raise",
-                grupo: "Gémeos",
-                series: 3,
-                repeticoes: "8-12",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 17,
-                nome: "Seated Calf Raise",
-                grupo: "Gémeos",
-                series: 3,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            }
-        ]
-    },
-
-    // ==========================================
-    // D3 — PUSH + OMBROS + TRÍCEPS
-    // ==========================================
-
-    {
-        dia: "D3",
-        nome: "Push + Ombros + Tríceps",
-
-        exercicios: [
-            {
-                id: 18,
-                nome: "Barbell Bench Press",
-                grupo: "Peito",
-                series: 3,
-                repeticoes: "6-10",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 19,
-                nome: "Incline Dumbbell Bench Press",
-                grupo: "Peito",
-                series: 3,
-                repeticoes: "8-12",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 20,
-                nome: "Pec Fly",
-                grupo: "Peito",
-                series: 2,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 21,
-                nome: "Cable Crossover — High Pulley",
-                grupo: "Peito",
-                series: 2,
-                repeticoes: "12-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 22,
-                nome: "Dumbbell Shoulder Press",
-                grupo: "Ombros",
-                series: 3,
-                repeticoes: "8-12",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 23,
-                nome: "Cable Lateral Raise",
-                grupo: "Ombros",
-                series: 3,
-                repeticoes: "12-20",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 24,
-                nome: "Cable Rear Delt Fly",
-                grupo: "Ombros",
-                series: 2,
-                repeticoes: "12-20",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 25,
-                nome: "Lying Triceps Extension / Skullcrusher",
-                grupo: "Tríceps",
-                series: 3,
-                repeticoes: "8-12",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 26,
-                nome: "Cable Triceps Extension",
-                grupo: "Tríceps",
-                series: 2,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 27,
-                nome: "Overhead Cable Triceps Extension",
-                grupo: "Tríceps",
-                series: 2,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            }
-        ]
-    },
-
-    // ==========================================
-    // D4 — UPPER
-    // ==========================================
-
-    {
-        dia: "D4",
-        nome: "Upper",
-
-        exercicios: [
-            {
-                id: 28,
-                nome: "Lat Pulldown / Chin Up",
-                grupo: "Costas",
-                series: 3,
-                repeticoes: "8-12",
-                falha: false,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 29,
-                nome: "Upper Back Machine",
-                grupo: "Costas",
-                series: 3,
-                repeticoes: "8-12",
-                falha: false,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 30,
-                nome: "Machine Chest Press",
-                grupo: "Peito",
-                series: 3,
-                repeticoes: "8-12",
-                falha: false,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 31,
-                nome: "Low-to-High Cable Fly",
-                grupo: "Peito",
-                series: 2,
-                repeticoes: "12-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 32,
-                nome: "Cable Lateral Raise",
-                grupo: "Ombros",
-                series: 3,
-                repeticoes: "12-20",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 33,
-                nome: "Cable Rear Delt Fly",
-                grupo: "Ombros",
-                series: 2,
-                repeticoes: "12-20",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 34,
-                nome: "Hammer Curl",
-                grupo: "Bíceps",
-                series: 2,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 35,
-                nome: "Rope Pushdown",
-                grupo: "Tríceps",
-                series: 2,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-        ]
-    },
-
-    // ==========================================
-    // D5 — LOWER B
-    // ==========================================
-
-    {
-        dia: "D5",
-        nome: "Lower B",
-
-        exercicios: [
-            {
-                id: 37,
-                nome: "Bulgarian Split Squat",
-                grupo: "Pernas",
-                series: 3,
-                repeticoes: "8-12",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 38,
-                nome: "Hip Thrust / Glute Bridge",
-                grupo: "Glúteos",
-                series: 3,
-                repeticoes: "8-12",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 39,
-                nome: "Single-Leg Romanian Deadlift",
-                grupo: "Posterior da coxa",
-                series: 2,
-                repeticoes: "10-12",
-                falha: true,
-                descanso: "2-3 min",
-                peso: 0
-            },
-            {
-                id: 40,
-                nome: "Leg Extension Unilateral",
-                grupo: "Quadríceps",
-                series: 2,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 41,
-                nome: "Lying Leg Curl",
-                grupo: "Posterior da coxa",
-                series: 3,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 42,
-                nome: "Hip Abduction",
-                grupo: "Glúteos",
-                series: 3,
-                repeticoes: "12-20",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 43,
-                nome: "Leg Press Calf Raise",
-                grupo: "Gémeos",
-                series: 3,
-                repeticoes: "10-15",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 44,
-                nome: "Seated Calf Raise",
-                grupo: "Gémeos",
-                series: 3,
-                repeticoes: "12-20",
-                falha: true,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-        ]
-    },
-
-    // ==========================================
-    // D6 — ABDÓMEN
-    // ==========================================
-
-    {
-        dia: "D6",
-        nome: "D.O Abdominais",
-
-        exercicios: [
-            {
-                id: 47,
-                nome: "Cable Crunch",
-                grupo: "Abdómen",
-                series: 3,
-                repeticoes: "10-15",
-                falha: false,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 48,
-                nome: "Ab Wheel Rollout",
-                grupo: "Abdómen",
-                series: 3,
-                repeticoes: "6-12",
-                falha: false,
-                descanso: "90 seg",
-                peso: 0
-            },
-            {
-                id: 49,
-                nome: "Leg Raise",
-                grupo: "Abdómen",
-                series: 3,
-                repeticoes: "8-15",
-                falha: false,
-                descanso: "60-90 seg",
-                peso: 0
-            },
-            {
-                id: 50,
-                nome: "Plank",
-                grupo: "Abdómen",
-                series: 2,
-                repeticoes: "30-60 seg",
-                falha: false,
-                descanso: "60 seg",
-                peso: 0
-            }
-        ]
+(async function iniciarAplicacao() {
+  try {
+    const respostaPlano = await fetch("js/treino-atual.json", { cache: "no-cache" });
+    if (!respostaPlano.ok) throw new Error("Não foi possível carregar js/treino-atual.json");
+    const plano = await respostaPlano.json();
+    if (!plano || !plano.id || !Array.isArray(plano.treinos) || plano.treinos.length === 0) {
+      throw new Error("O ficheiro do plano não contém dados válidos.");
     }
+    const ID_PLANO_TREINO = plano.id;
+    const treinos = plano.treinos;
+    const imagensExercicios = plano.imagens || {};
+    const descricoesTreinos = plano.descricoes || {};
+    const cardioTreinos = plano.cardio || {};
+    const imagensAlternativas = plano.imagensAlternativas || {};
 
-];
-
-
-// Mobilidade inicial de cada dia.
-const mobilidadeInicial = [
-  { dia:"D1", nome:"Arm Circles", id:1001 },
-  { dia:"D2", nome:"Ankle Circles", id:1002 },
-  { dia:"D3", nome:"Shoulder Stretch", id:1003 },
-  { dia:"D4", nome:"Cat Stretch", id:1004 },
-  { dia:"D5", nome:"Kneeling Hip Flexor", id:1005 }
-];
-
-mobilidadeInicial.forEach(function(item){
-  const treino=treinos.find(function(t){return t.dia===item.dia;});
-  if(treino && !treino.exercicios.some(function(e){return e.id===item.id;})){
-    treino.exercicios.push({id:item.id,nome:item.nome,grupo:"Mobilidade",series:2,repeticoes:"30–45 seg",falha:false,descanso:"30–60 seg",peso:0});
-  }
-});
-// ==========================================
-// CONFIGURAÇÕES DAS IMAGENS
-// ==========================================
-
-const imagensExercicios = {
-    1: "Chin-Up",
-    2: "Wide-Grip_Lat_Pulldown",
-    3: "Leverage_Iso_Row",
-    4: "Seated_One-Arm_Cable_Pulley_Rows",
-    5: "Reverse_Machine_Flyes",
-    6: "Preacher_Curl",
-    7: "Alternate_Incline_Dumbbell_Curl",
-    8: "Palms-Down_Wrist_Curl_Over_A_Bench",
-    9: "Palms-Up_Barbell_Wrist_Curl_Over_A_Bench",
-    10: "Smith_Machine_Squat",
-    11: "Romanian_Deadlift",
-    12: "Barbell_Hip_Thrust",
-    13: "Leg_Press",
-    14: "Lying_Leg_Curls",
-    15: "Leg_Extensions",
-    16: "Standing_Barbell_Calf_Raise",
-    17: "Seated_Calf_Raise",
-    18: "Barbell_Bench_Press_-_Medium_Grip",
-    19: "Incline_Dumbbell_Press",
-    20: "Butterfly",
-    21: "Cable_Crossover",
-    22: "Seated_Dumbbell_Press",
-    23: "Bent_Over_Low-Pulley_Side_Lateral",
-    24: "Cable_Rear_Delt_Fly",
-    25: "EZ-Bar_Skullcrusher",
-    26: "Cable_One_Arm_Tricep_Extension",
-    27: "Cable_Rope_Overhead_Triceps_Extension",
-    28: "Wide-Grip_Lat_Pulldown",
-    29: "Leverage_High_Row",
-    30: "Leverage_Chest_Press",
-    31: "Low_Cable_Crossover",
-    32: "Bent_Over_Low-Pulley_Side_Lateral",
-    33: "Cable_Rear_Delt_Fly",
-    34: "Hammer_Curls",
-    35: "Triceps_Pushdown_-_Rope_Attachment",
-    36: "Crunches",
-    37: "Split_Squat_with_Dumbbells",
-    38: "Barbell_Hip_Thrust",
-    39: "Romanian_Deadlift",
-    40: "Single-Leg_Leg_Extension",
-    41: "Lying_Leg_Curls",
-    42: "Thigh_Abductor",
-    43: "Calf_Press",
-    44: "Seated_Calf_Raise",
-    45: "Oblique_Crunches",
-    46: "Plank",
-    1001: "Arm_Circles",
-    1002: "Ankle_Circles",
-    1003: "Shoulder_Stretch",
-    1004: "Cat_Stretch",
-    1005: "Kneeling_Hip_Flexor",
-    47: "Cable_Crunch",
-    48: "Ab_Roller",
-    49: "Leg_Lift",
-    50: "Plank"
-};
-
-// =====================================================
-// 1. CONFIGURAÇÕES
-// =====================================================
 const BASE_IMAGENS = "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/";
-const CHAVE_PESOS = "meuPlanoPesosV4";
+const imagemDB = pasta => [0,1].map(i => BASE_IMAGENS + pasta + "/" + i + ".jpg");
+const imagemRepDB = (slug, fases = ["main", "main"]) => fases.map(f => "https://exercise-dataset.com/images/flat/" + slug + "-" + f + ".webp");
+const alternativasPorNome = {
+  "Arm Circles": [
+    {nome:"Shoulder Rolls",grupo:"Mobilidade",series:1,repeticoes:"10 por direção",descanso:"30–60 seg",imageUrls:imagemDB("Arm_Circles")},
+    {nome:"Band Shoulder Dislocations",grupo:"Mobilidade",series:1,repeticoes:"10–12",descanso:"30–60 seg",imageUrls:imagemDB("Round_The_World_Shoulder_Stretch")}
+  ],
+  "Shoulder Stretch": [
+    {nome:"Cross-Body Shoulder Stretch",grupo:"Mobilidade",series:1,repeticoes:"20–30 seg por lado",descanso:"30–60 seg",imageUrls:imagemDB("Shoulder_Stretch")},
+    {nome:"Doorway Chest Stretch",grupo:"Mobilidade",series:1,repeticoes:"20–30 seg",descanso:"30–60 seg",imageUrls:imagemRepDB("doorway-chest-stretch")}
+  ],
+  "Cat Stretch": [
+    {nome:"Cat-Cow Stretch",grupo:"Mobilidade",series:1,repeticoes:"8–10",descanso:"30–60 seg",imageUrls:["https://cdn.jsdelivr.net/npm/@bryllim/workout-guide@1.0.0/assets/cat-cow-stretch/frame-1.svg","https://cdn.jsdelivr.net/npm/@bryllim/workout-guide@1.0.0/assets/cat-cow-stretch/frame-3.svg"]}
+  ],
+  "Hip Abduction": [
+    {nome:"Standing Hip Abduction",grupo:"Glúteos",series:3,repeticoes:"12–15",descanso:"60–90 seg",imageUrls:imagemRepDB("standing-hip-abduction",["start","peak"])},
+    {nome:"Side-Lying Hip Abduction",grupo:"Glúteos",series:3,repeticoes:"12–15",descanso:"60–90 seg",imageUrls:imagemRepDB("side-lying-hip-abduction",["start","peak"])}
+  ],
+  "Hip Adduction": [
+    {nome:"Cable Hip Adduction",grupo:"Adutores",series:3,repeticoes:"12–15",descanso:"60–90 seg",imageUrls:imagemDB("Cable_Hip_Adduction")}
+  ],
+  "Kneeling Hip Flexor": [
+    {nome:"Standing Hip Flexor Stretch",grupo:"Mobilidade",series:1,repeticoes:"20–30 seg por lado",descanso:"30–60 seg",imageUrls:imagemDB("Standing_Hip_Flexors")},
+    {nome:"World’s Greatest Stretch",grupo:"Mobilidade",series:1,repeticoes:"5 por lado",descanso:"30–60 seg",imageUrls:imagemDB("Worlds_Greatest_Stretch")}
+  ]
+};
+function alternativasDo(exercicio){return alternativasPorNome[exercicio.nomeOriginal||exercicio.nome]||[];}
+function abrirModalAlternativas(exercicio){
+  const opcoes=alternativasDo(exercicio); if(!opcoes.length)return;
+  document.querySelector(".modal-alternativas")?.remove();
+  const modal=document.createElement("div"); modal.className="modal-alternativas"; modal.setAttribute("role","dialog"); modal.setAttribute("aria-modal","true");
+  const painel=document.createElement("section"); painel.className="modal-alternativas-painel";
+  const fechar=document.createElement("button"); fechar.className="fechar-alternativas"; fechar.type="button"; fechar.setAttribute("aria-label","Fechar"); fechar.textContent="×";
+  const titulo=document.createElement("h2"); titulo.textContent="Alternativas para "+(exercicio.nomeOriginal||exercicio.nome);
+  const texto=document.createElement("p"); texto.textContent="Escolhe uma opção para esta sessão. O plano guardado não é alterado.";
+  const lista=document.createElement("div"); lista.className="lista-alternativas";
+  opcoes.forEach(opcao=>{const botao=document.createElement("button");botao.type="button";botao.className="opcao-alternativa";const img=document.createElement("img");img.src=opcao.imageUrls[0];img.alt="Demonstração de "+opcao.nome;const info=document.createElement("span");const nome=document.createElement("b");nome.textContent=opcao.nome;const prescricao=document.createElement("small");prescricao.textContent=opcao.series+" série(s) · "+opcao.repeticoes;const usar=document.createElement("em");usar.textContent="Usar nesta sessão";info.append(nome,prescricao,usar);botao.append(img,info);botao.addEventListener("click",()=>{if(!exercicio.alternativaOriginal)exercicio.alternativaOriginal={nome:exercicio.nome,grupo:exercicio.grupo,series:exercicio.series,repeticoes:exercicio.repeticoes,falha:exercicio.falha,descanso:exercicio.descanso};exercicio.nomeOriginal=exercicio.alternativaOriginal.nome;Object.assign(exercicio,opcao);modal.remove();mostrarExercicios(obterExerciciosFiltrados());});lista.appendChild(botao);});
+  const fecharModal=()=>modal.remove(); fechar.addEventListener("click",fecharModal); modal.addEventListener("click",e=>{if(e.target===modal)fecharModal();}); painel.append(fechar,titulo,texto,lista);
+  if(exercicio.alternativaOriginal){const restaurar=document.createElement("button");restaurar.type="button";restaurar.className="restaurar-alternativa";restaurar.textContent="Restaurar exercício original";restaurar.addEventListener("click",()=>{Object.assign(exercicio,exercicio.alternativaOriginal);delete exercicio.alternativaOriginal;delete exercicio.nomeOriginal;delete exercicio.imageUrls;modal.remove();mostrarExercicios(obterExerciciosFiltrados());});painel.appendChild(restaurar);}
+  const credito=document.createElement("small");credito.className="credito-alternativas";credito.textContent="Imagens: Free Exercise DB e RepDB.";painel.appendChild(credito);modal.appendChild(painel);document.body.appendChild(modal);fechar.focus();
+}
+const CHAVE_PESOS_LEGADA = "meuPlanoPesosV4";
+const CHAVE_PESOS = `meuPlanoPesosV4:${ID_PLANO_TREINO}`;
+const CHAVE_PERSONALIZADOS_LEGADA = "meuPlanoExerciciosPersonalizados";
+const CHAVE_PERSONALIZADOS = `meuPlanoExerciciosPersonalizados:${ID_PLANO_TREINO}`;
+
+function migrarChaveLegada(chaveAtual, chaveLegada) {
+  try {
+    const marcador = `meuPlanoMigradoV1:${chaveLegada}`;
+    if (localStorage.getItem(marcador) === "1") return;
+    if (localStorage.getItem(chaveAtual) === null) {
+      const legado = localStorage.getItem(chaveLegada);
+      if (legado !== null) localStorage.setItem(chaveAtual, legado);
+    }
+    localStorage.setItem(marcador, "1");
+  } catch (erro) {
+    console.warn("Não foi possível migrar os dados do plano anterior.");
+  }
+}
+
+migrarChaveLegada(CHAVE_PESOS, CHAVE_PESOS_LEGADA);
 const FRASES = [
   "Disciplina hoje, resultado amanhã.",
   "Pequenos progressos, grandes resultados.",
@@ -647,24 +92,6 @@ const FRASES = [
   "Mantém o foco. Confia no processo."
 ];
 
-const descricoesTreinos = {
-  D1:"Costas, deltoide posterior, bíceps e antebraço. Finaliza com 20 min. de cardio.",
-  D2:"Quadríceps, posterior da coxa, glúteos e gémeos. Finaliza com 20 min. de cardio.",
-  D3:"Peito, ombros e tríceps. Finaliza com 20 min. de cardio.",
-  D4:"Costas, peito, ombros e braços. Finaliza com 20 min. de cardio.",
-  D5:"Pernas, glúteos e gémeos. Finaliza com 20 min. de cardio.",
-  D6:"Biblioteca complementar de exercícios para abdómen e estabilidade do core."
-};
-
-const cardioTreinos = {
-  D1:{tipo:"Esteira inclinada", detalhe:"20 min · moderado"},
-  D2:{tipo:"Bicicleta", detalhe:"20 min · leve/moderado"},
-  D3:{tipo:"Esteira inclinada", detalhe:"20 min · moderado"},
-  D4:{tipo:"Elíptica", detalhe:"20 min · moderado"},
-  D5:{tipo:"Bicicleta ou elíptica", detalhe:"20 min · leve/moderado"},
-  D6:{tipo:"Caminhada leve", detalhe:"10–15 min · opcional"}
-};
-
 const muscleWiki = {
   "Costas":"lats", "Peito":"chest", "Ombros":"shoulders", "Bíceps":"biceps",
   "Tríceps":"triceps", "Pernas":"quads", "Quadríceps":"quads",
@@ -679,11 +106,8 @@ const nomesExibicao = {
 function normalizarTexto(texto){
   return String(texto).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
-const imagensAlternativas = {
-  4: "Seated_Cable_Rows"
-};
-
 function obterImagemUrls(exercicio){
+  if(Array.isArray(exercicio.imageUrls)&&exercicio.imageUrls.length)return [exercicio.imageUrls[0],exercicio.imageUrls[1]||exercicio.imageUrls[0]];
   const pasta = imagensExercicios[exercicio.id];
   if(!pasta)return [];
   return [0,1].map(function(i){
@@ -709,6 +133,21 @@ function obterVideo(exercicio){
 // =====================================================
 // 2. DADOS GUARDADOS
 // =====================================================
+function carregarExerciciosPersonalizados() {
+  migrarChaveLegada(CHAVE_PERSONALIZADOS, CHAVE_PERSONALIZADOS_LEGADA);
+  let guardados = {};
+  try { guardados = JSON.parse(localStorage.getItem(CHAVE_PERSONALIZADOS)) || {}; } catch (erro) {}
+  treinos.forEach(function(treino) {
+    (guardados[treino.dia] || []).forEach(function(exercicio) {
+      if (!treino.exercicios.some(function(atual) { return String(atual.id) === String(exercicio.id); })) {
+        treino.exercicios.push(exercicio);
+      }
+    });
+  });
+}
+
+carregarExerciciosPersonalizados();
+
 function carregarPesos(){
   try{
     const dados=JSON.parse(localStorage.getItem(CHAVE_PESOS)) || {};
@@ -735,6 +174,7 @@ function carregarPesos(){
 }
 
 function guardarPeso(exercicio){
+  if(exercicio.alternativaOriginal)return;
   try{
     const dados=JSON.parse(localStorage.getItem(CHAVE_PESOS)) || {};
 
@@ -758,7 +198,8 @@ carregarPesos();
 // A ordem permanece guardada até ser alterada novamente.
 // =====================================================
 
-const CHAVE_ORDEM_EXERCICIOS = "meuPlanoOrdemExercicios";
+const CHAVE_ORDEM_EXERCICIOS_LEGADA = "meuPlanoOrdemExercicios";
+const CHAVE_ORDEM_EXERCICIOS = `meuPlanoOrdemExercicios:${ID_PLANO_TREINO}`;
 
 function carregarOrdemExercicios(){
 
@@ -839,22 +280,56 @@ function guardarOrdemExercicios(){
   }
 }
 
+migrarChaveLegada(CHAVE_ORDEM_EXERCICIOS, CHAVE_ORDEM_EXERCICIOS_LEGADA);
 carregarOrdemExercicios();
 
 // =====================================================
 // 3. ELEMENTOS E TREINO ATUAL
 // =====================================================
-const paginaAtual = document.body.dataset.dia || "D1";
-const treinoAtual = treinos.find(function(t){return t.dia===paginaAtual;}) || treinos[0];
+function obterProximoDiaDoPlano() {
+  const rotacao = (plano.rotacaoTreinos || treinos.map(function(t) { return t.dia; }))
+    .filter(function(dia) { return treinos.some(function(t) { return t.dia === dia; }); });
+  if (!rotacao.length) return treinos[0].dia;
+  try {
+    const registos = JSON.parse(localStorage.getItem("meuPlanoSessoesV1")) || [];
+    const ultimos = registos.filter(function(registo) { return rotacao.includes(registo.dia); });
+    ultimos.sort(function(a, b) {
+      const ordemA = Number(a.timestamp) || Date.parse((a.data || "") + "T23:59:59") || 0;
+      const ordemB = Number(b.timestamp) || Date.parse((b.data || "") + "T23:59:59") || 0;
+      return ordemB - ordemA;
+    });
+    if (!ultimos.length) return rotacao[0];
+    const indice = rotacao.indexOf(ultimos[0].dia);
+    return rotacao[(indice + 1) % rotacao.length];
+  } catch (erro) {
+    return rotacao[0];
+  }
+}
+
+const diaNaUrl = new URLSearchParams(window.location.search).get("dia");
+const diaSolicitado = (diaNaUrl || obterProximoDiaDoPlano() || document.body.dataset.dia || "D1").toUpperCase();
+const treinoAtual = treinos.find(function(t){return t.dia===diaSolicitado;}) || treinos[0];
+const paginaAtual = treinoAtual.dia;
+document.body.dataset.dia = paginaAtual;
+document.title = `Meu Plano — ${treinoAtual.dia} · ${treinoAtual.nome}`;
 
 // Histórico explícito dos exercícios por data e dia de treino.
 const CHAVE_ESTADOS_EXERCICIOS = "meuPlanoEstadosExerciciosV1";
 function dataLocalISO(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}
 function lerEstadosExercicios(){try{return JSON.parse(localStorage.getItem(CHAVE_ESTADOS_EXERCICIOS))||[];}catch(e){return [];}}
+(function migrarEstadosDeTreino(){
+  try {
+    const registos = lerEstadosExercicios();
+    let alterado = false;
+    registos.forEach(function(registo) { if (!registo.planoId) { registo.planoId = ID_PLANO_TREINO; alterado = true; } });
+    if (alterado) localStorage.setItem(CHAVE_ESTADOS_EXERCICIOS, JSON.stringify(registos));
+  } catch (erro) {}
+})();
 function guardarEstadoExercicio(exercicio, estado){
+  if(exercicio.alternativaOriginal)return;
   const data=dataLocalISO(), dia=treinoAtual.dia;
   let registos=lerEstadosExercicios().filter(r=>!(r.data===data&&r.dia===dia&&Number(r.exercicioId)===Number(exercicio.id)));
-  if(estado!=="pendente") registos.push({data,dia,exercicioId:exercicio.id,nome:exercicio.nome,grupo:exercicio.grupo,estado,atualizadoEm:Date.now()});
+  if(estado!=="pendente") registos.push({data,dia,exercicioId:exercicio.id,nome:exercicio.nome,grupo:exercicio.grupo,estado,atualizadoEm:Date.now(),planoId:ID_PLANO_TREINO});
   try{localStorage.setItem(CHAVE_ESTADOS_EXERCICIOS,JSON.stringify(registos));}catch(e){}
 }
 function estadoExercicioHoje(exercicio){return lerEstadosExercicios().find(r=>r.data===dataLocalISO()&&r.dia===treinoAtual.dia&&Number(r.exercicioId)===Number(exercicio.id))?.estado||"pendente";}
@@ -897,14 +372,11 @@ function atualizarCabecalho(){
   if(tituloTreino)tituloTreino.textContent=`${treinoAtual.dia} — ${treinoAtual.nome}`;
   if(descricaoTreino)descricaoTreino.textContent=descricoesTreinos[treinoAtual.dia] || "Organiza o teu treino e acompanha a tua evolução.";
 
-  const selecionado=sessionStorage.getItem("meuPlanoDiaSelecionado");
-const diaAtual = (
-  document.body.dataset.dia || treinoAtual.dia
-).toUpperCase();
+  const diaAtual = paginaAtual;
 
 document.querySelectorAll("#diasTreino a").forEach(function(link) {
   const pagina = link.getAttribute("href");
-  const diaLink = pagina.replace(".html", "").toUpperCase();
+  const diaLink = (new URL(link.href)).searchParams.get("dia")?.toUpperCase() || "";
   const ativo = diaAtual === diaLink;
 
   link.classList.toggle("ativo", ativo);
@@ -919,7 +391,7 @@ document.querySelectorAll("#diasTreino a").forEach(function(link) {
   document.querySelectorAll("#diasTreino a").forEach(function(link){
     link.addEventListener("click",function(){
       const pagina=link.getAttribute("href");
-      sessionStorage.setItem("meuPlanoDiaSelecionado",pagina.replace(".html","").toUpperCase());
+      sessionStorage.setItem("meuPlanoDiaSelecionado",(new URL(link.href)).searchParams.get("dia")?.toUpperCase() || paginaAtual);
       sessionStorage.setItem("meuPlanoDeveRolar","1");
     });
   });
@@ -1074,13 +546,15 @@ function mostrarExercicios(exercicios) {
     const pesoAnterior = historico[1];
 
     // Imagem: abre o GitHub, não o YouTube
+    const temAlternativas = alternativasDo(exercicio).length > 0;
     const imagemMarkup = temImagem
       ? `
         <a
           href="${paginaImagem || "#"}"
           ${paginaImagem ? 'target="_blank" rel="noopener noreferrer"' : ""}
-          class="imagem-link"
-          title="${paginaImagem ? "Ver imagens no Free Exercise DB" : "Imagem do exercício"}"
+          class="imagem-link${temAlternativas ? ' abrir-alternativas' : ''}"
+          data-id="${exercicio.id}"
+          title="${temAlternativas ? "Toque na imagem para ver alternativas" : (paginaImagem ? "Ver imagens no Free Exercise DB" : "Imagem do exercício")}"
           ${paginaImagem ? "" : 'aria-disabled="true"'}
         >
           <img
@@ -1302,6 +776,9 @@ listaExercicios.addEventListener("change",function(evento){
 // =====================================================
 
 listaExercicios.addEventListener("click",function(evento){
+
+  const abrirAlternativasBotao=evento.target.closest(".abrir-alternativas");
+  if(abrirAlternativasBotao){evento.preventDefault();const exercicio=encontrarExercicio(Number(abrirAlternativasBotao.dataset.id));if(exercicio)abrirModalAlternativas(exercicio);return;}
 
 
   // ---------------------------------------------------
@@ -1645,7 +1122,7 @@ if (formulario) {
     guardarOrdemExercicios();
 
     // Guarda os exercícios personalizados
-    const chave = "meuPlanoExerciciosPersonalizados";
+    const chave = CHAVE_PERSONALIZADOS;
 
     let personalizados = {};
 
@@ -2405,4 +1882,16 @@ mostrarExercicios(
     } catch(e) { if (estado) estado.textContent = "Não foi possível guardar. Exporta os teus dados ou verifica o armazenamento do navegador."; }
   });
   atualizar();
+})();
+
+
+
+  } catch (erro) {
+    console.error("Erro ao carregar o plano de treino:", erro);
+    const aviso = document.getElementById("erroPlano");
+    if (aviso) {
+      aviso.hidden = false;
+      aviso.textContent = "Não foi possível carregar a rotina. Abre esta aplicação através do Live Server ou da versão publicada.";
+    }
+  }
 })();
