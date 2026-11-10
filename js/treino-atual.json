@@ -173,6 +173,16 @@
           "peso": 0
         },
         {
+          "id": 51,
+          "nome": "Cable Hip Adduction",
+          "grupo": "Adutores",
+          "series": 2,
+          "repeticoes": "12-15 por lado",
+          "falha": false,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
           "id": 16,
           "nome": "Standing Calf Raise",
           "grupo": "Gémeos",
@@ -610,6 +620,7 @@
     "48": "Ab_Roller",
     "49": "Leg_Lift",
     "50": "Plank",
+    "51": "Cable_Hip_Adduction",
     "1001": "Arm_Circles",
     "1002": "Ankle_Circles",
     "1003": "Shoulder_Stretch",
@@ -618,7 +629,7 @@
   },
   "descricoes": {
     "D1": "Costas, deltoide posterior, bíceps e antebraço. Finaliza com 20 min. de cardio.",
-    "D2": "Quadríceps, posterior da coxa, glúteos e gémeos. Finaliza com 20 min. de cardio.",
+    "D2": "Quadríceps, posterior da coxa, glúteos, adutores e gémeos. Finaliza com 20 min. de cardio.",
     "D3": "Peito, ombros e tríceps. Finaliza com 20 min. de cardio.",
     "D4": "Costas, peito, ombros e braços. Finaliza com 20 min. de cardio.",
     "D5": "Pernas, glúteos e gémeos. Finaliza com 20 min. de cardio.",
