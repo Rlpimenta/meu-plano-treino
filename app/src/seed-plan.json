@@ -143,6 +143,16 @@
           "peso": 0
         },
         {
+          "id": 63,
+          "nome": "Cable Hip Adduction",
+          "grupo": "Adutores",
+          "series": 2,
+          "repeticoes": "12-15 por lado",
+          "falha": false,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
           "id": 13,
           "nome": "Leg Press 45°",
           "grupo": "Pernas",
@@ -173,16 +183,6 @@
           "peso": 0
         },
         {
-          "id": 51,
-          "nome": "Cable Hip Adduction",
-          "grupo": "Adutores",
-          "series": 2,
-          "repeticoes": "12-15 por lado",
-          "falha": false,
-          "descanso": "60-90 seg",
-          "peso": 0
-        },
-        {
           "id": 16,
           "nome": "Standing Calf Raise",
           "grupo": "Gémeos",
@@ -200,16 +200,6 @@
           "repeticoes": "10-15",
           "falha": true,
           "descanso": "60-90 seg",
-          "peso": 0
-        },
-        {
-          "id": 1002,
-          "nome": "Ankle Circles",
-          "grupo": "Mobilidade",
-          "series": 2,
-          "repeticoes": "30–45 seg",
-          "falha": false,
-          "descanso": "30–60 seg",
           "peso": 0
         }
       ]
@@ -565,6 +555,46 @@
           "falha": false,
           "descanso": "60 seg",
           "peso": 0
+        },
+        {
+          "id": 51,
+          "nome": "Crunches",
+          "grupo": "Abdómen",
+          "series": 3,
+          "repeticoes": "12-15",
+          "falha": false,
+          "descanso": "60-90 seg",
+          "peso": 0
+        },
+        {
+          "id": 52,
+          "nome": "Oblique Crunches",
+          "grupo": "Abdómen",
+          "series": 2,
+          "repeticoes": "12-15 por lado",
+          "falha": false,
+          "descanso": "60 seg",
+          "peso": 0
+        },
+        {
+          "id": 53,
+          "nome": "Reverse Crunch",
+          "grupo": "Abdómen",
+          "series": 2,
+          "repeticoes": "12-15",
+          "falha": false,
+          "descanso": "60 seg",
+          "peso": 0
+        },
+        {
+          "id": 54,
+          "nome": "Dead Bug",
+          "grupo": "Abdómen",
+          "series": 2,
+          "repeticoes": "10-12 por lado",
+          "falha": false,
+          "descanso": "60 seg",
+          "peso": 0
         }
       ]
     }
@@ -620,7 +650,7 @@
     "48": "Ab_Roller",
     "49": "Leg_Lift",
     "50": "Plank",
-    "51": "Cable_Hip_Adduction",
+    "63": "Cable_Hip_Adduction",
     "1001": "Arm_Circles",
     "1002": "Ankle_Circles",
     "1003": "Shoulder_Stretch",

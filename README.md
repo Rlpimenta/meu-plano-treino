@@ -1,31 +1,26 @@
-# Meu Plano de Treino
+**Meu Plano de Treino — React + Vite**
 
-Aplicação estática para consultar treinos, acompanhar exercícios e registar a evolução. Criada com HTML, CSS e JavaScript, sem servidor ou instalação.
+Aplicação mobile-first publicada em GitHub Pages: https://rlpimenta.github.io/meu-plano-treino/
 
-**Aplicação publicada:** https://rlpimenta.github.io/meu-plano-treino/
+## Executar localmente
 
-## Páginas
+1. Instalar Node.js LTS.
+2. Nesta pasta, executar `npm install` e depois `npm run dev`.
+3. Para gerar e publicar localmente os ficheiros estáticos, executar `npm run build`. O build compila `app/` e copia o resultado para a raiz, usada pelo GitHub Pages.
 
-- `index.html` é o modelo único dos seis treinos. Sem parâmetro, abre D1; usa `?dia=D2` (até `?dia=D6`) para selecionar outro dia.
-- `d1.html` a `d6.html` continuam como redirecionamentos compatíveis com os endereços antigos; D6 é o treino D.O Abdominais.
-- `progresso.html` reúne frequência, avaliações, gráficos e histórico.
+## Estrutura
+
+- `app/src/` — interface React, cartões e dados base dos treinos.
+- `app/public/` — recursos públicos da aplicação.
+- `scripts/publish-pages.mjs` — publica o build na raiz para manter a configuração atual do GitHub Pages.
+- `d1.html`–`d6.html` e `progresso.html` — redirecionamentos compatíveis com links antigos.
 
 ## Funcionalidades
 
-- Marcação de sessões e exercícios, cronómetro, registo de pesos e reorganização dos exercícios.
-- Histórico de exercícios assinalados como não realizados.
-- Avaliações físicas, comparação de registos e gráficos de evolução.
-- Exportação e importação de cópia de segurança em JSON.
-- Atalho para abrir o Spotify; o ícone é um SVG criado no `js/script.js`.
+Dashboard, seis treinos, cartões de exercícios com demonstrações em movimento, alternativas por toque na imagem, registo por série, cronómetro de descanso de 90 segundos, cargas, reordenação, avaliações, gráficos, atividade, cardio, nutrição e cópia de segurança.
 
-## Ficheiros principais
+O plano inclui Cable Hip Adduction em D2 (2 séries de 12–15 por lado). Alternativas e substituições são temporárias para a sessão.
 
-- `css/style.css` — estilos partilhados e responsividade.
-- `js/script.js` — dados dos treinos e interações das páginas D1–D6.
-- `js/progresso.js` — registos, avaliações, gráficos e cópias de segurança.
+## Dados e imagens
 
-## Dados
-
-Os registos ficam no armazenamento local do navegador e dispositivo; não sincronizam automaticamente. Exporta uma cópia antes de mudar de dispositivo, navegador ou limpar os dados do navegador. A importação substitui registos com as mesmas chaves.
-
-As páginas usam imagens externas para os exercícios e podem precisar de ligação à Internet para as carregar.
+Os registos ficam no armazenamento local deste navegador e dispositivo; não sincronizam automaticamente entre dispositivos. Exporta uma cópia antes de trocar de navegador ou dispositivo. As demonstrações de exercício requerem ligação à internet.
