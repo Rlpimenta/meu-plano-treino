@@ -86,3 +86,4 @@
 .drag-dots{grid-template-columns:repeat(2,3px);grid-template-rows:repeat(3,3px);gap:2px}
 .drag-dots i{width:3px;height:3px}
 @media(max-width:760px){.exercise-specs{gap:3px;font-size:10px;padding:7px 0}.exercise-specs .spec-action{gap:3px;min-height:27px;padding:4px 5px;font-size:9px}.exercise-specs .spec-prescription{gap:3px;font-size:10px}.exercise-specs .spec-prescription svg{width:13px}.exercise-specs .effort-indicator svg{width:14px;height:14px}.exercise-specs .rest-action{padding-inline:4px}.load-row{gap:7px}.load-row input{width:58px}.previous-load{font-size:9px}}
+@media(max-width:700px){.portfolio-return-panel{align-items:flex-start;flex-direction:column;padding:19px}.portfolio-return-panel .outline-btn{width:100%;justify-content:center}}
